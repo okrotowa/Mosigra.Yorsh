@@ -74,7 +74,7 @@ namespace Yorsh.Helpers
         {
             var path = Rep.Instance.DataBaseFile;
             var connection = new SQLiteAsyncConnection(path);
-            //File.Delete(path);
+            File.Delete(path);
             if (!File.Exists(path))
             {
                 var results = await connection.CreateTablesAsync<TaskTable, BonusTable, CategoryTable>();

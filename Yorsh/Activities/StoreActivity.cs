@@ -3,6 +3,9 @@ using Android.OS;
 using Android.Content.PM;
 using Xamarin.InAppBilling;
 using Android.Widget;
+using System;
+using System.Linq;
+using System.Runtime.Remoting.Contexts;
 
 namespace Yorsh.Activities
 {
@@ -16,9 +19,6 @@ namespace Yorsh.Activities
             SetContentView(Resource.Layout.Store);
             var taskListView = FindViewById<ListView>(Resource.Id.taskListView);
 
-            //TODO::Delete
-			//var m = @"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr1wsRhQz/aFBC2HGRbIJ0Dx372QXWoSYBZT8nESCUl9dxhILH+dSS2UN43ovQsqAfb1WNQ+qvc8aVwNq0BXiVmNecqLYbsL2jZSGS7ox/Y8Xl03wsQfVHoOY6LDORvYN+ZqJxEuS1dqcUul4TiUqbemZKOAqNQeRUmMz/QmCnNiINuaOv3vOQKMyJsYPwqg+9oei/9bYSIPdkXiyHATbEIiMULheQrS0w4fMu8Fk6nqAMmp8RAXX/fCDCIoIkJ42kIpiUY9k8qeqHeZkrTVMi//AbuWK7Hx+4hhf6gIR4U4Mz544aXX93w56OTgnC32Ngqoa8RkzHpQPoS5dvLUMMwIDAQAB";
-			 
 			var key = Xamarin.InAppBilling.Utilities.Security.Unify (
 						 new string[] {	GetNumberString(2),GetNumberString(5),GetNumberString(0),GetNumberString(3),GetNumberString(6),GetNumberString(7),GetNumberString(1),GetNumberString(4)},
 				         new int[]{ 0, 1, 2, 3, 4, 5, 6, 7 });
@@ -47,33 +47,79 @@ namespace Yorsh.Activities
 		}
         private class StoreListAdapter : BaseAdapter<StoreItem>
         {
+			StoreItem[] _storeItems;
+			Activity _context;
+			public StoreListAdapter(Activity context, BuyElement buyElement)
+			{
+				_context = context;
+				switch(buyElement)
+				{
+					case BuyElement.Task: 
+						_storeItems = new StoreItem[5];
+						_storeItems[0] = new StoreItem(29,"10\nштук",buyElement);
+						_storeItems[1] = new StoreItem(59,"30\nштук",buyElement);
+						_storeItems[2] = new StoreItem(119,"70\nштук",buyElement);
+						_storeItems[3] = new StoreItem(169,"100\nштук",buyElement);
+						_storeItems[4] = new StoreItem(279,"∞",buyElement){SaleImageString = "task_sale"};
+					break;
+					case BuyElement.Bonus: 
+						_storeItems = new StoreItem[3];
+						_storeItems[0] = new StoreItem(15,"10\nштук",buyElement){SaleImageString = "bonus_sale"};
+						_storeItems[1] = new StoreItem(59,"30\nштук",buyElement);
+						_storeItems[2] = new StoreItem(129,"∞",buyElement);
+					break;
+				}
+			}
+		
             public override StoreItem this[int position]
             {
-                get { throw new System.NotImplementedException(); }
+				get { return _storeItems[position]; }
             }
 
             
             public override int Count
             {
-                get { throw new System.NotImplementedException(); }
+				get { return _storeItems.Count(); }
             }
 
             public override long GetItemId(int position)
             {
-                throw new System.NotImplementedException();
+				return position;
             }
 			public override Android.Views.View GetView (int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
 			{
-				throw new System.NotImplementedException ();
+				if (convertView != null) return convertView;
+
+				var view = _context.LayoutInflater.Inflate (Resource.Layout.StoreItem, null);		
+				var button = view.FindViewById<RelativeLayout> (Resource.Id.storeButton);
+				var priceText = view.FindViewById<TextView> (Resource.Id.priceText);
+				return view;
 			}
         }
+		
+
 
         private class StoreItem
         {
-            public StoreItem()
+			public StoreItem(float price, string count, BuyElement buyElement, bool isBuy = false)
             { 
-                
+				Price = price;
+				Count = count;
+				BuyElement = buyElement;
+				IsBuy = isBuy;
             }
+
+			public float Price { get; set;}
+			public string Count { get; set;}
+			public bool IsBuy { get; set;}
+			public BuyElement BuyElement { get; set;}
+			public string SaleImageString { get; set;}
         }
+
+		private enum BuyElement
+		{
+			Task,
+			Bonus
+		}
     }
 }

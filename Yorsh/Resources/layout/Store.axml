@@ -125,7 +125,7 @@
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="25dp">
                         <Button
-                            android:background="@drawable/beer_icon_adblock"
+                            android:background="@drawable/remove_adb"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:id="@+id/imageButThreeOne"

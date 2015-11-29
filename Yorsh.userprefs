@@ -1,6 +1,28 @@
 ﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 10 (KitKat) - API 19 - 1600x2560" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\StoreActivity.cs">
+    <Files>
+      <File FileName="Yorsh\Activities\StoreActivity.cs" Line="95" Column="73" />
+      <File FileName="Yorsh\Activities\NewGameActivity.cs" Line="14" Column="14" />
+      <File FileName="Yorsh\Activities\Fragments.cs" Line="25" Column="30" />
+      <File FileName="Yorsh\Properties\AndroidManifest.xml" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Yorsh" expanded="True" selected="True">
+            <Node name="Yorsh" expanded="True">
+              <Node name="Activities" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="Resources" expanded="True">
+                <Node name="drawable-mdpi" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="C:\Users\paliy\Documents\Projects\Yorsh\Android.Yorsh\Helpers\ActivityExtensions.cs" line="30" column="1" />
@@ -9,4 +31,5 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <AuthorInfo Name="Olga Krotova" Email="okrotowa@gmail.com" Copyright="fionariza" Company="" Trademark="" />
+  <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus 4" />
 </Properties>

@@ -27,13 +27,13 @@ namespace Yorsh.Activities
 			};
 
 			buttonEasy.Click += (object sender, EventArgs e) => {
-				SetContentView(Resource.Layout.WebView);
+				//SetContentView(Resource.Layout.WebView);
 
 				string url = "https://itunes.apple.com/ua/app/ers/id604886527?mt=8";
-				var web = FindViewById<WebView>(Resource.Id.webView1);
+				//var web = FindViewById<WebView>(Resource.Id.webView1);
 
-				web.Settings.JavaScriptEnabled = true;
-				web.LoadUrl(url);
+				//web.Settings.JavaScriptEnabled = true;
+				//web.LoadUrl(url);
 			};
 
 			buttonYester.Click += (object sender, EventArgs e) => {

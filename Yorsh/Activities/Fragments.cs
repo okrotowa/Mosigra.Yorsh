@@ -16,7 +16,7 @@ namespace Yorsh.Activities
 
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
-			var view = inflater.Inflate (Resource.Layout.FragmentOne, null);
+			var view = inflater.Inflate (Resource.Layout.RuleFragment, null);
 			var imageBackgroundRules= view.FindViewById<ImageView> (Resource.Id.imageBackgroundRules);
 			var arr = Resources.GetStringArray (Resources.GetIdentifier(GetRuleName(_rule),"array", Activity.PackageName));
 			var imageId = Resources.GetIdentifier ("rules_" + GetRuleIdentifier(_rule) + "_page", "drawable", Activity.PackageName);
