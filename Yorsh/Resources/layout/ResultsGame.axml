@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/game_background">
+    <FrameLayout
+        android:id="@+id/buttonFrameLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/PlayersList_buttonHeight"
+        android:layout_marginBottom="@dimen/ContentMarginTopBottom"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="@dimen/ContentMarginLeftRight"
+        android:layout_marginLeft="@dimen/ContentMarginLeftRight">
+        <Button
+            android:id="@+id/startPlayButton"
+            android:visibility="gone"
+            android:text="@string/NewGameString"
+            android:layout_width="@dimen/PlayersList_buttonWidth"
+            android:background="@drawable/start_game_button"
+            android:gravity="center"
+            android:layout_height="@dimen/PlayersList_buttonHeight"
+            android:textSize="@dimen/PlayersList_buttonTextSize"
+            android:layout_gravity="center" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:visibility="visible"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <View
+                android:id="@+id/TextView01"
+                android:layout_width="@dimen/AddNewPlayers_padding"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true" />
+            <Button
+                android:id="@+id/completeGameButton"
+                android:text="@string/NewGameString"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/ready_button"
+                android:layout_toLeftOf="@id/TextView01"
+                android:layout_alignParentTop="true"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/ResultGameButton_Text_Size" />
+            <Button
+                android:id="@+id/shareButton"
+                android:text="@string/ShareString"
+                android:background="@drawable/shared"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_toRightOf="@id/TextView01"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/ResultGameButton_Text_Size" />
+        </RelativeLayout>
+    </FrameLayout>
+    <ListView
+        android:id="@+id/playerTournamentListView"
+        android:background="@drawable/table_list_background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/buttonFrameLayout"
+        android:layout_marginBottom="@dimen/ResultGameList_MarginBotom"
+        android:layout_marginTop="@dimen/ContentMarginTopBottom"
+        android:layout_marginLeft="@dimen/ResultGameList_MarginLeftRight"
+        android:layout_marginRight="@dimen/ResultGameList_MarginLeftRight" />
+</RelativeLayout>

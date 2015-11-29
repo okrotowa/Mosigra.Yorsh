@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+	<string-array name="Refuse">
+		  <item>ВЫ ОТКАЗАЛИСЬ</item>
+		  <item>ПЕРЕХОД ХОДА</item>
+		  <item>x2 очков</item>
+		  <item>Очки за задание удваиваются</item>
+		  <item>Очков на кону:\u0020</item>
+	</string-array>
+	<string-array name="RefuseAndMove">
+		  <item>ВЫ ОТКАЗАЛИСЬ</item>
+		  <item>ПЕРЕХОД ХОДА</item>
+		  <item>0 очков</item>
+		  <item>Зарабатывает\u0020</item>
+		  <item>Всего очков:\u0020</item>
+	</string-array>
+	<string-array name="MakeThis">
+		  <item>ПОЗДРАВЛЯЕМ</item>
+		  <item>ЗАДАНИЕ УСПЕШНО ВЫПОЛНЕНО</item>
+		  <item>+ {0} очков</item>
+		  <item>Зарабатывает\u0020</item>
+		  <item>Всего очков:\u0020</item>
+	</string-array>
+		<string-array name="Bear">
+		  <item>НE ПОВЕЗЛО:(</item>
+		  <item>МЕДВЕД ЗАБРАЛ ОЧКИ! И ПЕНСНЕ!</item>
+		  <item>5 очков</item>
+		  <item>Отнимается у\u0020</item>
+		  <item>Всего очков:\u0020</item>
+	</string-array>
+
+	<!--Rules-->
+	<string-array name="RulesCirle">
+		<item>one</item>
+		<item>two</item>
+		<item>three</item>
+	</string-array>
+	<string-array name="ShortAboutGame">
+		<item>Коротко об игре</item>
+		<item>Собери компанию, в которой планируешь хорошо повеселиться.Приготовь напитки: они могут быть любыми.Разумеется, особую пикантность игре придаёт алкоголь. Определи обьём штрафной, которую будет выпивать игрок, если откажется от задания или не сможет его выполнить.</item>
+	</string-array>
+	<string-array name="HowToPlay">
+		<item>Как играть-то?</item>
+		<item>Теперь начните выполнять задания: прочитай своё вслух, а затем сделай, что написано. Не можешь - выпей штрафную. Затем передай телефон или планшет своему соседу справа, пусть он выполняет другое задание.</item>
+	</string-array>
+	<string-array name="AndSuddenly">
+		<item>И внезапно...</item>
+		<item>Если вместо задания попалась карта медведя, нужно громко обьявить: "Белый медведь пришёл!"- и подождать, пока все игроки, кроме тебя, нырнут под стол. После того как белый медведь схватил самого нерасторопного игрока, можна обьявлять: "Белый медведь ушёл!" и разрешать вылезать из-под стола.</item>
+	</string-array>
+</resources>
