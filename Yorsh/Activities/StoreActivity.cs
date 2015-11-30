@@ -6,10 +6,12 @@ using Android.Widget;
 using System;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
+using Android.Views;
+using Yorsh.Adapters;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/BuyString", ParentActivity = typeof(MainMenuActivity), MainLauncher=false,ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/BuyString", ParentActivity = typeof(MainMenuActivity), MainLauncher=true,ScreenOrientation = ScreenOrientation.Portrait)]
     public class StoreActivity : BaseActivity
     {
 		private InAppBillingServiceConnection _connection;
@@ -18,7 +20,7 @@ namespace Yorsh.Activities
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Store);
             var taskListView = FindViewById<ListView>(Resource.Id.taskListView);
-
+			taskListView.Adapter = new MultiItemRowListAdapter(this, new StoreListAdapter(this, BuyElement.Task),3,1);
 			var key = Xamarin.InAppBilling.Utilities.Security.Unify (
 						 new string[] {	GetNumberString(2),GetNumberString(5),GetNumberString(0),GetNumberString(3),GetNumberString(6),GetNumberString(7),GetNumberString(1),GetNumberString(4)},
 				         new int[]{ 0, 1, 2, 3, 4, 5, 6, 7 });
@@ -56,16 +58,16 @@ namespace Yorsh.Activities
 				{
 					case BuyElement.Task: 
 						_storeItems = new StoreItem[5];
-						_storeItems[0] = new StoreItem(29,"10\nштук",buyElement);
-						_storeItems[1] = new StoreItem(59,"30\nштук",buyElement);
-						_storeItems[2] = new StoreItem(119,"70\nштук",buyElement);
-						_storeItems[3] = new StoreItem(169,"100\nштук",buyElement);
+						_storeItems[0] = new StoreItem(29,"10",buyElement);
+						_storeItems[1] = new StoreItem(59,"30",buyElement);
+						_storeItems[2] = new StoreItem(119,"70",buyElement);
+						_storeItems[3] = new StoreItem(169,"100",buyElement);
 						_storeItems[4] = new StoreItem(279,"∞",buyElement){SaleImageString = "task_sale"};
 					break;
 					case BuyElement.Bonus: 
 						_storeItems = new StoreItem[3];
-						_storeItems[0] = new StoreItem(15,"10\nштук",buyElement){SaleImageString = "bonus_sale"};
-						_storeItems[1] = new StoreItem(59,"30\nштук",buyElement);
+						_storeItems[0] = new StoreItem(15,"10",buyElement){SaleImageString = "bonus_sale"};
+						_storeItems[1] = new StoreItem(59,"30",buyElement);
 						_storeItems[2] = new StoreItem(129,"∞",buyElement);
 					break;
 				}
@@ -89,10 +91,20 @@ namespace Yorsh.Activities
 			public override Android.Views.View GetView (int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
 			{
 				if (convertView != null) return convertView;
-
+				var storeItem = this [position];
 				var view = _context.LayoutInflater.Inflate (Resource.Layout.StoreItem, null);		
 				var button = view.FindViewById<RelativeLayout> (Resource.Id.storeButton);
+				button.SetBackgroundResource (storeItem.BuyElement == BuyElement.Bonus 
+					? Resource.Drawable.bonus_store_icon
+					: Resource.Drawable.task_store_icon
+				);
+				var countText = view.FindViewById<TextView> (Resource.Id.countText);
+				countText.Text = storeItem.Count;
 				var priceText = view.FindViewById<TextView> (Resource.Id.priceText);
+				priceText.Text = storeItem.Price + " руб.";
+				view.FindViewById<TextView> (Resource.Id.unitText).Visibility = position == this.Count - 1 
+					? ViewStates.Gone
+					: ViewStates.Visible;
 				return view;
 			}
         }
@@ -115,11 +127,11 @@ namespace Yorsh.Activities
 			public BuyElement BuyElement { get; set;}
 			public string SaleImageString { get; set;}
         }
-
-		private enum BuyElement
-		{
-			Task,
-			Bonus
-		}
-    }
+   
+				private enum BuyElement
+				{
+					Task,
+					Bonus
+				}
+	}
 }

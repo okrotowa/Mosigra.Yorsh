@@ -1,11 +1,30 @@
 ﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus S (KitKat)" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\GameActivity.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="Yorsh\Activities\GameActivity.cs" Line="147" Column="29" />
-      <File FileName="Yorsh\Activities\MainMenuActivity.cs" Line="55" Column="4" />
-      <File FileName="Yorsh\Activities\ResultsGameActivity.cs" Line="107" Column="41" />
+      <File FileName="Yorsh\Activities\YourshApplication.cs" Line="1" Column="1" />
+      <File FileName="Yorsh\Activities\StoreActivity.cs" Line="95" Column="33" />
+      <File FileName="Yorsh\Activities\SplashScreenActivity.cs" Line="8" Column="74" />
+      <File FileName="Yorsh\Activities\GameActivity.cs" Line="101" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Yorsh" expanded="True">
+            <Node name="Yorsh" expanded="True">
+              <Node name="ComponentReferenceFolder" expanded="True" />
+              <Node name="Adapters" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="Resources" expanded="True">
+                <Node name="layout" expanded="True">
+                  <Node name="StoreItem.axml" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
@@ -15,5 +34,5 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <AuthorInfo Name="Olga Krotova" Email="okrotowa@gmail.com" Copyright="fionariza" Company="" Trademark="" />
-  <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus S" />
+  <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus 4" />
 </Properties>
