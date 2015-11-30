@@ -4,20 +4,22 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Android.Graphics.Drawables;
 
 namespace Yorsh.Fragments
 {		
 	public class DialogRatingFragment : DialogFragment
 	{
 	    private ISharedPreferencesEditor _editor;
-        public override Dialog OnCreateDialog(Bundle savedInstanceState)
-        {
-            var dialog = base.OnCreateDialog(savedInstanceState);
-            dialog.Window.RequestFeature(WindowFeatures.NoTitle);
-            dialog.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen); 
-            dialog.Window.SetBackgroundDrawableResource(Resource.Color.white);
-            return dialog;
-        }
+
+		public override Dialog OnCreateDialog(Bundle savedInstanceState)
+		{
+			var dialog = base.OnCreateDialog(savedInstanceState);
+			dialog.Window.RequestFeature(WindowFeatures.NoTitle);
+			dialog.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen); 
+			dialog.Window.SetBackgroundDrawableResource(Resource.Color.white);
+			return dialog;
+		}
 
         public override Android.Views.View OnCreateView(Android.Views.LayoutInflater inflater, Android.Views.ViewGroup container, Android.OS.Bundle savedInstanceState)
         {

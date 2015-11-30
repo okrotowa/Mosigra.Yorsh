@@ -144,9 +144,26 @@ namespace Yorsh.Activities
 
 		void EndOfGame()
 		{
+			GetShopDialog ().Show ();
 			var intent = new Intent (this, typeof(ResultsGameActivity));
 			intent.PutExtra ("isEnd", true);
 			this.StartActivityWithoutBackStack (intent);
+		}
+
+		private AlertDialog.Builder GetShopDialog ()
+		{
+			var builder = new AlertDialog.Builder (this);
+			builder.SetTitle (Resource.String.GoToShopingString);
+			builder.SetMessage (Resource.String.GoToSaleString);
+			builder.SetPositiveButton (GetString (Resource.String.YesString), delegate {
+				this.StartActivity(typeof(StoreActivity));
+			});
+			builder.SetNegativeButton (GetString (Resource.String.NoString), delegate {
+				var intent = new Intent (this, typeof(ResultsGameActivity));
+				intent.PutExtra ("isEnd", true);
+				this.StartActivityWithoutBackStack (intent);
+			});
+			return builder;
 		}
 
         public override void OnBackPressed()

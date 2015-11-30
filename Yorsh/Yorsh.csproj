@@ -74,14 +74,14 @@
     <Reference Include="Xamarin.Mobile">
       <HintPath>..\Components\xamarin.mobile-0.7.7\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
-    <Reference Include="SQLite">
-      <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\Components\xamandroidsupportv4-18-4.19.0.1\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.InAppBilling">
       <HintPath>..\Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite">
+      <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -347,12 +347,9 @@
     <AndroidResource Include="Resources\mipmap-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap\icon.png" />
-    <AndroidResource Include="Resources\drawable\fb72.png" />
     <AndroidResource Include="Resources\drawable\fbicon.png" />
-    <AndroidResource Include="Resources\drawable\tw72.png" />
     <AndroidResource Include="Resources\drawable\twicon.png" />
     <AndroidResource Include="Resources\drawable\vk.png" />
-    <AndroidResource Include="Resources\drawable\vk72.png" />
     <AndroidResource Include="Resources\layout\PickPlayerItem.axml" />
     <AndroidResource Include="Resources\layout\ShareSoc.axml" />
     <AndroidResource Include="Resources\drawable-hdpi\bonus_sale.png" />
@@ -407,6 +404,10 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\task_store_icon.png" />
     <AndroidResource Include="Resources\layout\RuleFragment.axml" />
     <AndroidResource Include="Resources\layout\StoreItem.axml" />
+    <AndroidResource Include="Resources\drawable\fb72.png" />
+    <AndroidResource Include="Resources\drawable\tw72.png" />
+    <AndroidResource Include="Resources\drawable\vk72.png" />
+    <AndroidResource Include="Resources\layout\MosDialog.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainMenu.axml" />
@@ -481,6 +482,11 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.inappbilling">
       <Version>2.2</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="xamarin.social">
+      <InstallationInProgress>True</InstallationInProgress>
+      <Version>1.1.7</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>

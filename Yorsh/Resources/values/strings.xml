@@ -60,4 +60,7 @@
   <string name="CancelString">ОТМЕНА</string>
   <string name="ConfirmString">ГОТОВО</string>
 
+  <string name="GoToShopingString">Переход в магазин</string>
+  <string name="GoToSaleString">Купить новые задачи?</string>
+
 </resources>

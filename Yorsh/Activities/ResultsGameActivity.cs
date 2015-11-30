@@ -12,7 +12,7 @@ using Yorsh.Fragments;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/ResultsString", MainLauncher = false, ParentActivity = typeof(GameActivity),ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/ResultsString", MainLauncher = true, ParentActivity = typeof(GameActivity),ScreenOrientation = ScreenOrientation.Portrait)]
     public class ResultsGameActivity : BaseActivity
     {
 		protected async override void OnCreate(Bundle bundle)
@@ -112,7 +112,7 @@ namespace Yorsh.Activities
 				var viewPlayerItem = inflater.Inflate (Resource.Layout.PlayerItem, null);
 				var textPlayerItemName = viewPlayerItem.FindViewById<TextView> (Resource.Id.playerName);
 				var textPlayerItemScore = viewPlayerItem.FindViewById<TextView> (Resource.Id.playerScore);
-				textPlayerItemName.SetTypeface (_context.MyriadProFont (MyriadPro.Condensed), Android.Graphics.TypefaceStyle.Normal);
+				textPlayerItemName.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Bold);
 				textPlayerItemScore.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Bold);
 				var isFirst = position == 0;
 				var view = inflater.Inflate(isFirst

@@ -53,7 +53,6 @@ namespace Yorsh.Activities
 		private AlertDialog.Builder GetAlertDialog ()
 		{
 			var builder = new AlertDialog.Builder (this);
-			builder.SetView (LayoutInflater.Inflate (Resource.Layout.Rules, null));
 			builder.SetMessage (Resource.String.OpenSiteQuestionString);
 			builder.SetTitle (Resource.String.GoToMosigraSite);
 			builder.SetPositiveButton (GetString (Resource.String.YesString), delegate {
