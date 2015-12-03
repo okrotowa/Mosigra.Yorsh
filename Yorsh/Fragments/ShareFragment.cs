@@ -4,11 +4,18 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Xamarin.Auth;
+using System.Xml;
+using System.Net;
+using System.IO;
 
 namespace Yorsh.Fragments
 {
     public class ShareFragment : DialogFragment
     {
+		public string token;
+		public string userId;
+
         public override Dialog OnCreateDialog(Bundle savedInstanceState)
         {
             var dialog = base.OnCreateDialog(savedInstanceState);
@@ -25,17 +32,13 @@ namespace Yorsh.Fragments
 			ImageButton btnVk = view.FindViewById<ImageButton>(Resource.Id.buttonVk);
 			ImageButton btnTw = view.FindViewById<ImageButton>(Resource.Id.buttonTw);
 
-			btnFb.Click += (object sender, EventArgs e) => {
-				var  url = Android.Net.Uri.Parse("https://facebook.com");
-				var intent = new Intent(Intent.ActionView, url);
-				StartActivity(intent);
+			btnFb.Click += delegate {
+				
 				this.Dismiss();
 			};
 
 			btnVk.Click += (object sender, EventArgs e) => {
-				var  url = Android.Net.Uri.Parse("https://vk.com");
-				var intent = new Intent(Intent.ActionView, url);
-				StartActivity(intent);
+				
 				this.Dismiss();
 			};
 
@@ -57,5 +60,6 @@ namespace Yorsh.Fragments
 		{
 			base.Dismiss();
 		}
-    }
+			
+	}
 }
