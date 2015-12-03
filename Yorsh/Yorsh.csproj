@@ -74,17 +74,25 @@
     <Reference Include="Xamarin.Mobile">
       <HintPath>..\Components\xamarin.mobile-0.7.7\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\Components\xamandroidsupportv4-18-4.19.0.1\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.InAppBilling">
       <HintPath>..\Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
     </Reference>
     <Reference Include="SQLite">
       <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="Xamarin.Auth.Android">
       <HintPath>..\Components\xamarin.auth-1.2.3.1\lib\android\Xamarin.Auth.Android.dll</HintPath>
+=======
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\Components\xamandroidsupportv4-18-4.19.0.1\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Bolts">
+      <HintPath>..\packages\Xamarin.Facebook.Android.4.8.2.2\lib\MonoAndroid403\Xamarin.Bolts.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Facebook">
+      <HintPath>..\packages\Xamarin.Facebook.Android.4.8.2.2\lib\MonoAndroid403\Xamarin.Facebook.dll</HintPath>
+>>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -412,7 +420,11 @@
     <AndroidResource Include="Resources\drawable\tw72.png" />
     <AndroidResource Include="Resources\drawable\vk72.png" />
     <AndroidResource Include="Resources\layout\MosDialog.axml" />
+<<<<<<< HEAD
     <AndroidResource Include="Resources\layout\text.axml" />
+=======
+    <None Include="packages.config" />
+>>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainMenu.axml" />
@@ -481,16 +493,17 @@
       <Version>0.7.7</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
-    <XamarinComponentReference Include="xamandroidsupportv4-18">
-      <Version>4.19.0.1</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.inappbilling">
       <Version>2.2</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
+<<<<<<< HEAD
     <XamarinComponentReference Include="xamarin.auth">
       <Version>1.2.3.1</Version>
+=======
+    <XamarinComponentReference Include="xamandroidsupportv4-18">
+      <Version>4.19.0.1</Version>
+>>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>

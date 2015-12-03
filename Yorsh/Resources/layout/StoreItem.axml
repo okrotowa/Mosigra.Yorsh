@@ -18,19 +18,23 @@
             android:layout_alignParentLeft="true"
             android:clickable="true">
             <TexView
+                android:id="@+id/countText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="100"
                 android:background="@android:color/transparent"
                 android:textColor="@color/white"
                 android:layout_centerInParent="true"
-                android:textSize="9sp" />
+                android:textSize="4sp" />
             <TexView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:text="штук"
-                android:textSize="8sp" />
+                android:textSize="3sp"
+                android:background="@android:color/transparent"
+                android:layout_below="@id/countText"
+                android:id="@+id/unitText" />
         </RelativeLayout>
         <ImageView
             android:layout_width="30dp"

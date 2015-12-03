@@ -1,15 +1,15 @@
 using System;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
+using Android.Graphics;
 using Android.OS;
+using Android.Views;
 using Android.Widget;
 using Yorsh.Fragments;
 using Yorsh.Helpers;
 using Yorsh.Model;
-using Android.Content.PM;
-using System.Threading.Tasks;
-using Android.Graphics;
-using Android.Views;
 
 namespace Yorsh.Activities
 {
