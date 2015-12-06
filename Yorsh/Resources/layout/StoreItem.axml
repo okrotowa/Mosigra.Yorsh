@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:color/background_light">
+    android:background="@android:color/transparent">
     <RelativeLayout
         android:gravity="center"
         android:paddingLeft="5dp"
@@ -17,7 +17,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:clickable="true">
-            <TexView
+            <TextView
                 android:id="@+id/countText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -25,16 +25,17 @@
                 android:background="@android:color/transparent"
                 android:textColor="@color/white"
                 android:layout_centerInParent="true"
-                android:textSize="4sp" />
-            <TexView
+                android:textSize="8sp" />
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:text="штук"
-                android:textSize="3sp"
+                android:textSize="5sp"
                 android:background="@android:color/transparent"
                 android:layout_below="@id/countText"
-                android:id="@+id/unitText" />
+                android:id="@+id/unitText"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
         <ImageView
             android:layout_width="30dp"

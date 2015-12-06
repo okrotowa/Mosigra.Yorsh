@@ -131,13 +131,13 @@
     <Compile Include="Activities\ChoosePlayerActivity.cs" />
     <Compile Include="Adapters\AddNewPlayerListAdapter.cs" />
     <Compile Include="Adapters\PlayerListAdapter.cs" />
-    <Compile Include="Activities\Fragments.cs" />
     <Compile Include="Adapters\MultiItemRowListAdapter.cs" />
     <Compile Include="Activities\NewGameActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Adapters\GenericFragmentPagerAdapter.cs" />
     <Compile Include="Fragments\DialogRatingFragment.cs" />
     <Compile Include="Fragments\ShareFragment.cs" />
+    <Compile Include="Activities\RuleFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Bonus.csv" />
@@ -414,7 +414,8 @@
     <AndroidResource Include="Resources\drawable\tw72.png" />
     <AndroidResource Include="Resources\drawable\vk72.png" />
     <AndroidResource Include="Resources\layout\MosDialog.axml" />
-    <None Include="packages.config" />
+    <AndroidResource Include="Resources\drawable\shop_bonus_background.xml" />
+    <AndroidResource Include="Resources\drawable\shop_more_background.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainMenu.axml" />

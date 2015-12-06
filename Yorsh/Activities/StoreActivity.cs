@@ -5,13 +5,12 @@ using Xamarin.InAppBilling;
 using Android.Widget;
 using System;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using Android.Views;
 using Yorsh.Adapters;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/BuyString", ParentActivity = typeof(MainMenuActivity), MainLauncher=true,ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/BuyString", ParentActivity = typeof(MainMenuActivity), MainLauncher=false,ScreenOrientation = ScreenOrientation.Portrait)]
     public class StoreActivity : BaseActivity
     {
 		private InAppBillingServiceConnection _connection;
@@ -21,6 +20,8 @@ namespace Yorsh.Activities
             SetContentView(Resource.Layout.Store);
             var taskListView = FindViewById<ListView>(Resource.Id.taskListView);
 			taskListView.Adapter = new MultiItemRowListAdapter(this, new StoreListAdapter(this, BuyElement.Task),3,1);
+			var bonusListView = FindViewById<ListView> (Resource.Id.bonusListView);
+			bonusListView.Adapter = new MultiItemRowListAdapter (this, new StoreListAdapter (this, BuyElement.Bonus), 3, 1);
 			var key = Xamarin.InAppBilling.Utilities.Security.Unify (
 						 new string[] {	GetNumberString(2),GetNumberString(5),GetNumberString(0),GetNumberString(3),GetNumberString(6),GetNumberString(7),GetNumberString(1),GetNumberString(4)},
 				         new int[]{ 0, 1, 2, 3, 4, 5, 6, 7 });
@@ -88,6 +89,7 @@ namespace Yorsh.Activities
             {
 				return position;
             }
+
 			public override Android.Views.View GetView (int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
 			{
 				if (convertView != null) return convertView;
