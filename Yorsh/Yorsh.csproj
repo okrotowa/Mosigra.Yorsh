@@ -433,23 +433,7 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <EmbeddedResource Include="Assets\cards\iq_bg_DF.jpg" />
-    <EmbeddedResource Include="Assets\cards\������_bg_DF.jpg" />
-    <EmbeddedResource Include="Assets\cards\�����������_bg_DF.jpg" />
-    <EmbeddedResource Include="Assets\cards\�������_bg_DF.jpg" />
-    <EmbeddedResource Include="Assets\cards\����������_bg_DF.jpg" />
-    <EmbeddedResource Include="Assets\cards\�����_bg_DF.jpg" />
-    <EmbeddedResource Include="Assets\cards\������������_bg_DF.jpg" />
-    <EmbeddedResource Include="Assets\cards\���_bg_DF.jpg" />
-    <EmbeddedResource Include="Assets\cards\����_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\iq_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\������_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\�����������_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\�������_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\����������_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\�����_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\���_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\����_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\������������_bg_NY.jpg" />
     <Content Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
       <DeployService-Deploy>True</DeployService-Deploy>
@@ -461,6 +445,30 @@
     <AndroidResource Include="Resources\drawable\add_player_button.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <EmbeddedResource Include="Assets\cards\координация_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\выпить_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\выпить_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\координация_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\медведь_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\медведь_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\неприятное_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\неприятное_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\обмен_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\обмен_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\приколы_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\приколы_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\рисунок_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\рисунок_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\скороговорка_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\скороговорка_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\смс_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\смс_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\тост_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\тост_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\физическое_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\физическое_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\фото_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\фото_bg_NY.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

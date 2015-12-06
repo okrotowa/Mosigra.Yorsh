@@ -930,38 +930,17 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0016
 			public const int TextView01 = 2131361814;
 			
-<<<<<<< HEAD
-			// aapt resource value: 0x7f0a0078
-			public const int addPlayer = 2131361912;
-=======
-<<<<<<< HEAD
-			// aapt resource value: 0x7f0a005d
-			public const int addPlayer = 2131361885;
-=======
-			// aapt resource value: 0x7f0a0077
-			public const int addPlayer = 2131361911;
->>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
->>>>>>> 5d533d5cadac1b64669aebc6d20ea02c33fb53ce
+			// aapt resource value: 0x7f0a007a
+			public const int addPlayer = 2131361914;
 			
 			// aapt resource value: 0x7f0a000c
 			public const int automatic = 2131361804;
 			
-<<<<<<< HEAD
 			// aapt resource value: 0x7f0a0066
 			public const int bonusListView = 2131361894;
 			
-=======
-<<<<<<< HEAD
-			// aapt resource value: 0x7f0a0058
-			public const int button1 = 2131361880;
-			
-			// aapt resource value: 0x7f0a0019
-			public const int buttonEasy = 2131361817;
-=======
->>>>>>> 5d533d5cadac1b64669aebc6d20ea02c33fb53ce
 			// aapt resource value: 0x7f0a0024
 			public const int bonusText = 2131361828;
->>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
 			
 			// aapt resource value: 0x7f0a0006
 			public const int bottom = 2131361798;
@@ -971,6 +950,9 @@ namespace Yorsh
 			
 			// aapt resource value: 0x7f0a0004
 			public const int button = 2131361796;
+			
+			// aapt resource value: 0x7f0a0075
+			public const int button1 = 2131361909;
 			
 			// aapt resource value: 0x7f0a0032
 			public const int buttonEasy = 2131361842;
@@ -1020,13 +1002,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a002b
 			public const int com_facebook_body_frame = 2131361835;
 			
-<<<<<<< HEAD
-			// aapt resource value: 0x7f0a005c
-			public const int customActionButton = 2131361884;
-=======
 			// aapt resource value: 0x7f0a002d
 			public const int com_facebook_button_xout = 2131361837;
->>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
 			
 			// aapt resource value: 0x7f0a0029
 			public const int com_facebook_fragment_container = 2131361833;
@@ -1034,16 +1011,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a002a
 			public const int com_facebook_login_activity_progress_bar = 2131361834;
 			
-<<<<<<< HEAD
-			// aapt resource value: 0x7f0a0059
-			public const int editText1 = 2131361881;
-			
-			// aapt resource value: 0x7f0a0056
-			public const int endDescriptionText = 2131361878;
-=======
 			// aapt resource value: 0x7f0a002f
 			public const int com_facebook_tooltip_bubble_view_bottom_pointer = 2131361839;
->>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
 			
 			// aapt resource value: 0x7f0a002e
 			public const int com_facebook_tooltip_bubble_view_text_body = 2131361838;
@@ -1072,18 +1041,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0074
 			public const int currentScoreText = 2131361908;
 			
-<<<<<<< HEAD
-			// aapt resource value: 0x7f0a0077
-			public const int customActionButton = 2131361911;
-=======
-<<<<<<< HEAD
-			// aapt resource value: 0x7f0a005a
-			public const int layout = 2131361882;
-=======
-			// aapt resource value: 0x7f0a0076
-			public const int customActionButton = 2131361910;
->>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
->>>>>>> 5d533d5cadac1b64669aebc6d20ea02c33fb53ce
+			// aapt resource value: 0x7f0a0079
+			public const int customActionButton = 2131361913;
 			
 			// aapt resource value: 0x7f0a0071
 			public const int descLayout = 2131361905;
@@ -1093,6 +1052,9 @@ namespace Yorsh
 			
 			// aapt resource value: 0x7f0a001a
 			public const int doneImage = 2131361818;
+			
+			// aapt resource value: 0x7f0a0076
+			public const int editText1 = 2131361910;
 			
 			// aapt resource value: 0x7f0a0073
 			public const int endDescriptionText = 2131361907;
@@ -1124,8 +1086,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a000f
 			public const int large = 2131361807;
 			
-			// aapt resource value: 0x7f0a0075
-			public const int layout = 2131361909;
+			// aapt resource value: 0x7f0a0077
+			public const int layout = 2131361911;
 			
 			// aapt resource value: 0x7f0a0036
 			public const int leadText = 2131361846;
@@ -1199,13 +1161,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0038
 			public const int playerScore = 2131361848;
 			
-<<<<<<< HEAD
-			// aapt resource value: 0x7f0a005e
-			public const int tableButton = 2131361886;
-=======
 			// aapt resource value: 0x7f0a004d
 			public const int playerTournamentListView = 2131361869;
->>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
 			
 			// aapt resource value: 0x7f0a001f
 			public const int playersList = 2131361823;
@@ -1252,13 +1209,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0005
 			public const int standard = 2131361797;
 			
-<<<<<<< HEAD
-			// aapt resource value: 0x7f0a005b
-			public const int titleText = 2131361883;
-=======
 			// aapt resource value: 0x7f0a0056
 			public const int startGameLayout = 2131361878;
->>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
 			
 			// aapt resource value: 0x7f0a001e
 			public const int startPlayButton = 2131361822;
@@ -1272,8 +1224,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a006b
 			public const int storeButton = 2131361899;
 			
-			// aapt resource value: 0x7f0a0079
-			public const int tableButton = 2131361913;
+			// aapt resource value: 0x7f0a007b
+			public const int tableButton = 2131361915;
 			
 			// aapt resource value: 0x7f0a0060
 			public const int tableShop = 2131361888;
@@ -1314,8 +1266,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0031
 			public const int textView1 = 2131361841;
 			
-			// aapt resource value: 0x7f0a0076
-			public const int titleText = 2131361910;
+			// aapt resource value: 0x7f0a0078
+			public const int titleText = 2131361912;
 			
 			// aapt resource value: 0x7f0a0008
 			public const int top = 2131361800;
@@ -1424,15 +1376,6 @@ namespace Yorsh
 			public const int PlayerItem = 2130968600;
 			
 			// aapt resource value: 0x7f040019
-<<<<<<< HEAD
-			public const int text = 2130968601;
-			
-			// aapt resource value: 0x7f04001a
-			public const int YorshActionBar = 2130968602;
-			
-			// aapt resource value: 0x7f04001b
-			public const int YorshActionBarTournamentTable = 2130968603;
-=======
 			public const int ResultsGame = 2130968601;
 			
 			// aapt resource value: 0x7f04001a
@@ -1460,11 +1403,13 @@ namespace Yorsh
 			public const int TaskStatus = 2130968609;
 			
 			// aapt resource value: 0x7f040022
-			public const int YorshActionBar = 2130968610;
+			public const int text = 2130968610;
 			
 			// aapt resource value: 0x7f040023
-			public const int YorshActionBarTournamentTable = 2130968611;
->>>>>>> 7bcc748dd813e1067da70bfb1b168d4e5083438c
+			public const int YorshActionBar = 2130968611;
+			
+			// aapt resource value: 0x7f040024
+			public const int YorshActionBarTournamentTable = 2130968612;
 			
 			static Layout()
 			{
