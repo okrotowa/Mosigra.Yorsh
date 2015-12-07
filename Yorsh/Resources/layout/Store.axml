@@ -12,30 +12,14 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/light_top"
-            android:adjustViewBounds="true"
-            android:layout_marginTop="-15dp" />
-        <ImageView
-            android:id="@+id/light_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/light_bottom"
-            android:adjustViewBounds="true"
-            android:layout_marginBottom="-17dp" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp">
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="20dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,5 +134,20 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/light_top"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="-15dp" />
+        <ImageView
+            android:id="@+id/light_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/light_bottom"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="-17dp" />
     </RelativeLayout>
 </RelativeLayout>
