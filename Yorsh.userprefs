@@ -1,4 +1,30 @@
 ﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
+<<<<<<< HEAD
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus S (KitKat)" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\ShareToFacebookActivity.cs">
+    <Files>
+      <File FileName="Yorsh\Fragments\ShareFragment.cs" Line="39" Column="6" />
+      <File FileName="Yorsh\Activities\ShareToFacebookActivity.cs" Line="165" Column="16" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Yorsh" expanded="True">
+            <Node name="Yorsh" expanded="True">
+              <Node name="Activities" expanded="True">
+                <Node name="ShareToFacebookActivity.cs" selected="True" />
+              </Node>
+              <Node name="Properties" expanded="True" />
+              <Node name="Resources" expanded="True">
+                <Node name="layout" expanded="True" />
+                <Node name="values" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+=======
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 4 (Lollipop)" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\StoreActivity.cs">
     <Files>
@@ -6,6 +32,7 @@
       <File FileName="Yorsh\Activities\StoreActivity.cs" Line="102" Column="14" />
       <File FileName="Yorsh\Helpers\ListExtensions.cs" Line="1" Column="1" />
     </Files>
+>>>>>>> d16e80f01d464d40388d54fcd74a7516cde8cce8
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>

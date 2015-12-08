@@ -77,20 +77,25 @@
     <Reference Include="Xamarin.InAppBilling">
       <HintPath>..\Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Auth.Android">
+      <HintPath>..\Components\xamarin.auth-1.2.3.1\lib\android\Xamarin.Auth.Android.dll</HintPath>
+    </Reference>
     <Reference Include="SQLite">
       <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Auth.Android">
-      <HintPath>..\Components\xamarin.auth-1.2.3.1\lib\android\Xamarin.Auth.Android.dll</HintPath>
+    <Reference Include="Twitter4J.Binding">
+      <HintPath>..\Components\Twitter4j-1.0\lib\android\Twitter4J.Binding.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\Components\xamandroidsupportv4-18-4.19.0.1\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Bolts">
       <HintPath>..\packages\Xamarin.Facebook.Android.4.8.2.2\lib\MonoAndroid403\Xamarin.Bolts.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Xamarin.Facebook">
       <HintPath>..\packages\Xamarin.Facebook.Android.4.8.2.2\lib\MonoAndroid403\Xamarin.Facebook.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +146,9 @@
     <Compile Include="Fragments\DialogRatingFragment.cs" />
     <Compile Include="Fragments\ShareFragment.cs" />
     <Compile Include="Activities\RuleFragment.cs" />
-    <Compile Include="Activities\SocActivity.cs" />
+    <Compile Include="Activities\ShareToTwitterActivity.cs" />
+    <Compile Include="Activities\ShareToVkActivity.cs" />
+    <Compile Include="Activities\ShareToFacebookActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Bonus.csv" />
@@ -420,6 +427,10 @@
     <AndroidResource Include="Resources\drawable\shop_bonus_background.xml" />
     <AndroidResource Include="Resources\drawable\shop_more_background.xml" />
     <AndroidResource Include="Resources\layout\text.axml" />
+    <AndroidResource Include="Resources\layout\Autorize.axml" />
+    <AndroidResource Include="Resources\layout\EditText.axml" />
+    <AndroidResource Include="Resources\layout\Facebook.axml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainMenu.axml" />
@@ -494,6 +505,14 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.auth">
       <Version>1.2.3.1</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="Twitter4j">
+      <Version>1.0</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="facebookandroid">
+      <Version>4.8.2.2</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
     <XamarinComponentReference Include="xamandroidsupportv4-18">

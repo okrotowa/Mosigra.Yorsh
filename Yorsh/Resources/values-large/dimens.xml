@@ -122,4 +122,13 @@
 
     <dimen name="FirstPlayerItem_ImageSize">100dp</dimen>
     <dimen name="FirstPalyerItem_HalfImageSize">60dp</dimen>
+
+    <dimen name="Autorize_ButtonHeigt">55dp</dimen>
+    <dimen name="Autorize_ButtonTextSize">25sp</dimen>
+    <dimen name="Autorize_Margin">40dp</dimen>
+
+    <dimen name="EditText_Margins">30dp</dimen>
+    <dimen name="EditText_TextSize">25sp</dimen>
+    <dimen name="EditText_EditHeight">200dp</dimen>
+    <dimen name="EditText_ButtonHeight">80dp</dimen>
 </resources>

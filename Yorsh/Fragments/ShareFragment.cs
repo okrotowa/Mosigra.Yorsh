@@ -8,6 +8,7 @@ using Xamarin.Auth;
 using System.Xml;
 using System.Net;
 using System.IO;
+using Yorsh.Activities;
 
 namespace Yorsh.Fragments
 {
@@ -33,19 +34,17 @@ namespace Yorsh.Fragments
 			ImageButton btnTw = view.FindViewById<ImageButton>(Resource.Id.buttonTw);
 
 			btnFb.Click += delegate {
-				
+				Activity.StartActivity(typeof(ShareToFacebookActivity));
 				this.Dismiss();
 			};
 
 			btnVk.Click += (object sender, EventArgs e) => {
-				
+				Activity.StartActivity(typeof(ShareToVkActivity));
 				this.Dismiss();
 			};
 
 			btnTw.Click += (object sender, EventArgs e) => {
-				var  url = Android.Net.Uri.Parse("https://twitter.com");
-				var intent = new Intent(Intent.ActionView, url);
-				StartActivity(intent);
+				Activity.StartActivity(typeof(ShareToTwitterActivity));
 				this.Dismiss();
 			};
 			return view;

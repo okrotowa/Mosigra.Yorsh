@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+    <EditText
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/Autorize_ButtonHeigt"
+        android:id="@+id/login"
+        android:text="login"
+        android:layout_marginLeft="@dimen/Autorize_Margin"
+        android:layout_marginTop="@dimen/Autorize_Margin"
+        android:layout_marginRight="@dimen/Autorize_Margin"
+        android:textSize="@dimen/Autorize_ButtonTextSize" />
+    <EditText
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/Autorize_ButtonHeigt"
+        android:id="@+id/password"
+        android:text="password"
+        android:layout_marginLeft="@dimen/Autorize_Margin"
+        android:layout_marginRight="@dimen/Autorize_Margin"
+        android:layout_marginBottom="30dp"
+        android:textSize="@dimen/Autorize_ButtonTextSize" />
+    <Button
+        android:text="Login In"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/Autorize_ButtonHeigt"
+        android:id="@+id/sumbit"
+        android:layout_marginLeft="@dimen/Autorize_Margin"
+        android:layout_marginRight="@dimen/Autorize_Margin"
+        android:textSize="@dimen/Autorize_ButtonTextSize" />
+</LinearLayout>
