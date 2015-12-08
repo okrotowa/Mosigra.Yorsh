@@ -236,7 +236,6 @@
     <AndroidResource Include="Resources\drawable-hdpi\add_new_player.png" />
     <None Include="Resources\drawable-xxxhdpi\add_new_player.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\add_new_player.png" />
-    <AndroidResource Include="Resources\layout\YorshActionBarTournamentTable.axml" />
     <AndroidResource Include="Resources\drawable-hdpi\game_background.png" />
     <AndroidResource Include="Resources\drawable-ldpi\game_background.png" />
     <AndroidResource Include="Resources\drawable-ldpi\splash.png" />

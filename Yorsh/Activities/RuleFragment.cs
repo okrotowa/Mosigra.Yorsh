@@ -31,25 +31,28 @@ namespace Yorsh.Activities
 		}
 		private string GetRuleIdentifier(Rules rule)
 		{
-			switch (rule) {
-			case Rules.ShortAboutGame:
-				return "one";
-			case Rules.HowToPlay:
-				return "two";
-			case Rules.Bear:
-				return "three";
-			default: throw new NotImplementedException();
+			switch (rule)
+			{
+				case Rules.ShortAboutGame:
+					return "one";
+				case Rules.HowToPlay:
+					return "two";
+				case Rules.Bear:
+					return "three";
+				default: throw new NotImplementedException();
 			}
 		}
-		private string GetRuleName(Rules rule){
-			switch (rule) {
-			case Rules.ShortAboutGame:
-				return "ShortAboutGame";
-			case Rules.HowToPlay:
-				return "HowToPlay";
-			case Rules.Bear:
-				return "AndSuddenly";
-			default: throw new NotImplementedException();
+		private string GetRuleName(Rules rule)
+		{
+			switch (rule) 
+			{
+				case Rules.ShortAboutGame:
+					return "ShortAboutGame";
+				case Rules.HowToPlay:
+					return "HowToPlay";
+				case Rules.Bear:
+					return "AndSuddenly";
+				default: throw new NotImplementedException();
 			}
 		}
 	}

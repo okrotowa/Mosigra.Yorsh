@@ -3,20 +3,22 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:id="@+id/layout"
     android:background="@android:color/transparent">
     <RelativeLayout
         android:gravity="center"
         android:paddingLeft="5dp"
         android:layout_width="75dp"
+        android:layout_centerHorizontal="true"
         android:layout_height="70dp">
         <RelativeLayout
             android:background="@drawable/task_store_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/storeButton"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:clickable="true">
+            android:clickable="true"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true">
             <TextView
                 android:id="@+id/countText"
                 android:layout_width="wrap_content"
@@ -38,15 +40,16 @@
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
         <ImageView
+            android:id="@+id/saleImageView"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/task_sale" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/shadow" />
     <TextView
         android:text="59 руб."
@@ -58,5 +61,6 @@
         android:textStyle="bold"
         android:layout_marginTop="5dp"
         android:textSize="12sp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true" />
 </LinearLayout>
