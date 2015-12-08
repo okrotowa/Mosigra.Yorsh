@@ -22,17 +22,17 @@ namespace Yorsh.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Store);
-            var taskListView = FindViewById<ListView>(Resource.Id.taskListView);
-			var adapter = new StoreListAdapter (this, BuyElement.Task);
-			taskListView.Adapter = new MultiItemRowListAdapter(this, adapter,3,1);
-			taskListView.JustifyListViewHeightBasedOnChildren ();
-			var bonusListView = FindViewById<ListView> (Resource.Id.bonusListView);
-			bonusListView.Adapter = new MultiItemRowListAdapter (this, new StoreListAdapter (this, BuyElement.Bonus), 3, 1);
-			bonusListView.JustifyListViewHeightBasedOnChildren ();
 			var key = Xamarin.InAppBilling.Utilities.Security.Unify (
 				new string[] {	GetNumberString(2),GetNumberString(5),GetNumberString(0),GetNumberString(3),GetNumberString(6),GetNumberString(7),GetNumberString(1),GetNumberString(4)},
 				new int[]{ 0, 1, 2, 3, 4, 5, 6, 7 });
 			_connection = new InAppBillingServiceConnection (this, key);
+            var taskListView = FindViewById<ListView>(Resource.Id.taskListView);
+			var adapter = new StoreListAdapter (this, BuyElement.Task,_connection);
+			taskListView.Adapter = new MultiItemRowListAdapter(this, adapter,3,1);
+			taskListView.JustifyListViewHeightBasedOnChildren ();
+			var bonusListView = FindViewById<ListView> (Resource.Id.bonusListView);
+			bonusListView.Adapter = new MultiItemRowListAdapter (this, new StoreListAdapter (this, BuyElement.Bonus, _connection), 3, 1);
+			bonusListView.JustifyListViewHeightBasedOnChildren ();			
         }
 
 		private string GetNumberString(int num)
@@ -61,8 +61,8 @@ namespace Yorsh.Activities
 		protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
 		{
 			// Ask the open service connection's billing handler to process this request
-			//_connection.BillingHandler.HandleActivityResult (requestCode, resultCode, data);
-
+			_connection.BillingHandler.HandleActivityResult (requestCode, resultCode, data);
+			var purchases = _connection.BillingHandler.GetPurchases (ItemType.Product);	
 			// TODO: Use a call back to update the purchased items
 			// or listen to the OnProductPurchased event to
 			// handle a successful purchase
@@ -73,10 +73,12 @@ namespace Yorsh.Activities
 			StoreItem[] _storeItems;
 			Activity _context;
 			IList<Product> _products;
+			private InAppBillingServiceConnection _connection;
 
-			public StoreListAdapter(Activity context, BuyElement buyElement)
+			public StoreListAdapter(Activity context, BuyElement buyElement, InAppBillingServiceConnection connection)
 			{
 				_context = context;
+				_connection = connection;
 				switch(buyElement)
 				{
 					case BuyElement.Task: 
@@ -94,15 +96,16 @@ namespace Yorsh.Activities
 						_storeItems[2] = new StoreItem(129,"∞",buyElement);
 					break;
 				}
-				//_connection.OnConnected += async () => 				
-				//							_products = await _connection.BillingHandler.QueryInventoryAsync (new List<string> {
-				//							ReservedTestProductIDs.Purchased,
-				//							ReservedTestProductIDs.Canceled,
-				//							ReservedTestProductIDs.Refunded,
-				//							ReservedTestProductIDs.Unavailable
-				//						}, ItemType.Product);
+				_connection.OnConnected += async () => 				
+											_products = await _connection.BillingHandler.QueryInventoryAsync (new List<string> {
+											ReservedTestProductIDs.Purchased,
+											ReservedTestProductIDs.Canceled,
+											ReservedTestProductIDs.Refunded,
+											ReservedTestProductIDs.Unavailable
+										}, ItemType.Product);
 				
-				//_connection.Connect();
+							
+				_connection.Connect();
 			}
 		
             public override StoreItem this[int position]
@@ -121,7 +124,7 @@ namespace Yorsh.Activities
 				return position;
             }
 
-			public override Android.Views.View GetView (int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
+			public override View GetView (int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
 			{
 				if (convertView != null) return convertView;
 				var storeItem = this [position];
