@@ -124,4 +124,14 @@
     <dimen name="PickPlayerDialog_TextView_Height">40dp</dimen>
     <dimen name="PickPlayerDialog_TextView_Size">18sp</dimen>
     <dimen name="PickPlayerDialog_ListView_MarginS">20dp</dimen>
+
+    <dimen name="Autorize_ButtonHeigt">40dp</dimen>
+    <dimen name="Autorize_ButtonTextSize">20sp</dimen>
+    <dimen name="Autorize_Margin">30dp</dimen>
+
+    <dimen name="EditText_Margins">20dp</dimen>
+    <dimen name="EditText_TextSize">20sp</dimen>
+    <dimen name="EditText_EditHeight">150dp</dimen>
+    <dimen name="EditText_ButtonHeight">50dp</dimen>
+
 </resources>

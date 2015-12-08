@@ -6,14 +6,23 @@
     <EditText
         android:inputType="textMultiLine"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/EditText_EditHeight"
         android:id="@+id/TextShare"
-        android:text="шось тами курча"
-        android:layout_margin="20dp" />
+        android:text="Мы сыграли в Ёрша. Победитель спит под столом :) #Ёрш #Мосигра"
+        android:gravity="top"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/EditText_TextSize"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/EditText_Margins"
+        android:layout_marginTop="@dimen/EditText_Margins"
+        android:layout_marginRight="@dimen/EditText_Margins" />
     <Button
-        android:text="слати"
+        android:text="Отправить"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/EditText_ButtonHeight"
         android:id="@+id/SumbitShare"
-        android:layout_margin="20dp" />
+        android:layout_marginLeft="@dimen/EditText_Margins"
+        android:layout_marginRight="@dimen/EditText_Margins"
+        android:textSize="@dimen/EditText_TextSize"
+        android:layout_marginTop="40dp" />
 </LinearLayout>
