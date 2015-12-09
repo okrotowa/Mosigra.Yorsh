@@ -54,7 +54,7 @@ namespace Yorsh.Activities
 		protected override void OnDestroy ()
 		{
 			if (_connection != null)
-				_connection.Disconnect ();
+				//_connection.Disconnect ();
 			base.OnDestroy ();
 		}
 
