@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="20dp">
+                android:paddingTop="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,13 +103,14 @@
                         android:layout_gravity="center" />
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:background="@drawable/remove_adb"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp">
+                        <ImageButton
+                            android:src="@drawable/remove_adb"
+                            android:background="@android:color/transparent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:id="@+id/imageButThreeOne"
-                            android:textSize="8sp"
                             android:layout_alignParentLeft="true" />
                         <TextView
                             android:text="59 руб."
@@ -139,15 +140,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:src="@drawable/light_top"
-            android:adjustViewBounds="true"
-            android:layout_marginTop="-15dp" />
+            android:background="@drawable/shop_background_toplight"
+            android:adjustViewBounds="true" />
         <ImageView
             android:id="@+id/light_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:src="@drawable/light_bottom"
-            android:adjustViewBounds="true"
-            android:layout_marginBottom="-17dp" />
+            android:background="@drawable/shop_background_bottomlight"
+            android:adjustViewBounds="true" />
     </RelativeLayout>
 </RelativeLayout>

@@ -12,13 +12,13 @@ using Yorsh.Fragments;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/ResultsString", MainLauncher = true, ParentActivity = typeof(GameActivity),ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/ResultsString", MainLauncher = false, ParentActivity = typeof(GameActivity),ScreenOrientation = ScreenOrientation.Portrait)]
     public class ResultsGameActivity : BaseActivity
     {
 		protected async override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
-			await this.StubInitialize ();
+			//await this.StubInitialize ();
 			SetContentView(Resource.Layout.ResultsGame);
 			var isEndGame = Intent.GetBooleanExtra("isEnd", false);
 			var listView = FindViewById<ListView>(Resource.Id.playerTournamentListView);
