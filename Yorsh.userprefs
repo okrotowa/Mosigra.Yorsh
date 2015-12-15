@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus S (KitKat)" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\ShareToVkActivity.cs">
     <Files>
-      <File FileName="Yorsh\Activities\ShareToTwitterActivity.cs" Line="69" Column="10" />
-      <File FileName="Yorsh\Activities\ResultsGameActivity.cs" Line="20" Column="14" />
-      <File FileName="Yorsh\Activities\ShareToVkActivity.cs" Line="82" Column="11" />
+      <File FileName="Yorsh\Activities\ShareToTwitterActivity.cs" Line="1" Column="1" />
+      <File FileName="Yorsh\Activities\ResultsGameActivity.cs" Line="37" Column="3" />
+      <File FileName="Yorsh\Activities\ShareToVkActivity.cs" Line="76" Column="69" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

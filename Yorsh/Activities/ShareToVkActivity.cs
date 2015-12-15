@@ -73,7 +73,7 @@ namespace Yorsh.Activities
 			btn.Click += delegate {
 				
 				EditText text = FindViewById<EditText>(Resource.Id.TextShare);
-				string stext = "Мы сыграли в Ёрша. Победитель спит под столом :) #Ёрш #Мосигра";
+				string stext = "Мы сыграли в Ёрша. Победитель спит под столом :)";
 		
 				var c = new WebClient();
 				//
