@@ -6,51 +6,34 @@
     android:id="@+id/layout"
     android:background="@android:color/transparent">
     <RelativeLayout
+        android:layout_width="90dp"
         android:gravity="center"
-        android:paddingLeft="5dp"
-        android:layout_width="75dp"
-        android:layout_centerHorizontal="true"
-        android:layout_height="70dp">
-        <RelativeLayout
-            android:background="@drawable/task_store_icon"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="90dp">
+        <ImageButton
+            android:src="@drawable/shop_task_10"
+            android:background="@android:color/transparent"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/storeButton"
-            android:clickable="true"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true">
-            <TextView
-                android:id="@+id/countText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100"
-                android:background="@android:color/transparent"
-                android:textColor="@color/white"
-                android:layout_centerInParent="true"
-                android:textSize="8sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="штук"
-                android:textSize="5sp"
-                android:background="@android:color/transparent"
-                android:layout_below="@id/countText"
-                android:id="@+id/unitText"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop" />
         <ImageView
             android:id="@+id/saleImageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:src="@drawable/task_sale"
+            android:cropToPadding="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true" />
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/shadow"
+            android:layout_below="@id/storeButton"
+            android:id="@+id/shadow" />
     </RelativeLayout>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/shadow" />
     <TextView
         android:text="59 руб."
         android:layout_width="wrap_content"
@@ -58,9 +41,7 @@
         android:id="@+id/priceText"
         android:textColor="#110626"
         android:gravity="center"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
         android:textSize="12sp"
-        android:layout_gravity="center"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center" />
 </LinearLayout>

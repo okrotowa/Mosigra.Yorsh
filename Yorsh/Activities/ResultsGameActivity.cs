@@ -22,20 +22,45 @@ namespace Yorsh.Activities
 		protected async override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
-			await this.StubInitialize ();
+			//await this.StubInitialize ();
 			SetContentView(Resource.Layout.ResultsGame);
 			var isEndGame = Intent.GetBooleanExtra("isEnd", false);
 			var listView = FindViewById<ListView>(Resource.Id.playerTournamentListView);
-			var adapter = new ListAdapter(this, isEndGame);
+			var sortedPlayersList = Rep.Instance.Players.OrderByDescending (player => player.Score).ToList<Player>();
+			SetFirstItem(sortedPlayersList.First(),isEndGame);
+			sortedPlayersList.RemoveAt (0);
+			var adapter = new ListAdapter(this, isEndGame, sortedPlayersList);
 			listView.Adapter = adapter;
 
 			if (isEndGame)
-				SetButtonsAndActionBarIsEndGame ();
-			else
 				SetButtonsAndActionBarIsNotEndGame ();
+			else
+				SetButtonsAndActionBarIsEndGame ();
 		}
 
-		void SetButtonsAndActionBarIsEndGame()
+		void SetFirstItem(Player player, bool isEndGame)
+		{
+			var leadString = FindViewById<TextView> (Resource.Id.leadText);
+			var imageView = FindViewById<ImageView>(Resource.Id.playerImage);
+			var textScore = FindViewById<TextView> (Resource.Id.scoreText);
+			var playerName = FindViewById<TextView>(Resource.Id.playerName);
+			var playerScore = FindViewById<TextView>(Resource.Id.playerScore);
+
+			leadString.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+			textScore.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+			playerName.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+			playerScore.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+
+			imageView.SetImageBitmap(player.Photo);
+			playerName.Text = player.Name.ToUpper();
+			playerScore.Text = player.Score.ToString();
+			leadString.Text = Resources.GetString(isEndGame 
+				? Resource.String.WinnerString 
+				: Resource.String.LeadString);
+			
+		}
+
+		void SetButtonsAndActionBarIsNotEndGame()
 		{
 			var startPlayButton = FindViewById<Button>(Resource.Id.startPlayButton);
 			startPlayButton.Visibility = ViewStates.Visible;
@@ -44,20 +69,7 @@ namespace Yorsh.Activities
 			startPlayButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(startPlayButton, e);
 			startPlayButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
 			startPlayButton.Click+= delegate {
-				Rep.Instance.Clear();				 
-				this.StartActivityWithoutBackStack(new Intent(this,typeof(MainMenuActivity)));
-			};
-		}
-
-		void SetButtonsAndActionBarIsNotEndGame()
-		{
-			FindViewById<Button> (Resource.Id.startPlayButton).Visibility = ViewStates.Gone;
-			FindViewById<RelativeLayout> (Resource.Id.relativeLayout).Visibility = ViewStates.Visible;
-			this.ActionBar.Show ();
-			var completeGameButton = FindViewById<Button> (Resource.Id.completeGameButton);
-			//completeGameButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(completeGameButton, e);
-			completeGameButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
-			completeGameButton.Click+= delegate {
+				
 				var preferences = GetPreferences(FileCreationMode.Private);
 				var isShow = preferences.GetBoolean("isShow", true);
 				if (isShow)
@@ -67,8 +79,26 @@ namespace Yorsh.Activities
 					var dialog = prev ?? new DialogRatingFragment() {ShowsDialog = true};
 					dialog.Show(fragmentTransaction, "rating");
 				}
-				Intent.PutExtra("isEnd",true);
-				this.Recreate();
+				else
+				{
+					Intent.PutExtra("isEnd",true);
+					this.Recreate();
+				}
+			};
+		}
+
+		void SetButtonsAndActionBarIsEndGame()
+		{
+			FindViewById<Button> (Resource.Id.startPlayButton).Visibility = ViewStates.Gone;
+			FindViewById<RelativeLayout> (Resource.Id.relativeLayout).Visibility = ViewStates.Visible;
+			this.ActionBar.Show ();
+			var completeGameButton = FindViewById<Button> (Resource.Id.completeGameButton);
+			//completeGameButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(completeGameButton, e);
+			completeGameButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+			completeGameButton.Click+= delegate 
+			{
+				Rep.Instance.Clear();				 
+				this.StartActivityWithoutBackStack(new Intent(this,typeof(MainMenuActivity)));
 			};
 			var shareButton = FindViewById<Button> (Resource.Id.shareButton);
 			shareButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(shareButton, e);
@@ -99,11 +129,11 @@ namespace Yorsh.Activities
 			bool _isEndGame;
 			private readonly IList<Player> _players;
 
-			public ListAdapter(Activity context, bool isEndGame)
+			public ListAdapter(Activity context, bool isEndGame, IList<Player> players)
 			{
 				_context = context;
 				_isEndGame = isEndGame;
-				_players = Rep.Instance.Players.OrderBy(player => player.Score).ToList();
+				_players = players;
 			}
 
 			public override long GetItemId(int position)
@@ -119,40 +149,17 @@ namespace Yorsh.Activities
 			private View SetPlayerView(int position)
 			{
 				var inflater = (LayoutInflater)_context.GetSystemService(LayoutInflaterService);
-				var viewLead = inflater.Inflate (Resource.Layout.FirstPlayerItem, null);
-				var textLead = viewLead.FindViewById<TextView> (Resource.Id.leadText);
-				var textScore = viewLead.FindViewById<TextView> (Resource.Id.scoreText);
-				textLead.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
-				textScore.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
-				var viewPlayerItem = inflater.Inflate (Resource.Layout.PlayerItem, null);
-				var textPlayerItemName = viewPlayerItem.FindViewById<TextView> (Resource.Id.playerName);
-				var textPlayerItemScore = viewPlayerItem.FindViewById<TextView> (Resource.Id.playerScore);
-				textPlayerItemName.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Bold);
-				textPlayerItemScore.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Bold);
-				var isFirst = position == 0;
-				var view = inflater.Inflate(isFirst
-					? Resource.Layout.FirstPlayerItem
-					: Resource.Layout.PlayerItem, null);
+				var view = inflater.Inflate(Resource.Layout.PlayerItem, null);
+
 				var imageView = view.FindViewById<ImageView>(Resource.Id.playerImage);
 				var playerName = view.FindViewById<TextView>(Resource.Id.playerName);
 				var playerScore = view.FindViewById<TextView>(Resource.Id.playerScore);
-				playerName.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Bold);
-				playerScore.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Bold);
-				SetLeadString (isFirst, view);
+				playerName.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+				playerScore.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
 				imageView.SetImageBitmap(this[position].Photo);
 				playerName.Text = this[position].Name;
 				playerScore.Text = this[position].Score.ToString();
 				return view;
-			}
-
-			private void SetLeadString(bool firstItem, View view)
-			{
-				if (!firstItem)
-					return;
-				var leadString = view.FindViewById<TextView> (Resource.Id.leadText);
-				leadString.Text = _context.Resources.GetString(_isEndGame 
-					? Resource.String.WinnerString 
-					: Resource.String.LeadString);
 			}
 
 			public override int Count

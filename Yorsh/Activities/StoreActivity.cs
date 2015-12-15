@@ -17,22 +17,39 @@ namespace Yorsh.Activities
     public class StoreActivity : BaseActivity
     {
 		private InAppBillingServiceConnection _connection;
+		private const string Task = "task";
+		private const string Bonus = "bonus";
 
 		protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Store);
-            var taskListView = FindViewById<ListView>(Resource.Id.taskListView);
-			var adapter = new StoreListAdapter (this, BuyElement.Task);
-			taskListView.Adapter = new MultiItemRowListAdapter(this, adapter,3,1);
-			taskListView.JustifyListViewHeightBasedOnChildren ();
-			var bonusListView = FindViewById<ListView> (Resource.Id.bonusListView);
-			bonusListView.Adapter = new MultiItemRowListAdapter (this, new StoreListAdapter (this, BuyElement.Bonus), 3, 1);
-			bonusListView.JustifyListViewHeightBasedOnChildren ();
+			FindViewById<TextView> (Resource.Id.taskHeader).SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+			var taskDescription = FindViewById<TextView> (Resource.Id.taskDescription);
+			taskDescription.SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+
+			FindViewById<TextView> (Resource.Id.bonusHeader).SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+			var bonusDescription = FindViewById<TextView>(Resource.Id.bonusDescription);
+			bonusDescription.SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+
+			FindViewById<TextView> (Resource.Id.moreHeader).SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+			var moreDescription = FindViewById<TextView>(Resource.Id.moreDescription);
+			moreDescription.SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+
+			var morePriceText = FindViewById<TextView> (Resource.Id.morePriceText);
+			morePriceText.SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Normal);
+
 			var key = Xamarin.InAppBilling.Utilities.Security.Unify (
 				new string[] {	GetNumberString(2),GetNumberString(5),GetNumberString(0),GetNumberString(3),GetNumberString(6),GetNumberString(7),GetNumberString(1),GetNumberString(4)},
 				new int[]{ 0, 1, 2, 3, 4, 5, 6, 7 });
 			_connection = new InAppBillingServiceConnection (this, key);
+            var taskListView = FindViewById<ListView>(Resource.Id.taskListView);
+			var adapter = new StoreListAdapter (this, Task,_connection);
+			taskListView.Adapter = new MultiItemRowListAdapter(this, adapter,3,1);
+			taskListView.JustifyListViewHeightBasedOnChildren ();
+			var bonusListView = FindViewById<ListView> (Resource.Id.bonusListView);
+			bonusListView.Adapter = new MultiItemRowListAdapter (this, new StoreListAdapter (this, Bonus, _connection), 3, 1);
+			bonusListView.JustifyListViewHeightBasedOnChildren ();			
         }
 
 		private string GetNumberString(int num)
@@ -51,18 +68,12 @@ namespace Yorsh.Activities
 
 			return m[num];
 		}
-		protected override void OnDestroy ()
-		{
-			if (_connection != null)
-				_connection.Disconnect ();
-			base.OnDestroy ();
-		}
 
 		protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
 		{
 			// Ask the open service connection's billing handler to process this request
-			//_connection.BillingHandler.HandleActivityResult (requestCode, resultCode, data);
-
+			_connection.BillingHandler.HandleActivityResult (requestCode, resultCode, data);
+			var purchases = _connection.BillingHandler.GetPurchases (ItemType.Product);	
 			// TODO: Use a call back to update the purchased items
 			// or listen to the OnProductPurchased event to
 			// handle a successful purchase
@@ -73,36 +84,39 @@ namespace Yorsh.Activities
 			StoreItem[] _storeItems;
 			Activity _context;
 			IList<Product> _products;
+			private InAppBillingServiceConnection _connection;
 
-			public StoreListAdapter(Activity context, BuyElement buyElement)
+			public StoreListAdapter(Activity context, string buyElement, InAppBillingServiceConnection connection)
 			{
 				_context = context;
+				_connection = connection;
 				switch(buyElement)
 				{
-					case BuyElement.Task: 
+					case Task: 
 						_storeItems = new StoreItem[5];
 						_storeItems[0] = new StoreItem(29,"10",buyElement);
 						_storeItems[1] = new StoreItem(59,"30",buyElement);
 						_storeItems[2] = new StoreItem(119,"70",buyElement);
 						_storeItems[3] = new StoreItem(169,"100",buyElement);
-					_storeItems[4] = new StoreItem(279,"∞",buyElement,"task_sale");
+						_storeItems[4] = new StoreItem(279,"all",buyElement,true);
 					break;
-					case BuyElement.Bonus: 
+					case Bonus: 
 						_storeItems = new StoreItem[3];
-						_storeItems[0] = new StoreItem(15,"10",buyElement,"bonus_sale");
+						_storeItems[0] = new StoreItem(15,"10",buyElement,true);
 						_storeItems[1] = new StoreItem(59,"30",buyElement);
-						_storeItems[2] = new StoreItem(129,"∞",buyElement);
+						_storeItems[2] = new StoreItem(129,"all",buyElement);
 					break;
 				}
-				//_connection.OnConnected += async () => 				
-				//							_products = await _connection.BillingHandler.QueryInventoryAsync (new List<string> {
-				//							ReservedTestProductIDs.Purchased,
-				//							ReservedTestProductIDs.Canceled,
-				//							ReservedTestProductIDs.Refunded,
-				//							ReservedTestProductIDs.Unavailable
-				//						}, ItemType.Product);
+				_connection.OnConnected += async () => 			
+											_products = await _connection.BillingHandler.QueryInventoryAsync (new List<string> {
+											ReservedTestProductIDs.Purchased,
+											ReservedTestProductIDs.Canceled,
+											ReservedTestProductIDs.Refunded,
+											ReservedTestProductIDs.Unavailable
+										}, ItemType.Product);
 				
-				//_connection.Connect();
+							
+				_connection.Connect();
 			}
 		
             public override StoreItem this[int position]
@@ -121,59 +135,52 @@ namespace Yorsh.Activities
 				return position;
             }
 
-			public override Android.Views.View GetView (int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
+			public override View GetView (int position, Android.Views.View convertView, Android.Views.ViewGroup parent)
 			{
 				if (convertView != null) return convertView;
 				var storeItem = this [position];
 				var view = _context.LayoutInflater.Inflate (Resource.Layout.StoreItem, null);		
-				var button = view.FindViewById<RelativeLayout> (Resource.Id.storeButton);
-				button.SetBackgroundResource (storeItem.BuyElement == BuyElement.Bonus 
-					? Resource.Drawable.bonus_store_icon
-					: Resource.Drawable.task_store_icon
-				);
+				var button = view.FindViewById<ImageButton> (Resource.Id.storeButton);
+				var drawable =_context.Resources.GetDrawable(_context.Resources.GetIdentifier(storeItem.ImageString, "drawable", _context.PackageName));
+				button.SetImageDrawable(drawable);
 				button.Click += (sender, e) => 
 				{
-					
+					//buy something
 				};
-				if (!string.IsNullOrEmpty (storeItem.SaleImageString)) 
-					view.FindViewById<ImageView>(Resource.Id.saleImageView).SetImageResource(
-						_context.Resources.GetIdentifier(storeItem.SaleImageString, "drawable", _context.PackageName));
-				var countText = view.FindViewById<TextView> (Resource.Id.countText);
-				countText.Text = storeItem.Count;
+				;
+				var saleImage = view.FindViewById<ImageView> (Resource.Id.saleImageView);
+				saleImage.Visibility = storeItem.IsSale ? ViewStates.Visible : ViewStates.Invisible;
+				if (storeItem.IsSale) 
+					saleImage.SetImageResource (_context.Resources.GetIdentifier (storeItem.SaleImageString, "drawable", _context.PackageName));
+
 				var priceText = view.FindViewById<TextView> (Resource.Id.priceText);
-				priceText.Text = storeItem.Price + " руб.";
-				view.FindViewById<TextView> (Resource.Id.unitText).Visibility = position == this.Count - 1 
-					? ViewStates.Gone
-					: ViewStates.Visible;
-				
+				priceText.SetTypeface (_context.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Normal);
+				priceText.Text = storeItem.Price + " руб.";				
 				return view;
 			}
         }
 
 		private sealed class StoreItem
         {
-			public StoreItem(float price, string count, BuyElement buyElement, string saleImageString = null)
+			public StoreItem(float price, string count, string buyElement, bool isSale = false)
             { 
 				Price = price;
 				Count = count;
 				BuyElement = buyElement;
-				SaleImageString=saleImageString;
+				IsSale = isSale;
+				ImageString = string.Format("shop_{0}_{1}",buyElement,count);
+				SaleImageString = isSale ? buyElement + "_sale" : null;
 				IsBuy = false;
             }
 
 			public float Price { get; private set;}
 			public string Count { get; private set;}
-			public BuyElement BuyElement { get; private set;}
-			public string SaleImageString { get; private set;}
-
-
+			public string BuyElement { get; private set;}
+			public bool IsSale { get; private set;}
+			public string ImageString {get;private set;}
+			public string SaleImageString { get; private set; }
 			public bool IsBuy { get; set;} 
         }
    
-				private enum BuyElement
-				{
-					Task,
-					Bonus
-				}
 	}
 }

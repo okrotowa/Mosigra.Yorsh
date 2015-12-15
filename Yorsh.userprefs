@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<Properties StartupItem="Yorsh\Yorsh.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus S (KitKat)" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\ShareToVkActivity.cs">
@@ -5,11 +6,24 @@
       <File FileName="Yorsh\Activities\ShareToTwitterActivity.cs" Line="1" Column="1" />
       <File FileName="Yorsh\Activities\ResultsGameActivity.cs" Line="37" Column="3" />
       <File FileName="Yorsh\Activities\ShareToVkActivity.cs" Line="76" Column="69" />
+=======
+﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.Nexus 4 (Marshmallow)" />
+  <MonoDevelop.Ide.Workbench>
+    <Files>
+      <File FileName="Yorsh\Activities\StoreActivity.cs" Line="10" Column="21" />
+      <File FileName="Yorsh\Resources\values-large\dimens.xml" Line="135" Column="5" />
+>>>>>>> 41d12fc04005e06494a10946f574e29009e6ffb8
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+<<<<<<< HEAD
   <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus 4" />
+=======
+  <AuthorInfo Name="Olga Krotova" Email="okrotowa@gmail.com" Copyright="fionariza" Company="" Trademark="" />
+  <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus 7" />
+>>>>>>> 41d12fc04005e06494a10946f574e29009e6ffb8
 </Properties>

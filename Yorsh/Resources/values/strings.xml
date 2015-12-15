@@ -39,9 +39,9 @@
   <string name="PickPlayerString">Выбери игрока</string>
   <string name="ContinueString">ПРОДОЛЖИТЬ</string>
   <string name="NotSupportCameraString">На данном устройстве не включена поддержка камеры</string>
-  <string name="LeadString">ВЕДЁТ</string>
-  <string name="WinnerString">ПОБЕДИТЕЛЬ</string>
-  <string name="ScoresString">БАЛОВ</string>
+  <string name="LeadString">ВЕДЁТ\u0020</string>
+  <string name="WinnerString">ПОБЕДИТЕЛЬ\u0020</string>
+  <string name="ScoresString">БАЛОВ\u0020</string>
   <string name="CompleteGameString">ЗАВЕРШИТЬ ИГРУ</string>
   <string name="NewGameString">НОВАЯ ИГРА</string>
   <string name="ShareString">ПОДЕЛИТЬСЯ</string>

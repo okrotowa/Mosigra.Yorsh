@@ -2,8 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+<<<<<<< HEAD
     android:background="@drawable/game_background"
     android:id="@+id/tournament">
+=======
+    android:background="@drawable/game_background">
+>>>>>>> 41d12fc04005e06494a10946f574e29009e6ffb8
     <FrameLayout
         android:id="@+id/buttonFrameLayout"
         android:layout_width="fill_parent"
@@ -15,8 +19,13 @@
         android:layout_marginLeft="@dimen/ContentMarginLeftRight">
         <Button
             android:id="@+id/startPlayButton"
+<<<<<<< HEAD
             android:visibility="gone"
             android:text="@string/NewGameString"
+=======
+            android:visibility="visible"
+            android:text="@string/CompleteGameString"
+>>>>>>> 41d12fc04005e06494a10946f574e29009e6ffb8
             android:layout_width="@dimen/PlayersList_buttonWidth"
             android:background="@drawable/start_game_button"
             android:gravity="center"
@@ -25,7 +34,11 @@
             android:layout_gravity="center" />
         <RelativeLayout
             android:id="@+id/relativeLayout"
+<<<<<<< HEAD
             android:visibility="visible"
+=======
+            android:visibility="gone"
+>>>>>>> 41d12fc04005e06494a10946f574e29009e6ffb8
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
             <View
@@ -54,14 +67,88 @@
                 android:textSize="@dimen/ResultGameButton_Text_Size" />
         </RelativeLayout>
     </FrameLayout>
+<<<<<<< HEAD
     <ListView
         android:id="@+id/playerTournamentListView"
         android:background="@drawable/table_list_background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+=======
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="@drawable/table_list_background"
+>>>>>>> 41d12fc04005e06494a10946f574e29009e6ffb8
         android:layout_above="@id/buttonFrameLayout"
         android:layout_marginBottom="@dimen/ResultGameList_MarginBotom"
         android:layout_marginTop="@dimen/ContentMarginTopBottom"
         android:layout_marginLeft="@dimen/ResultGameList_MarginLeftRight"
+<<<<<<< HEAD
         android:layout_marginRight="@dimen/ResultGameList_MarginLeftRight" />
+=======
+        android:layout_marginRight="@dimen/ResultGameList_MarginLeftRight">
+        <FrameLayout
+            android:layout_width="@dimen/FirstPlayerItem_ImageSize"
+            android:layout_height="@dimen/FirstPlayerItem_ImageSize"
+            android:background="@drawable/first_player"
+            android:layout_gravity="center_horizontal"
+            android:padding="20dp">
+            <ImageView
+                android:id="@+id/playerImage"
+                android:src="@drawable/icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cropToPadding="true" />
+            <ImageView
+                android:id="@+id/circle_crop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_shape" />
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                android:id="@+id/leadText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ВЕДЕТ:  "
+                android:textColor="@color/name_black"
+                android:textSize="@dimen/PlayerLeadText_Size" />
+            <TextView
+                android:id="@+id/playerName"
+                android:textColor="@color/bonus_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/PlayerLeadText_Size" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                android:id="@+id/scoreText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bonus_blue"
+                android:text="БАЛОВ:  "
+                android:textSize="@dimen/PlayerLeadText_Size" />
+            <TextView
+                android:id="@+id/playerScore"
+                android:textColor="@color/bonus_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/PlayerLeadText_Size" />
+        </LinearLayout>
+        <ListView
+            android:id="@+id/playerTournamentListView"
+            android:background="@drawable/round_rect_shape_white_background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+>>>>>>> 41d12fc04005e06494a10946f574e29009e6ffb8
 </RelativeLayout>

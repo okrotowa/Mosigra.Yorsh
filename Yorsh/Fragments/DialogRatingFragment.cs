@@ -4,14 +4,13 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Android.Graphics.Drawables;
 
 namespace Yorsh.Fragments
 {		
 	public class DialogRatingFragment : DialogFragment
 	{
 	    private ISharedPreferencesEditor _editor;
-
+		private bool editorIsPutted = false;
 		public override Dialog OnCreateDialog(Bundle savedInstanceState)
 		{
 			var dialog = base.OnCreateDialog(savedInstanceState);
@@ -32,35 +31,37 @@ namespace Yorsh.Fragments
             _editor = preferences.Edit();   
      
 			buttonEasy.Click += (object sender, EventArgs e) => {
+				//TODO::GOOGLE STORE URL
 				var  url = Android.Net.Uri.Parse("https://itunes.apple.com/ua/app/ers/id604886527?mt=8");
                 var intent = new Intent(Intent.ActionView, url);
                 StartActivity(intent);
-			    _editor.PutBoolean("isShow", false);
+			    PutEditor(false);
                 this.Dismiss();
 			};
 
 			buttonYester.Click += (object sender, EventArgs e) => {
-                _editor.PutBoolean("isShow", true);
+				PutEditor(true);
                 this.Dismiss();
 			};
 
 			buttonNo.Click += (object sender, EventArgs e) => {
-                _editor.PutBoolean("isShow", false);
+				PutEditor(false);
                 this.Dismiss();
 			};
             return view;
         }
-
-        public override void OnCancel(IDialogInterface dialog)
-        {
-            _editor.PutBoolean("isShow", true);
-            base.OnCancel(dialog);
-        }
+		private void PutEditor(bool value)
+		{
+			editorIsPutted = true;
+			_editor.PutBoolean("isShow", value);
+		}
 
         public override void Dismiss()
         {
-            //Activity.Recreate();
-            _editor.Commit();
+			if (!editorIsPutted) PutEditor (false);
+			_editor.Commit();
+			Activity.Intent.PutExtra("isEnd",true);
+            Activity.Recreate();
             base.Dismiss();
         }
 	}
