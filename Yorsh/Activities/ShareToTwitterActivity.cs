@@ -59,16 +59,22 @@ namespace Yorsh.Activities
 		void GetInfo(){
 			SetContentView (Resource.Layout.EditText);
 			Button btn = FindViewById<Button> (Resource.Id.SumbitShare);
-
 			btn.Click += delegate
 			{
+				var sdCardPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+				var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
+
 				ThreadPool.QueueUserWorkItem(state =>
 					{
 						try
 						{
 							EditText context = FindViewById<EditText>(Resource.Id.TextShare);
-							string textShare = context.Text.ToString();
-							twitter.UpdateStatus(textShare);
+							string textShare = context.Text;
+							var  f =  new Java.IO.File(filePath);
+							StatusUpdate updStatus = new StatusUpdate(textShare);
+							updStatus.SetMedia(f);
+							twitter.UpdateStatus(updStatus);
+
 						}
 						catch (Java.Lang.Exception ex)
 						{

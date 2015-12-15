@@ -143,7 +143,7 @@ namespace Yorsh.Activities
 			canPresentShareDialog = ShareDialog.CanShow (Java.Lang.Class.FromType (typeof(ShareLinkContent)));
 
 			// Can we present the share dialog for photos?
-			canPresentShareDialogWithPhotos = ShareDialog.CanShow (Java.Lang.Class.FromType (typeof(SharePhotoContent)));
+			//canPresentShareDialogWithPhotos = ShareDialog.CanShow (Java.Lang.Class.FromType (typeof(SharePhotoContent)));
 		}
 
 
@@ -160,7 +160,7 @@ namespace Yorsh.Activities
 		{
 			base.OnResume ();
 
-			AppEventsLogger.ActivateApp (this);
+			//AppEventsLogger.ActivateApp (this);
 
 			UpdateUI ();
 		}

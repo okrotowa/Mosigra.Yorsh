@@ -97,6 +97,18 @@
       <HintPath>..\packages\Xamarin.Facebook.Android.4.8.2.2\lib\MonoAndroid403\Xamarin.Facebook.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Facebook">
+      <HintPath>..\Components\facebook-sdk-6.2.2\lib\android\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ModernHttpClient">
+      <HintPath>..\Components\modernhttpclient-2.4.2\lib\android\ModernHttpClient.dll</HintPath>
+    </Reference>
+    <Reference Include="OkHttp">
+      <HintPath>..\Components\modernhttpclient-2.4.2\lib\android\OkHttp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\AddNewPlayerActivity.cs" />
@@ -426,7 +438,6 @@
     <AndroidResource Include="Resources\layout\MosDialog.axml" />
     <AndroidResource Include="Resources\drawable\shop_bonus_background.xml" />
     <AndroidResource Include="Resources\drawable\shop_more_background.xml" />
-    <AndroidResource Include="Resources\layout\text.axml" />
     <AndroidResource Include="Resources\layout\Autorize.axml" />
     <AndroidResource Include="Resources\layout\EditText.axml" />
     <AndroidResource Include="Resources\layout\Facebook.axml" />
@@ -517,6 +528,18 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="xamandroidsupportv4-18">
       <Version>4.19.0.1</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="facebook-sdk">
+      <Version>6.2.2</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="json.net">
+      <Version>7.0.1</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="modernhttpclient">
+      <Version>2.4.2</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>

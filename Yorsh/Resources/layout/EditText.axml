@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
     <EditText
         android:inputType="textMultiLine"
         android:layout_width="match_parent"
@@ -15,7 +16,9 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="@dimen/EditText_Margins"
         android:layout_marginTop="@dimen/EditText_Margins"
-        android:layout_marginRight="@dimen/EditText_Margins" />
+        android:layout_marginRight="@dimen/EditText_Margins"
+        android:textColor="@color/black"
+        android:background="@color/white" />
     <Button
         android:text="Отправить"
         android:layout_width="match_parent"
@@ -24,5 +27,7 @@
         android:layout_marginLeft="@dimen/EditText_Margins"
         android:layout_marginRight="@dimen/EditText_Margins"
         android:textSize="@dimen/EditText_TextSize"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="40dp"
+        android:textStyle="bold"
+        android:background="@color/bonus_blue" />
 </LinearLayout>

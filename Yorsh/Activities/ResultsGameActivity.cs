@@ -9,12 +9,16 @@ using Android.Widget;
 using Yorsh.Helpers;
 using Yorsh.Model;
 using Yorsh.Fragments;
+using Android.Graphics;
+using System.IO;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/ResultsString", MainLauncher = false, ParentActivity = typeof(GameActivity),ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/ResultsString", MainLauncher = true, ParentActivity = typeof(GameActivity),ScreenOrientation = ScreenOrientation.Portrait)]
     public class ResultsGameActivity : BaseActivity
     {
+		Bitmap bmp;
+
 		protected async override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
@@ -24,6 +28,7 @@ namespace Yorsh.Activities
 			var listView = FindViewById<ListView>(Resource.Id.playerTournamentListView);
 			var adapter = new ListAdapter(this, isEndGame);
 			listView.Adapter = adapter;
+
 			if (isEndGame)
 				SetButtonsAndActionBarIsEndGame ();
 			else
@@ -70,6 +75,17 @@ namespace Yorsh.Activities
 			shareButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
 			shareButton.Click += delegate
 			{
+				//twitter
+				var contentview = FindViewById (Resource.Id.tournament);
+				contentview.BuildDrawingCache();
+				bmp = contentview.DrawingCache;
+				var sdCardPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+				var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
+				using (var stream = new FileStream(filePath, FileMode.Create))
+				{
+					bmp.Compress(Bitmap.CompressFormat.Png, 100, stream);
+				}
+
 				var fragmentTrans = FragmentManager.BeginTransaction();
 				var prev = (DialogFragment)FragmentManager.FindFragmentByTag("share");
 				var dialogShare = prev ?? new ShareFragment() { ShowsDialog = true };
