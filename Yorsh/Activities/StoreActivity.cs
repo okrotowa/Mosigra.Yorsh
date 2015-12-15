@@ -24,6 +24,21 @@ namespace Yorsh.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Store);
+			FindViewById<TextView> (Resource.Id.taskHeader).SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+			var taskDescription = FindViewById<TextView> (Resource.Id.taskDescription);
+			taskDescription.SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+
+			FindViewById<TextView> (Resource.Id.bonusHeader).SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+			var bonusDescription = FindViewById<TextView>(Resource.Id.bonusDescription);
+			bonusDescription.SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+
+			FindViewById<TextView> (Resource.Id.moreHeader).SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+			var moreDescription = FindViewById<TextView>(Resource.Id.moreDescription);
+			moreDescription.SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Bold);
+
+			var morePriceText = FindViewById<TextView> (Resource.Id.morePriceText);
+			morePriceText.SetTypeface (this.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Normal);
+
 			var key = Xamarin.InAppBilling.Utilities.Security.Unify (
 				new string[] {	GetNumberString(2),GetNumberString(5),GetNumberString(0),GetNumberString(3),GetNumberString(6),GetNumberString(7),GetNumberString(1),GetNumberString(4)},
 				new int[]{ 0, 1, 2, 3, 4, 5, 6, 7 });
@@ -52,12 +67,6 @@ namespace Yorsh.Activities
 				};
 
 			return m[num];
-		}
-		protected override void OnDestroy ()
-		{
-			//if (_connection != null)
-				//_connection.Disconnect ();
-			base.OnDestroy ();
 		}
 
 		protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
@@ -98,7 +107,7 @@ namespace Yorsh.Activities
 						_storeItems[2] = new StoreItem(129,"all",buyElement);
 					break;
 				}
-				_connection.OnConnected += async () => 				
+				_connection.OnConnected += async () => 			
 											_products = await _connection.BillingHandler.QueryInventoryAsync (new List<string> {
 											ReservedTestProductIDs.Purchased,
 											ReservedTestProductIDs.Canceled,
@@ -133,8 +142,6 @@ namespace Yorsh.Activities
 				var view = _context.LayoutInflater.Inflate (Resource.Layout.StoreItem, null);		
 				var button = view.FindViewById<ImageButton> (Resource.Id.storeButton);
 				var drawable =_context.Resources.GetDrawable(_context.Resources.GetIdentifier(storeItem.ImageString, "drawable", _context.PackageName));
-				int h = drawable.IntrinsicWidth;
-				int w = drawable.IntrinsicWidth;
 				button.SetImageDrawable(drawable);
 				button.Click += (sender, e) => 
 				{
@@ -144,12 +151,10 @@ namespace Yorsh.Activities
 				var saleImage = view.FindViewById<ImageView> (Resource.Id.saleImageView);
 				saleImage.Visibility = storeItem.IsSale ? ViewStates.Visible : ViewStates.Invisible;
 				if (storeItem.IsSale) 
-				{
 					saleImage.SetImageResource (_context.Resources.GetIdentifier (storeItem.SaleImageString, "drawable", _context.PackageName));
-					saleImage.SetMinimumWidth (w / 3);
-					saleImage.SetMinimumHeight (h / 3);
-				}	
+
 				var priceText = view.FindViewById<TextView> (Resource.Id.priceText);
+				priceText.SetTypeface (_context.MyriadProFont (MyriadPro.SemiboldCondensed),Android.Graphics.TypefaceStyle.Normal);
 				priceText.Text = storeItem.Price + " руб.";				
 				return view;
 			}

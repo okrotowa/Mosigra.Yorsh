@@ -6,32 +6,34 @@
     android:id="@+id/layout"
     android:background="@android:color/transparent">
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp">
+        android:layout_width="90dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="90dp">
         <ImageButton
             android:src="@drawable/shop_task_10"
             android:background="@android:color/transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/storeButton"
-            android:layout_centerHorizontal="true"
-            android:minWidth="25px"
-            android:minHeight="25px" />
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop" />
         <ImageView
             android:id="@+id/saleImageView"
             android:src="@drawable/task_sale"
+            android:cropToPadding="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/storeButton" />
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/shadow"
+            android:layout_below="@id/storeButton"
+            android:id="@+id/shadow" />
     </RelativeLayout>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/shadow"
-        android:layout_gravity="center_horizontal" />
     <TextView
         android:text="59 руб."
         android:layout_width="wrap_content"
@@ -39,9 +41,7 @@
         android:id="@+id/priceText"
         android:textColor="#110626"
         android:gravity="center"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
         android:textSize="12sp"
-        android:layout_gravity="center"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center" />
 </LinearLayout>
