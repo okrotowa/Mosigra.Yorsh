@@ -22,7 +22,7 @@ namespace Yorsh.Activities
 		protected async override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
-			//await this.StubInitialize ();
+			await this.StubInitialize ();
 			SetContentView(Resource.Layout.ResultsGame);
 			var isEndGame = Intent.GetBooleanExtra("isEnd", false);
 			var listView = FindViewById<ListView>(Resource.Id.playerTournamentListView);
