@@ -100,47 +100,8 @@ namespace Yorsh.Activities
 				c.DownloadString(u4);
 			};
 		}
-//		void GetInfo()
-//		{
-//			var sdCardPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-//			var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
-//			SetContentView (Resource.Layout.EditText);
-//			Button btn = FindViewById<Button> (Resource.Id.SumbitShare);
-//
-//			btn.Click += delegate {
-//				
-//				EditText text = FindViewById<EditText>(Resource.Id.TextShare);
-//				string stext = "fsds";
-//					//text.Text.ToString();
-//			
-//				var c = new WebClient();
-//				//
-//				var u = "https://api.vk.com/method/photos.getWallUploadServer?user_id=" + userId 
-//					+ "&access_token=" + token;
-//				var r = c.DownloadString(u);
-//				var j = JsonConvert.DeserializeObject(r) as JObject;
-//				//
-//				var u2 = j["response"]["upload_url"].ToString();
-//				var r2 = Encoding.UTF8.GetString(c.UploadFile(u2, "POST", filePath));
-//				var j2 = JsonConvert.DeserializeObject(r2) as JObject;
-//				//
-//				var u3 = "https://api.vk.com/method/photos.saveWallPhoto?access_token=" + token
-//					+ "&server=" + j2["server"]
-//					+ "&photo=" + j2["photo"]
-//					+ "&hash=" + j2["hash"];
-//				var r3 = c.DownloadString(u3);
-//				var j3 = JsonConvert.DeserializeObject(r3) as JObject;
-//				// 
-//				var u4 = "https://api.vk.com/method/wall.post?access_token=" + token
-//					+ "&owner_id" + j3["response"][0]["owner_id"]
-//					+ "&message=" + stext
-//					+ "&attachments=" + j3["response"][0]["id"];
-//				c.DownloadString(u4);
-//			};
-//		}
 
 		private static readonly TaskScheduler UIScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-
 	}
 }
 

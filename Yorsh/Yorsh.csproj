@@ -80,9 +80,6 @@
     <Reference Include="Xamarin.Auth.Android">
       <HintPath>..\Components\xamarin.auth-1.2.3.1\lib\android\Xamarin.Auth.Android.dll</HintPath>
     </Reference>
-    <Reference Include="SQLite">
-      <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="Twitter4J.Binding">
       <HintPath>..\Components\Twitter4j-1.0\lib\android\Twitter4J.Binding.dll</HintPath>
     </Reference>
@@ -108,6 +105,9 @@
     </Reference>
     <Reference Include="OkHttp">
       <HintPath>..\Components\modernhttpclient-2.4.2\lib\android\OkHttp.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite">
+      <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
