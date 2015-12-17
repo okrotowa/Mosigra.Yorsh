@@ -130,5 +130,5 @@
     <dimen name="EditText_Margins">50dp</dimen>
     <dimen name="EditText_TextSize">30sp</dimen>
     <dimen name="EditText_EditHeight">250dp</dimen>
-    <dimen name="EditText_ButtonHeight">90dp</dimen>
+    <dimen name="EditText_ButtonHeight">60dp</dimen>
 </resources>

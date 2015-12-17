@@ -130,7 +130,7 @@
     <dimen name="EditText_Margins">30dp</dimen>
     <dimen name="EditText_TextSize">25sp</dimen>
     <dimen name="EditText_EditHeight">200dp</dimen>
-    <dimen name="EditText_ButtonHeight">80dp</dimen>
+    <dimen name="EditText_ButtonHeight">60dp</dimen>
 
     <dimen name="Store_Header_TextSize">16sp</dimen>
     <dimen name="Store_ContentTextSize">12sp</dimen>
