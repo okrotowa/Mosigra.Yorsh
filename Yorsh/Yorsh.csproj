@@ -26,8 +26,12 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;arm64-v8a</AndroidSupportedAbis>
+    <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
     <AssemblyName>Yorsh</AssemblyName>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <Debugger>Xamarin</Debugger>
+    <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -479,6 +483,9 @@
     <AndroidResource Include="Resources\values-large\dimens.xml" />
     <AndroidResource Include="Resources\values-xlarge\dimens.xml" />
     <AndroidResource Include="Resources\values-xhdpi\dimens.xml" />
+    <None Include="Properties\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainMenu.axml" />
@@ -492,10 +499,6 @@
     </AndroidResource>
     <EmbeddedResource Include="Assets\cards\iq_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\iq_bg_NY.jpg" />
-    <Content Include="Properties\AndroidManifest.xml">
-      <SubType>Designer</SubType>
-      <DeployService-Deploy>True</DeployService-Deploy>
-    </Content>
     <AndroidResource Include="Resources\drawable\back_button.png" />
     <AndroidResource Include="Resources\drawable\add_player_button.xml">
       <SubType>Designer</SubType>

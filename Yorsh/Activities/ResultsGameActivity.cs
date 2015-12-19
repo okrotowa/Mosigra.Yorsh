@@ -14,12 +14,12 @@ using System.IO;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/ResultsString", MainLauncher = true, ParentActivity = typeof(GameActivity),ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/ResultsString", MainLauncher = false, ParentActivity = typeof(GameActivity),ScreenOrientation = ScreenOrientation.Portrait)]
     public class ResultsGameActivity : BaseActivity
     {
 		Bitmap bmp;
 
-		protected async override void OnCreate(Bundle bundle)
+		protected  override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
 			//await this.StubInitialize ();
