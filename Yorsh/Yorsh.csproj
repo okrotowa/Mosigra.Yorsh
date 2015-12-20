@@ -12,9 +12,9 @@
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,12 +26,20 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
+    <AndroidSupportedAbis>
+    </AndroidSupportedAbis>
     <AssemblyName>Yorsh</AssemblyName>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <Debugger>Xamarin</Debugger>
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
+    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <AndroidLinkSkip />
+    <BundleAssemblies>False</BundleAssemblies>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+    <AndroidStoreUncompressedFileExtensions />
+    <MandroidI18n />
+    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -81,9 +89,6 @@
     <Reference Include="Xamarin.Mobile">
       <HintPath>..\Components\xamarin.mobile-0.7.7\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.InAppBilling">
-      <HintPath>..\Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Auth.Android">
       <HintPath>..\Components\xamarin.auth-1.2.3.1\lib\android\Xamarin.Auth.Android.dll</HintPath>
     </Reference>
@@ -124,6 +129,7 @@
     <Compile Include="Activities\AddPlayersActivity.cs" />
     <Compile Include="Activities\StoreActivity.cs" />
     <Compile Include="Activities\ResultsGameActivity.cs" />
+    <Compile Include="Adapters\StoreListAdapter.cs" />
     <Compile Include="Fragments\ChoosePhotoDialog.cs" />
     <Compile Include="Fragments\GameFragment.cs" />
     <Compile Include="Fragments\ImageFragment.cs" />
@@ -143,6 +149,7 @@
     <Compile Include="Model\PlayerList.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Rep.cs" />
+    <Compile Include="Model\StoreItem.cs" />
     <Compile Include="Model\TaskList.cs" />
     <Compile Include="Model\TaskTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -555,10 +562,6 @@
       <Version>0.7.7</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
-    <XamarinComponentReference Include="xamarin.inappbilling">
-      <Version>2.2</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.auth">
       <Version>1.2.3.1</Version>
       <Visible>False</Visible>
@@ -587,6 +590,12 @@
       <Version>2.4.2</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Krotova\Downloads\AndroidInAppBillingDemo-master\AndroidInAppBillingDemo-master\InAppService\Xamarin.InAppBilling\Xamarin.InAppBilling.csproj">
+      <Project>{e540e876-ccc3-4f41-880f-8acd7221058d}</Project>
+      <Name>Xamarin.InAppBilling</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
