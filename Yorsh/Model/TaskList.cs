@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BoltsSdk;
 using Yorsh.Helpers;
 
 namespace Yorsh.Model
@@ -11,7 +12,7 @@ namespace Yorsh.Model
         private readonly Dictionary<int, CategoryTable> _category;
         private readonly Dictionary<int, TaskTable> _taskDictionary;
         private readonly TaskEnumerator _enumerator;
-
+        
         public TaskList(IList<TaskTable> tasks, IEnumerable<CategoryTable> categories)
         {
             _tasks = tasks;
@@ -54,6 +55,11 @@ namespace Yorsh.Model
         public int Count
         {
             get { return _tasks.Count; }
+        }
+
+        public void Add(TaskTable task)
+        {
+            _tasks.Add(task);
         }
 
         public TaskTable GetTask(int taskId)

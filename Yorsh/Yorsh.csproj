@@ -150,6 +150,7 @@
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Rep.cs" />
     <Compile Include="Model\StoreItem.cs" />
+    <Compile Include="Model\StoreItemClickEventArgs.cs" />
     <Compile Include="Model\TaskList.cs" />
     <Compile Include="Model\TaskTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

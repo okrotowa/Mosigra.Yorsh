@@ -14,11 +14,22 @@ namespace Yorsh.Adapters
     {
         readonly Activity _context;
         readonly List<StoreItem> _products;
-        public StoreListAdapter(Activity context, IEnumerable<Product> products, Func<Product, bool> productIsSale)
+        private readonly Func<Product, bool> _productIsEnabled;
+
+        public StoreListAdapter(Activity context, IEnumerable<Product> products, Func<Product, bool> productIsSale, Func<Product,bool> productIsEnabled)
         {
             _context = context;
             var productList = products.Select(prod => new StoreItem(prod, productIsSale(prod))).ToList();
             _products = productList.OrderBy(item => item.CountForSort).ToList();
+            _productIsEnabled = productIsEnabled;
+        }
+
+        public event EventHandler<StoreItemClickEventArgs> ItemClick;
+
+        private void OnItemClick(StoreItemClickEventArgs e)
+        {
+            var handler = ItemClick;
+            if (handler != null) handler(this, e);
         }
 
         public override StoreItem this[int position]
@@ -44,17 +55,13 @@ namespace Yorsh.Adapters
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            if (convertView != null) return convertView;
             var storeItem = this[position];
             var view = _context.LayoutInflater.Inflate(Resource.Layout.StoreItem, null);
             var button = view.FindViewById<ImageButton>(Resource.Id.storeButton);
             var drawable = _context.Resources.GetIdentifier(storeItem.ImageString, "drawable", _context.PackageName);
             button.SetImageResource(drawable);
-
-            button.Click += (sender, e) =>
-            {
-                //buy something
-            };
+            button.Enabled = _productIsEnabled(storeItem.Product);
+            button.Click += (sender, args) => OnItemClick(new StoreItemClickEventArgs(storeItem.Product));
             var saleImage = view.FindViewById<ImageView>(Resource.Id.saleImageView);
             saleImage.Visibility = storeItem.IsSale ? ViewStates.Visible : ViewStates.Invisible;
             if (storeItem.IsSale) saleImage.SetImageResource(_context.Resources.GetIdentifier(storeItem.SaleImageString, "drawable", _context.PackageName));
@@ -64,6 +71,11 @@ namespace Yorsh.Adapters
             priceText.Text = storeItem.Product.Price;
 
             return view;
+        }
+
+        public void Item_Click(object sender, EventArgs e)
+        {
+            //Buy Something
         }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Yorsh.Helpers;
 using SQLite;
 using Path = System.IO.Path;
-using System.Linq;
 
 namespace Yorsh.Model
 {
@@ -39,30 +38,45 @@ namespace Yorsh.Model
             }
         }
 
-        public PlayerList Players 
-		{ 
-			get 
-			{ 
-				return _players; 
-			} 
-		}
+        public int AllBonusCount
+        {
+            get { return 81; }
+        }
+
+        public int AllTaskCount
+        {
+            get { return 174; }
+        }
+        public PlayerList Players
+        {
+            get
+            {
+                return _players;
+            }
+        }
         public TaskList Tasks { get { return _tasks; } }
         public IList<BonusTable> Bonuses { get { return _bonuses; } }
 
-        public async Task TaskGenerateAsync(int count)
+        public async Task TaskGenerateAsync()
         {
             var connect = new SQLiteAsyncConnection(DataBaseFile);
-			var taskList = await connect.Table<TaskTable>().Take(count).ToListAsync();
-			taskList.Shuffle ();
-            var categoryList = await connect.Table<CategoryTable>().ToListAsync();
-            _tasks = new TaskList(taskList, categoryList);
+            var taskList = await connect.Table<TaskTable>().ToListAsync();
+            if (_tasks != null)
+                foreach (var taskTable in taskList.Where(taskTable => !taskList.Contains(taskTable)))
+                {
+                    _tasks.Add(taskTable);
+                }
+            else
+            {
+                var categoryList = await connect.Table<CategoryTable>().ToListAsync();
+                _tasks = new TaskList(taskList, categoryList);
+            }
         }
 
-        public async Task BonusGenerateAsync(int count)
+        public async Task BonusGenerateAsync()
         {
             var connect = new SQLiteAsyncConnection(DataBaseFile);
-            _bonuses = await connect.Table<BonusTable>().Take(count).ToListAsync();
-            _bonuses.Shuffle();
+            _bonuses = await connect.Table<BonusTable>().ToListAsync();
         }
 
         public void Clear()

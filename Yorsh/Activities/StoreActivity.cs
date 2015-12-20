@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.OS;
@@ -12,11 +13,11 @@ using Yorsh.Adapters;
 using Yorsh.Helpers;
 using System.Collections.Generic;
 using Android.Content;
+using Yorsh.Model;
 
 namespace Yorsh.Activities
 {
-    [Activity(Label = "@string/BuyString", ParentActivity = typeof (MainMenuActivity), MainLauncher = false,
-        ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/BuyString", ParentActivity = typeof(MainMenuActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
     public class StoreActivity : BaseActivity
     {
         private IInAppBillingHelper _billingHelper;
@@ -54,6 +55,7 @@ namespace Yorsh.Activities
             morePriceText.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed),
                 Android.Graphics.TypefaceStyle.Normal);
 
+            StartSetup();
         }
 
         private string GetNumberString(int num)
@@ -82,18 +84,11 @@ namespace Yorsh.Activities
             base.OnDestroy();
         }
 
-        private void InitPurchasedItems()
+        private void UpdatePurchasedItems()
         {
             _purchases = _billingHelper.GetPurchases(ItemType.InApp);
-
         }
-
-        private void OnBuyButtonClick(object sender, EventArgs e)
-        {
-            //_billingHelper.LaunchPurchaseFlow ("android.test.purchased", ItemType.InApp, Guid.NewGuid().ToString());
-            //_billingHelper.LaunchPurchaseFlow(_selectedProduct);
-        }
-
+        
         public void StartSetup()
         {
             var key = string.Concat(new string[]
@@ -101,17 +96,15 @@ namespace Yorsh.Activities
                 GetNumberString(2), GetNumberString(5), GetNumberString(0), GetNumberString(3), GetNumberString(6),
                 GetNumberString(7), GetNumberString(1), GetNumberString(4)
             });
-
             _serviceConnection = new InAppBillingServiceConnection(this, key);
             _serviceConnection.OnConnected += HandleOnConnected;
-
             _serviceConnection.Connect();
         }
 
         private async void HandleOnConnected(object sender, EventArgs e)
         {
             _billingHelper = _serviceConnection.BillingHelper;
-            InitPurchasedItems();
+            UpdatePurchasedItems();
             await GetInventory();
             SetupInventory();
         }
@@ -122,15 +115,40 @@ namespace Yorsh.Activities
             FindViewById<TextView>(Resource.Id.googleStoreNotActive).Visibility = ViewStates.Gone;
             var taskListView = FindViewById<ListView>(Resource.Id.taskListView);
             var adapter = new StoreListAdapter(this, _taskProducts,
-                product => String.CompareOrdinal(product.ProductId, "all_task") == 0);
+                product => String.CompareOrdinal(product.ProductId, "all_task") == 0, TaskIsEnabled);
+            adapter.ItemClick += ItemClick;
             taskListView.Adapter = new MultiItemRowListAdapter(this, adapter, 3, 1);
             taskListView.JustifyListViewHeightBasedOnChildren();
             var bonusListView = FindViewById<ListView>(Resource.Id.bonusListView);
-
             var bonusAdapter = new StoreListAdapter(this, _bonusProducts,
-                product => String.CompareOrdinal(product.ProductId, "10_bonus") == 0);
+                product => String.CompareOrdinal(product.ProductId, "10_bonus") == 0, BonusIsEnabled);
+            bonusAdapter.ItemClick += ItemClick;
             bonusListView.Adapter = new MultiItemRowListAdapter(this, bonusAdapter, 3, 1);
             bonusListView.JustifyListViewHeightBasedOnChildren();
+        }
+
+        void ItemClick(object sender, StoreItemClickEventArgs e)
+        {
+           _billingHelper.LaunchPurchaseFlow(e.Product);
+        }
+
+
+        private bool TaskIsEnabled(Product product)
+        {
+            var purchase = _purchases.FirstOrDefault(x => string.CompareOrdinal(x.ProductId, "all_task") == 0);
+            if (purchase != null && (purchase.PurchaseState == BillingResult.OK || purchase.PurchaseState == BillingResult.ItemAlreadyOwned)) return false;
+            int result;
+            var prod = product.ProductId.Split('_');
+            return !int.TryParse(prod[0], out result) || Rep.Instance.AllTaskCount - Rep.Instance.Tasks.Count < result;
+        }
+
+        private bool BonusIsEnabled(Product product)
+        {
+            var purchase = _purchases.FirstOrDefault(x => string.CompareOrdinal(x.ProductId, "all_bonus") == 0);
+            if (purchase != null && (purchase.PurchaseState == BillingResult.OK || purchase.PurchaseState == BillingResult.ItemAlreadyOwned)) return false;
+            int result;
+            var prod = product.ProductId.Split('_');
+            return !int.TryParse(prod[0], out result) || Rep.Instance.AllBonusCount - Rep.Instance.Bonuses.Count < result;
         }
 
         private async Task GetInventory()
@@ -157,37 +175,10 @@ namespace Yorsh.Activities
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             _billingHelper.HandleActivityResult(requestCode, resultCode, data);
+            UpdatePurchasedItems();
 
-            //TODO: Use a call back to update the purchased items
-            // UpdatePurchasedItems();
         }
 
-        public void OnItemSelected(AdapterView parent, Android.Views.View view, int position, long id)
-        {
-            //_selectedProduct = _taskProducts[position];
-        }
-
-        public void OnNothingSelected(AdapterView parent)
-        {
-            //throw new NotImplementedException ();
-        }
-
-
-        public void OnItemClick(AdapterView parent, View view, int position, long id)
-        {
-            //string productid = ((TextView)view).Text;
-            //var purchases = _storeListAdapter.Items;
-            //var purchasedItem = purchases.FirstOrDefault(p => p.ProductId == productid);
-            //if (purchasedItem != null)
-            //{
-            //    bool result = _billingHelper.ConsumePurchase(purchasedItem);
-            //    if (result)
-            //    {
-            //        _storeListAdapter.Items.Remove(purchasedItem);
-            //        _storeListAdapter.NotifyDataSetChanged();
-            //    }
-            //}
-        }
 
 
         private void ErrorOccur(string message)

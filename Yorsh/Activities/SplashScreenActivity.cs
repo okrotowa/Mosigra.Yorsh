@@ -12,7 +12,7 @@ namespace Yorsh.Activities
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Splash);
-            await this.CreateDataBaseAsync(50, 50);
+            await this.CreateDataBaseAsync();
             StartActivity(typeof(MainMenuActivity));
         }
     }
