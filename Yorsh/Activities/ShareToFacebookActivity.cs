@@ -1,3 +1,6 @@
+
+﻿using System;
+using Android.App;
 ﻿using System;
 using Android.App;
 using Android.Content;
@@ -19,7 +22,7 @@ using System.Collections.Generic;
 
 namespace Yorsh.Activities
 {
-	[Activity]			
+	[Activity (WindowSoftInputMode = SoftInput.AdjustResize)]			
 	public class ShareToFacebookActivity : Activity
 	{
 		static readonly string [] PERMISSIONS = new [] { "publish_actions" };

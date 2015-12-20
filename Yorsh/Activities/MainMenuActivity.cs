@@ -10,7 +10,7 @@ using Android.Graphics;
 
 namespace Yorsh.Activities
 {
-	[Activity(Theme = "@android:style/Theme.NoTitleBar", MainLauncher=false,  ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Theme = "@android:style/Theme.NoTitleBar", MainLauncher=true,  ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainMenuActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)

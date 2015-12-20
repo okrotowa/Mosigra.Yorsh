@@ -54,10 +54,12 @@
             android:text="Default"
             android:id="@+id/playerName"
             android:gravity="top"
-            android:textColor="@color/name_black"
+            android:textColor="#636166"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/AddPlayerItem_nameTextSize" />
+            android:textSize="@dimen/AddPlayerItem_nameTextSize"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="5dp" />
         <TextView
             android:id="@+id/isPlayText"
             android:text="Default"
@@ -65,6 +67,7 @@
             android:layout_width="fill_parent"
             android:textSize="@dimen/AddPlayerItem_isPlayTextSize"
             android:layout_height="wrap_content"
-            android:textColor="@drawable/ready_label_enable" />
+            android:textColor="@drawable/ready_label_enable"
+            android:layout_marginLeft="5dp" />
     </RelativeLayout>
 </RelativeLayout>

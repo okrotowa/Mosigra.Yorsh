@@ -70,8 +70,9 @@
                 android:gravity="top"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/Game_TopBarPlayerNameTextSize"
-                android:textColor="@color/name_black" />
+                android:textColor="#110626"
+                android:layout_marginBottom="3dp"
+                android:textSize="@dimen/Game_TopBarPlayerNameTextSize" />
             <TextView
                 android:id="@+id/playerInGamePostion"
                 android:text="Позиция игрока 2"
@@ -79,7 +80,7 @@
                 android:layout_width="fill_parent"
                 android:textSize="@dimen/Game_TopBarPlayerPositionTextSize"
                 android:layout_height="wrap_content"
-                android:textColor="@color/position_gray" />
+                android:textColor="#636166" />
         </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout

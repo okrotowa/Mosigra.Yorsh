@@ -815,184 +815,190 @@ namespace Yorsh
 			public const int game_background = 2130837546;
 			
 			// aapt resource value: 0x7f02002b
-			public const int home_button = 2130837547;
+			public const int gir_bott = 2130837547;
 			
 			// aapt resource value: 0x7f02002c
-			public const int Icon = 2130837548;
+			public const int gir_top = 2130837548;
 			
 			// aapt resource value: 0x7f02002d
-			public const int iq_bg = 2130837549;
+			public const int home_button = 2130837549;
 			
 			// aapt resource value: 0x7f02002e
-			public const int light_bottom = 2130837550;
+			public const int Icon = 2130837550;
 			
 			// aapt resource value: 0x7f02002f
-			public const int light_top = 2130837551;
+			public const int iq_bg = 2130837551;
 			
 			// aapt resource value: 0x7f020030
-			public const int logo = 2130837552;
+			public const int light_bottom = 2130837552;
 			
 			// aapt resource value: 0x7f020031
-			public const int messenger_bubble_large_blue = 2130837553;
+			public const int light_top = 2130837553;
 			
 			// aapt resource value: 0x7f020032
-			public const int messenger_bubble_large_white = 2130837554;
+			public const int logo = 2130837554;
 			
 			// aapt resource value: 0x7f020033
-			public const int messenger_bubble_small_blue = 2130837555;
+			public const int messenger_bubble_large_blue = 2130837555;
 			
 			// aapt resource value: 0x7f020034
-			public const int messenger_bubble_small_white = 2130837556;
+			public const int messenger_bubble_large_white = 2130837556;
 			
 			// aapt resource value: 0x7f020035
-			public const int messenger_button_blue_bg_round = 2130837557;
+			public const int messenger_bubble_small_blue = 2130837557;
 			
 			// aapt resource value: 0x7f020036
-			public const int messenger_button_blue_bg_selector = 2130837558;
+			public const int messenger_bubble_small_white = 2130837558;
 			
 			// aapt resource value: 0x7f020037
-			public const int messenger_button_send_round_shadow = 2130837559;
+			public const int messenger_button_blue_bg_round = 2130837559;
 			
 			// aapt resource value: 0x7f020038
-			public const int messenger_button_white_bg_round = 2130837560;
+			public const int messenger_button_blue_bg_selector = 2130837560;
 			
 			// aapt resource value: 0x7f020039
-			public const int messenger_button_white_bg_selector = 2130837561;
+			public const int messenger_button_send_round_shadow = 2130837561;
 			
 			// aapt resource value: 0x7f02003a
-			public const int photo_default = 2130837562;
+			public const int messenger_button_white_bg_round = 2130837562;
 			
 			// aapt resource value: 0x7f02003b
-			public const int plus_tasks_button = 2130837563;
+			public const int messenger_button_white_bg_selector = 2130837563;
 			
 			// aapt resource value: 0x7f02003c
-			public const int points = 2130837564;
+			public const int photo_default = 2130837564;
 			
 			// aapt resource value: 0x7f02003d
-			public const int ready_button = 2130837565;
+			public const int plus_tasks_button = 2130837565;
 			
 			// aapt resource value: 0x7f02003e
-			public const int ready_label_enable = 2130837566;
+			public const int points = 2130837566;
 			
 			// aapt resource value: 0x7f02003f
-			public const int remove_adb = 2130837567;
+			public const int ready_button = 2130837567;
 			
 			// aapt resource value: 0x7f020040
-			public const int round_rect_shape_grey_background = 2130837568;
+			public const int ready_label_enable = 2130837568;
 			
 			// aapt resource value: 0x7f020041
-			public const int round_rect_shape_white_background = 2130837569;
+			public const int remove_adb = 2130837569;
 			
 			// aapt resource value: 0x7f020042
-			public const int round_rect_shape_white_border = 2130837570;
+			public const int round_rect_shape_grey_background = 2130837570;
 			
 			// aapt resource value: 0x7f020043
-			public const int rules_button = 2130837571;
+			public const int round_rect_shape_white_background = 2130837571;
 			
 			// aapt resource value: 0x7f020044
-			public const int rules_one_page = 2130837572;
+			public const int round_rect_shape_white_border = 2130837572;
 			
 			// aapt resource value: 0x7f020045
-			public const int rules_one_sroll_page = 2130837573;
+			public const int rules_button = 2130837573;
 			
 			// aapt resource value: 0x7f020046
-			public const int rules_three_page = 2130837574;
+			public const int rules_one_page = 2130837574;
 			
 			// aapt resource value: 0x7f020047
-			public const int rules_three_sroll_page = 2130837575;
+			public const int rules_one_sroll_page = 2130837575;
 			
 			// aapt resource value: 0x7f020048
-			public const int rules_two_page = 2130837576;
+			public const int rules_three_page = 2130837576;
 			
 			// aapt resource value: 0x7f020049
-			public const int rules_two_sroll_page = 2130837577;
+			public const int rules_three_sroll_page = 2130837577;
 			
 			// aapt resource value: 0x7f02004a
-			public const int shadow = 2130837578;
+			public const int rules_two_page = 2130837578;
 			
 			// aapt resource value: 0x7f02004b
-			public const int shared = 2130837579;
+			public const int rules_two_sroll_page = 2130837579;
 			
 			// aapt resource value: 0x7f02004c
-			public const int shop_background_bottomlight = 2130837580;
+			public const int shadow = 2130837580;
 			
 			// aapt resource value: 0x7f02004d
-			public const int shop_background_toplight = 2130837581;
+			public const int shared = 2130837581;
 			
 			// aapt resource value: 0x7f02004e
-			public const int shop_bonus_10 = 2130837582;
+			public const int shop_background_bottomlight = 2130837582;
 			
 			// aapt resource value: 0x7f02004f
-			public const int shop_bonus_30 = 2130837583;
+			public const int shop_background_toplight = 2130837583;
 			
 			// aapt resource value: 0x7f020050
-			public const int shop_bonus_all = 2130837584;
+			public const int shop_bonus_10 = 2130837584;
 			
 			// aapt resource value: 0x7f020051
-			public const int shop_bonus_background = 2130837585;
+			public const int shop_bonus_30 = 2130837585;
 			
 			// aapt resource value: 0x7f020052
-			public const int shop_more_background = 2130837586;
+			public const int shop_bonus_all = 2130837586;
 			
 			// aapt resource value: 0x7f020053
-			public const int shop_task_10 = 2130837587;
+			public const int shop_bonus_background = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int shop_task_100 = 2130837588;
+			public const int shop_more_background = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int shop_task_30 = 2130837589;
+			public const int shop_task_10 = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int shop_task_70 = 2130837590;
+			public const int shop_task_100 = 2130837590;
 			
 			// aapt resource value: 0x7f020057
-			public const int shop_task_all = 2130837591;
+			public const int shop_task_30 = 2130837591;
 			
 			// aapt resource value: 0x7f020058
-			public const int shop_task_background = 2130837592;
+			public const int shop_task_70 = 2130837592;
 			
 			// aapt resource value: 0x7f020059
-			public const int splash = 2130837593;
+			public const int shop_task_all = 2130837593;
 			
 			// aapt resource value: 0x7f02005a
-			public const int splash_screen = 2130837594;
+			public const int shop_task_background = 2130837594;
 			
 			// aapt resource value: 0x7f02005b
-			public const int start_game_button = 2130837595;
+			public const int splash = 2130837595;
 			
 			// aapt resource value: 0x7f02005c
-			public const int start_new_game_button = 2130837596;
+			public const int splash_screen = 2130837596;
 			
 			// aapt resource value: 0x7f02005d
-			public const int table_button = 2130837597;
+			public const int start_game_button = 2130837597;
 			
 			// aapt resource value: 0x7f02005e
-			public const int table_list_background = 2130837598;
+			public const int start_new_game_button = 2130837598;
 			
 			// aapt resource value: 0x7f02005f
-			public const int task_sale = 2130837599;
+			public const int table_button = 2130837599;
 			
 			// aapt resource value: 0x7f020060
-			public const int task_store_icon = 2130837600;
+			public const int table_list_background = 2130837600;
 			
 			// aapt resource value: 0x7f020061
-			public const int taskprogress_background = 2130837601;
+			public const int task_sale = 2130837601;
 			
 			// aapt resource value: 0x7f020062
-			public const int tw72 = 2130837602;
+			public const int task_store_icon = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int twicon = 2130837603;
+			public const int taskprogress_background = 2130837603;
 			
 			// aapt resource value: 0x7f020064
-			public const int vk = 2130837604;
+			public const int tw72 = 2130837604;
 			
 			// aapt resource value: 0x7f020065
-			public const int vk72 = 2130837605;
+			public const int twicon = 2130837605;
 			
 			// aapt resource value: 0x7f020066
-			public const int x2 = 2130837606;
+			public const int vk = 2130837606;
+			
+			// aapt resource value: 0x7f020067
+			public const int vk72 = 2130837607;
+			
+			// aapt resource value: 0x7f020068
+			public const int x2 = 2130837608;
 			
 			static Drawable()
 			{
@@ -1007,17 +1013,17 @@ namespace Yorsh
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0a0047
-			public const int BoardGame = 2131361863;
+			// aapt resource value: 0x7f0a0048
+			public const int BoardGame = 2131361864;
+			
+			// aapt resource value: 0x7f0a004b
+			public const int PlusCards = 2131361867;
 			
 			// aapt resource value: 0x7f0a004a
-			public const int PlusCards = 2131361866;
+			public const int Rules = 2131361866;
 			
 			// aapt resource value: 0x7f0a0049
-			public const int Rules = 2131361865;
-			
-			// aapt resource value: 0x7f0a0048
-			public const int StartGame = 2131361864;
+			public const int StartGame = 2131361865;
 			
 			// aapt resource value: 0x7f0a0039
 			public const int SumbitShare = 2131361849;
@@ -1028,20 +1034,20 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0016
 			public const int TextView01 = 2131361814;
 			
-			// aapt resource value: 0x7f0a0084
-			public const int addPlayer = 2131361924;
+			// aapt resource value: 0x7f0a0087
+			public const int addPlayer = 2131361927;
 			
 			// aapt resource value: 0x7f0a000c
 			public const int automatic = 2131361804;
 			
-			// aapt resource value: 0x7f0a0070
-			public const int bonusDescription = 2131361904;
+			// aapt resource value: 0x7f0a0073
+			public const int bonusDescription = 2131361907;
 			
-			// aapt resource value: 0x7f0a006f
-			public const int bonusHeader = 2131361903;
+			// aapt resource value: 0x7f0a0072
+			public const int bonusHeader = 2131361906;
 			
-			// aapt resource value: 0x7f0a0071
-			public const int bonusListView = 2131361905;
+			// aapt resource value: 0x7f0a0074
+			public const int bonusListView = 2131361908;
 			
 			// aapt resource value: 0x7f0a0027
 			public const int bonusText = 2131361831;
@@ -1058,23 +1064,23 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0035
 			public const int buttonEasy = 2131361845;
 			
-			// aapt resource value: 0x7f0a005f
-			public const int buttonFb = 2131361887;
+			// aapt resource value: 0x7f0a0060
+			public const int buttonFb = 2131361888;
 			
-			// aapt resource value: 0x7f0a0054
-			public const int buttonFrameLayout = 2131361876;
+			// aapt resource value: 0x7f0a0055
+			public const int buttonFrameLayout = 2131361877;
 			
-			// aapt resource value: 0x7f0a0065
-			public const int buttonLayout = 2131361893;
+			// aapt resource value: 0x7f0a0066
+			public const int buttonLayout = 2131361894;
 			
 			// aapt resource value: 0x7f0a0037
 			public const int buttonNo = 2131361847;
 			
-			// aapt resource value: 0x7f0a0060
-			public const int buttonTw = 2131361888;
+			// aapt resource value: 0x7f0a0061
+			public const int buttonTw = 2131361889;
 			
-			// aapt resource value: 0x7f0a005e
-			public const int buttonVk = 2131361886;
+			// aapt resource value: 0x7f0a005f
+			public const int buttonVk = 2131361887;
 			
 			// aapt resource value: 0x7f0a0036
 			public const int buttonYester = 2131361846;
@@ -1085,8 +1091,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0009
 			public const int center = 2131361801;
 			
-			// aapt resource value: 0x7f0a007f
-			public const int changeCountScoreText = 2131361919;
+			// aapt resource value: 0x7f0a0082
+			public const int changeCountScoreText = 2131361922;
 			
 			// aapt resource value: 0x7f0a0015
 			public const int chooseFromContButton = 2131361813;
@@ -1121,8 +1127,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a002f
 			public const int com_facebook_tooltip_bubble_view_top_pointer = 2131361839;
 			
-			// aapt resource value: 0x7f0a0056
-			public const int completeGameButton = 2131361878;
+			// aapt resource value: 0x7f0a0057
+			public const int completeGameButton = 2131361879;
 			
 			// aapt resource value: 0x7f0a0018
 			public const int confirmButton = 2131361816;
@@ -1136,14 +1142,14 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0026
 			public const int continueButton = 2131361830;
 			
+			// aapt resource value: 0x7f0a0084
+			public const int currentScoreText = 2131361924;
+			
+			// aapt resource value: 0x7f0a0086
+			public const int customActionButton = 2131361926;
+			
 			// aapt resource value: 0x7f0a0081
-			public const int currentScoreText = 2131361921;
-			
-			// aapt resource value: 0x7f0a0083
-			public const int customActionButton = 2131361923;
-			
-			// aapt resource value: 0x7f0a007e
-			public const int descLayout = 2131361918;
+			public const int descLayout = 2131361921;
 			
 			// aapt resource value: 0x7f0a000d
 			public const int display_always = 2131361805;
@@ -1151,23 +1157,29 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a001a
 			public const int doneImage = 2131361818;
 			
-			// aapt resource value: 0x7f0a0080
-			public const int endDescriptionText = 2131361920;
+			// aapt resource value: 0x7f0a0083
+			public const int endDescriptionText = 2131361923;
+			
+			// aapt resource value: 0x7f0a006e
+			public const int googleStoreActive = 2131361902;
+			
+			// aapt resource value: 0x7f0a006d
+			public const int googleStoreNotActive = 2131361901;
 			
 			// aapt resource value: 0x7f0a003b
 			public const int greeting = 2131361851;
 			
-			// aapt resource value: 0x7f0a0059
-			public const int imageBackgroundRules = 2131361881;
+			// aapt resource value: 0x7f0a005a
+			public const int imageBackgroundRules = 2131361882;
 			
 			// aapt resource value: 0x7f0a0044
 			public const int imageCardView = 2131361860;
 			
-			// aapt resource value: 0x7f0a004d
-			public const int imagePickPlayer = 2131361869;
+			// aapt resource value: 0x7f0a004e
+			public const int imagePickPlayer = 2131361870;
 			
-			// aapt resource value: 0x7f0a005c
-			public const int imageScroll = 2131361884;
+			// aapt resource value: 0x7f0a005d
+			public const int imageScroll = 2131361885;
 			
 			// aapt resource value: 0x7f0a0023
 			public const int imageView = 2131361827;
@@ -1181,8 +1193,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a000f
 			public const int large = 2131361807;
 			
-			// aapt resource value: 0x7f0a0077
-			public const int layout = 2131361911;
+			// aapt resource value: 0x7f0a007a
+			public const int layout = 2131361914;
 			
 			// aapt resource value: 0x7f0a0040
 			public const int leadText = 2131361856;
@@ -1190,17 +1202,20 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a000a
 			public const int left = 2131361802;
 			
-			// aapt resource value: 0x7f0a0076
-			public const int light_bottom = 2131361910;
+			// aapt resource value: 0x7f0a0079
+			public const int light_bottom = 2131361913;
 			
 			// aapt resource value: 0x7f0a0033
 			public const int linearLayout1 = 2131361843;
 			
+			// aapt resource value: 0x7f0a0046
+			public const int linearLayout2 = 2131361862;
+			
 			// aapt resource value: 0x7f0a0020
 			public const int login = 2131361824;
 			
-			// aapt resource value: 0x7f0a0046
-			public const int logoImage = 2131361862;
+			// aapt resource value: 0x7f0a0047
+			public const int logoImage = 2131361863;
 			
 			// aapt resource value: 0x7f0a003a
 			public const int main_ui_container = 2131361850;
@@ -1208,23 +1223,23 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0028
 			public const int makePhotoButton = 2131361832;
 			
-			// aapt resource value: 0x7f0a0067
-			public const int makeThisButton = 2131361895;
+			// aapt resource value: 0x7f0a0068
+			public const int makeThisButton = 2131361896;
 			
-			// aapt resource value: 0x7f0a004b
-			public const int messenger_send_button = 2131361867;
+			// aapt resource value: 0x7f0a004c
+			public const int messenger_send_button = 2131361868;
+			
+			// aapt resource value: 0x7f0a0078
+			public const int moreDescription = 2131361912;
 			
 			// aapt resource value: 0x7f0a0075
-			public const int moreDescription = 2131361909;
+			public const int moreHeader = 2131361909;
 			
-			// aapt resource value: 0x7f0a0072
-			public const int moreHeader = 2131361906;
+			// aapt resource value: 0x7f0a0077
+			public const int morePriceText = 2131361911;
 			
-			// aapt resource value: 0x7f0a0074
-			public const int morePriceText = 2131361908;
-			
-			// aapt resource value: 0x7f0a004e
-			public const int namePickPlayer = 2131361870;
+			// aapt resource value: 0x7f0a004f
+			public const int namePickPlayer = 2131361871;
 			
 			// aapt resource value: 0x7f0a000e
 			public const int never_display = 2131361806;
@@ -1244,17 +1259,17 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0013
 			public const int playerImage = 2131361811;
 			
-			// aapt resource value: 0x7f0a004f
-			public const int playerInGameImage = 2131361871;
-			
 			// aapt resource value: 0x7f0a0050
-			public const int playerInGameName = 2131361872;
+			public const int playerInGameImage = 2131361872;
 			
 			// aapt resource value: 0x7f0a0051
-			public const int playerInGamePostion = 2131361873;
+			public const int playerInGameName = 2131361873;
 			
 			// aapt resource value: 0x7f0a0052
-			public const int playerInGameScore = 2131361874;
+			public const int playerInGamePostion = 2131361874;
+			
+			// aapt resource value: 0x7f0a0053
+			public const int playerInGameScore = 2131361875;
 			
 			// aapt resource value: 0x7f0a0012
 			public const int playerLayout = 2131361810;
@@ -1268,20 +1283,20 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a001c
 			public const int playerNameLayout = 2131361820;
 			
-			// aapt resource value: 0x7f0a004c
-			public const int playerPickList = 2131361868;
+			// aapt resource value: 0x7f0a004d
+			public const int playerPickList = 2131361869;
 			
 			// aapt resource value: 0x7f0a0042
 			public const int playerScore = 2131361858;
 			
-			// aapt resource value: 0x7f0a0058
-			public const int playerTournamentListView = 2131361880;
+			// aapt resource value: 0x7f0a0059
+			public const int playerTournamentListView = 2131361881;
 			
 			// aapt resource value: 0x7f0a001f
 			public const int playersList = 2131361823;
 			
-			// aapt resource value: 0x7f0a0069
-			public const int points = 2131361897;
+			// aapt resource value: 0x7f0a006a
+			public const int points = 2131361898;
 			
 			// aapt resource value: 0x7f0a003e
 			public const int postPhotoButton = 2131361854;
@@ -1289,20 +1304,20 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a003d
 			public const int postStatusUpdateButton = 2131361853;
 			
-			// aapt resource value: 0x7f0a007b
-			public const int priceText = 2131361915;
+			// aapt resource value: 0x7f0a007e
+			public const int priceText = 2131361918;
 			
 			// aapt resource value: 0x7f0a003c
 			public const int profilePicture = 2131361852;
 			
-			// aapt resource value: 0x7f0a0066
-			public const int refuseButton = 2131361894;
+			// aapt resource value: 0x7f0a0067
+			public const int refuseButton = 2131361895;
 			
-			// aapt resource value: 0x7f0a0055
-			public const int relativeLayout = 2131361877;
+			// aapt resource value: 0x7f0a0056
+			public const int relativeLayout = 2131361878;
 			
-			// aapt resource value: 0x7f0a0073
-			public const int removeAdButton = 2131361907;
+			// aapt resource value: 0x7f0a0076
+			public const int removeAdButton = 2131361910;
 			
 			// aapt resource value: 0x7f0a001b
 			public const int removeButton = 2131361819;
@@ -1313,26 +1328,26 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a000b
 			public const int right = 2131361803;
 			
-			// aapt resource value: 0x7f0a0079
-			public const int saleImageView = 2131361913;
-			
-			// aapt resource value: 0x7f0a0062
-			public const int scoreLayout = 2131361890;
+			// aapt resource value: 0x7f0a007c
+			public const int saleImageView = 2131361916;
 			
 			// aapt resource value: 0x7f0a0063
-			public const int scoreString = 2131361891;
+			public const int scoreLayout = 2131361891;
+			
+			// aapt resource value: 0x7f0a0064
+			public const int scoreString = 2131361892;
 			
 			// aapt resource value: 0x7f0a0041
 			public const int scoreText = 2131361857;
 			
-			// aapt resource value: 0x7f0a0064
-			public const int separator = 2131361892;
+			// aapt resource value: 0x7f0a0065
+			public const int separator = 2131361893;
 			
-			// aapt resource value: 0x7f0a007a
-			public const int shadow = 2131361914;
+			// aapt resource value: 0x7f0a007d
+			public const int shadow = 2131361917;
 			
-			// aapt resource value: 0x7f0a0057
-			public const int shareButton = 2131361879;
+			// aapt resource value: 0x7f0a0058
+			public const int shareButton = 2131361880;
 			
 			// aapt resource value: 0x7f0a0011
 			public const int small = 2131361809;
@@ -1340,71 +1355,71 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0005
 			public const int standard = 2131361797;
 			
-			// aapt resource value: 0x7f0a0061
-			public const int startGameLayout = 2131361889;
+			// aapt resource value: 0x7f0a0062
+			public const int startGameLayout = 2131361890;
 			
 			// aapt resource value: 0x7f0a001e
 			public const int startPlayButton = 2131361822;
 			
-			// aapt resource value: 0x7f0a007d
-			public const int statusDescriptionText = 2131361917;
+			// aapt resource value: 0x7f0a0080
+			public const int statusDescriptionText = 2131361920;
 			
-			// aapt resource value: 0x7f0a007c
-			public const int statusTitleText = 2131361916;
+			// aapt resource value: 0x7f0a007f
+			public const int statusTitleText = 2131361919;
 			
-			// aapt resource value: 0x7f0a0078
-			public const int storeButton = 2131361912;
+			// aapt resource value: 0x7f0a007b
+			public const int storeButton = 2131361915;
 			
 			// aapt resource value: 0x7f0a0022
 			public const int sumbit = 2131361826;
 			
-			// aapt resource value: 0x7f0a0085
-			public const int tableButton = 2131361925;
-			
-			// aapt resource value: 0x7f0a006b
-			public const int tableShop = 2131361899;
-			
-			// aapt resource value: 0x7f0a006d
-			public const int taskDescription = 2131361901;
+			// aapt resource value: 0x7f0a0088
+			public const int tableButton = 2131361928;
 			
 			// aapt resource value: 0x7f0a006c
-			public const int taskHeader = 2131361900;
+			public const int tableShop = 2131361900;
 			
-			// aapt resource value: 0x7f0a0068
-			public const int taskImageButton = 2131361896;
+			// aapt resource value: 0x7f0a0070
+			public const int taskDescription = 2131361904;
 			
-			// aapt resource value: 0x7f0a006e
-			public const int taskListView = 2131361902;
+			// aapt resource value: 0x7f0a006f
+			public const int taskHeader = 2131361903;
+			
+			// aapt resource value: 0x7f0a0069
+			public const int taskImageButton = 2131361897;
+			
+			// aapt resource value: 0x7f0a0071
+			public const int taskListView = 2131361905;
 			
 			// aapt resource value: 0x7f0a0045
 			public const int textCard = 2131361861;
 			
-			// aapt resource value: 0x7f0a005b
-			public const int textContainer = 2131361883;
+			// aapt resource value: 0x7f0a005c
+			public const int textContainer = 2131361884;
 			
-			// aapt resource value: 0x7f0a005a
-			public const int textHeader = 2131361882;
+			// aapt resource value: 0x7f0a005b
+			public const int textHeader = 2131361883;
 			
 			// aapt resource value: 0x7f0a0034
 			public const int textView1 = 2131361844;
 			
-			// aapt resource value: 0x7f0a0082
-			public const int titleText = 2131361922;
+			// aapt resource value: 0x7f0a0085
+			public const int titleText = 2131361925;
 			
 			// aapt resource value: 0x7f0a0008
 			public const int top = 2131361800;
 			
-			// aapt resource value: 0x7f0a0053
-			public const int tournament = 2131361875;
+			// aapt resource value: 0x7f0a0054
+			public const int tournament = 2131361876;
 			
 			// aapt resource value: 0x7f0a0002
 			public const int unknown = 2131361794;
 			
-			// aapt resource value: 0x7f0a005d
-			public const int viewPager = 2131361885;
+			// aapt resource value: 0x7f0a005e
+			public const int viewPager = 2131361886;
 			
-			// aapt resource value: 0x7f0a006a
-			public const int x2 = 2131361898;
+			// aapt resource value: 0x7f0a006b
+			public const int x2 = 2131361899;
 			
 			// aapt resource value: 0x7f0a0025
 			public const int youHaveBonus = 2131361829;

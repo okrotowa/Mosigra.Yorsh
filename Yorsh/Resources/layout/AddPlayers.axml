@@ -23,5 +23,7 @@
         android:layout_marginBottom="@dimen/ContentMarginTopBottom"
         android:layout_marginTop="@dimen/ContentMarginTopBottom"
         android:layout_marginLeft="@dimen/ContentMarginLeftRight"
-        android:layout_marginRight="@dimen/ContentMarginLeftRight" />
+        android:layout_marginRight="@dimen/ContentMarginLeftRight"
+        android:divider="#636166"
+        android:dividerHeight="1dp" />
 </RelativeLayout>

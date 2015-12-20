@@ -71,7 +71,7 @@ namespace Yorsh.Activities
 			SetFont (_cancelButton);
 			SetFont (_confirmButton);
 			SetFont (_chooseFromContactsButton);
-			SetFont (_editText);
+			SetFontItalic (_editText);
 
 			_confirmButton.Touch += (sender, e) => this.OnTouchButtonDarker(_confirmButton, e);
 			_cancelButton.Touch += (sender, e) => this.OnTouchButtonDarker(_cancelButton, e);
@@ -161,6 +161,11 @@ namespace Yorsh.Activities
 		private void SetFont(TextView textView)
 		{
 			textView.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+		}
+
+		private void SetFontItalic(TextView textView)
+		{
+			textView.SetTypeface(this.MyriadProFont(MyriadPro.Condensed), TypefaceStyle.Italic);
 		}
 
 		protected override void OnStop ()

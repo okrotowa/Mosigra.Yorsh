@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/game_background"
     android:id="@+id/tournament">
     <FrameLayout
         android:id="@+id/buttonFrameLayout"
@@ -14,11 +15,11 @@
         android:layout_marginLeft="@dimen/ContentMarginLeftRight">
         <Button
             android:id="@+id/startPlayButton"
-            android:visibility="gone"
-            android:text="@string/CompleteGameString"
+            android:text="@string/NewGameString"
+            android:visibility="visible"
             android:layout_width="@dimen/PlayersList_buttonWidth"
-            android:background="@drawable/start_game_button"
             android:gravity="center"
+            android:background="@drawable/start_game_button"
             android:layout_height="@dimen/PlayersList_buttonHeight"
             android:textSize="@dimen/PlayersList_buttonTextSize"
             android:layout_gravity="center" />

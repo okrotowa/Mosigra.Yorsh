@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -26,8 +26,12 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;arm64-v8a</AndroidSupportedAbis>
+    <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
     <AssemblyName>Yorsh</AssemblyName>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <Debugger>Xamarin</Debugger>
+    <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -66,6 +70,9 @@
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="SQLite">
+      <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -105,9 +112,6 @@
     </Reference>
     <Reference Include="OkHttp">
       <HintPath>..\Components\modernhttpclient-2.4.2\lib\android\OkHttp.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLite">
-      <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -479,6 +483,23 @@
     <AndroidResource Include="Resources\values-large\dimens.xml" />
     <AndroidResource Include="Resources\values-xlarge\dimens.xml" />
     <AndroidResource Include="Resources\values-xhdpi\dimens.xml" />
+    <None Include="Properties\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <AndroidResource Include="Resources\drawable\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-nodpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-nodpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\gir_top.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainMenu.axml" />
@@ -492,10 +513,6 @@
     </AndroidResource>
     <EmbeddedResource Include="Assets\cards\iq_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\iq_bg_NY.jpg" />
-    <Content Include="Properties\AndroidManifest.xml">
-      <SubType>Designer</SubType>
-      <DeployService-Deploy>True</DeployService-Deploy>
-    </Content>
     <AndroidResource Include="Resources\drawable\back_button.png" />
     <AndroidResource Include="Resources\drawable\add_player_button.xml">
       <SubType>Designer</SubType>
@@ -528,19 +545,6 @@
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Resources\menu\" />
-    <Folder Include="Resources\mipmap-mdpi\" />
-    <Folder Include="Resources\mipmap-hdpi\" />
-    <Folder Include="Resources\mipmap-xhdpi\" />
-    <Folder Include="Resources\mipmap-xxhdpi\" />
-    <Folder Include="Resources\mipmap-xxxhdpi\" />
-    <Folder Include="Resources\mipmap\" />
-    <Folder Include="Resources\values\" />
-    <Folder Include="Resources\values-sw600dp\" />
-    <Folder Include="Resources\values-sw720dp\" />
-    <Folder Include="Resources\values-sw480dp\" />
-    <Folder Include="Resources\values-normal\" />
-    <Folder Include="Resources\values-large\" />
-    <Folder Include="Resources\values-xhdpi\" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="sqlite-net">
