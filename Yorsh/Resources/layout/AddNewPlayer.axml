@@ -37,7 +37,11 @@
                 android:paddingLeft="10dp"
                 android:textSize="@dimen/AddNewPlayers_editTextSize"
                 android:paddingBottom="@dimen/AddNewPlayers_editTextPadding"
-                android:textColor="@color/position_gray" />
+                android:textColorHint="#636166"
+                android:textColor="@color/name_black"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                android:descendantFocusability="beforeDescendants" />
         </RelativeLayout>
         <Button
             android:id="@+id/chooseFromContButton"

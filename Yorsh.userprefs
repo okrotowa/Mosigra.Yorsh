@@ -1,16 +1,9 @@
-﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 4 (Jelly Bean) - API 16 - 768x1280" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\StoreActivity.cs">
-    <Files>
-      <File FileName="Yorsh\Activities\ResultsGameActivity.cs" Line="1" Column="1" />
-      <File FileName="Yorsh\Properties\AndroidManifest.xml" Line="1" Column="1" />
-      <File FileName="Yorsh\Activities\StoreActivity.cs" Line="62" Column="8" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+﻿<Properties StartupItem="Yorsh\Yorsh.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x64" PreferredExecutionTarget="Android.Nexus S (KitKat)" />
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Activities\StoreActivity.cs" line="28" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus S" />
 </Properties>

@@ -4,6 +4,23 @@
     android:layout_height="fill_parent"
     android:background="@drawable/background">
     <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/linearLayout1"
+        android:background="@drawable/gir_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/linearLayout2"
+        android:background="@drawable/gir_bott"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+    <LinearLayout
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:layout_width="fill_parent"

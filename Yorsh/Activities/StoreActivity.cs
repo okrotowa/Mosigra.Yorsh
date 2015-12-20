@@ -88,7 +88,7 @@ namespace Yorsh.Activities
         {
             _purchases = _billingHelper.GetPurchases(ItemType.InApp);
         }
-        
+
         public void StartSetup()
         {
             var key = string.Concat(new string[]

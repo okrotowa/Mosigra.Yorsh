@@ -494,6 +494,20 @@
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
     </None>
+    <AndroidResource Include="Resources\drawable\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-nodpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-nodpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\gir_top.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\gir_bott.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\gir_top.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainMenu.axml" />
