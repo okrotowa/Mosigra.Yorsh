@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace Yorsh.Activities
 {
-	[Activity (WindowSoftInputMode = SoftInput.AdjustResize)]			
+	[Activity]			
 	public class ShareToFacebookActivity : Activity
 	{
 		static readonly string [] PERMISSIONS = new [] { "publish_actions" };
