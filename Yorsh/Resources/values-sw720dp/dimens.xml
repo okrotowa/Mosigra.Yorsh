@@ -94,9 +94,9 @@
     <dimen name="RuleFragment_LayoutMarginLeftRight">30dp</dimen>
     <dimen name="RuleFragment_LayoutPadding">25dp</dimen>
     <dimen name="RuleFragment_ImageViewHeight">400dp</dimen>
-    <dimen name="RuleFragment_HeaderTextSize">48sp</dimen>
+    <dimen name="RuleFragment_HeaderTextSize">49sp</dimen>
     <dimen name="RuleFragment_HeaderTextMarginTopBottom">7dp</dimen>
-    <dimen name="RuleFragment_ContainerTextSize">32sp</dimen>
+    <dimen name="RuleFragment_ContainerTextSize">33sp</dimen>
 
     <dimen name="PlayerLeadText_Size">40sp</dimen>
     <dimen name="PlayerNameText_Size">35sp</dimen>
