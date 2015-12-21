@@ -4,7 +4,7 @@ using System.Linq;
 using Android.App;
 using Android.Views;
 using Android.Widget;
-using Xamarin.InAppBilling.Model;
+using Xamarin.InAppBilling;
 using Yorsh.Helpers;
 using Yorsh.Model;
 

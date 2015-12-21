@@ -7,12 +7,11 @@ using Xamarin.InAppBilling;
 using Android.Widget;
 using System;
 using Android.Views;
-using Xamarin.InAppBilling.Model;
-using Xamarin.InAppBilling.Utilities;
 using Yorsh.Adapters;
 using Yorsh.Helpers;
 using System.Collections.Generic;
 using Android.Content;
+using Com.Android.Vending.Billing;
 using Yorsh.Model;
 
 namespace Yorsh.Activities
@@ -20,7 +19,8 @@ namespace Yorsh.Activities
     [Activity(Label = "@string/BuyString", ParentActivity = typeof(MainMenuActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
     public class StoreActivity : BaseActivity
     {
-        private IInAppBillingHelper _billingHelper;
+        private IInAppBillingService _billingService;
+        private IInAppBillingHandler _billingHandler;
         private IList<Product> _taskProducts;
         private IList<Product> _bonusProducts;
         private InAppBillingServiceConnection _serviceConnection;
@@ -79,14 +79,14 @@ namespace Yorsh.Activities
         {
             if (_serviceConnection != null)
             {
-                _serviceConnection.Disconnected();
+                _serviceConnection.Disconnect();
             }
             base.OnDestroy();
         }
 
         private void UpdatePurchasedItems()
         {
-            _purchases = _billingHelper.GetPurchases(ItemType.InApp);
+            _purchases = _billingHandler.GetPurchases(ItemType.Product);
         }
 
         public void StartSetup()
@@ -101,9 +101,10 @@ namespace Yorsh.Activities
             _serviceConnection.Connect();
         }
 
-        private async void HandleOnConnected(object sender, EventArgs e)
+        private async void HandleOnConnected()
         {
-            _billingHelper = _serviceConnection.BillingHelper;
+            _billingHandler = _serviceConnection.BillingHandler;
+            _billingService = _serviceConnection.Service;
             UpdatePurchasedItems();
             await GetInventory();
             SetupInventory();
@@ -129,7 +130,7 @@ namespace Yorsh.Activities
 
         void ItemClick(object sender, StoreItemClickEventArgs e)
         {
-           _billingHelper.LaunchPurchaseFlow(e.Product);
+           _billingHandler.BuyProduct(e.Product);
         }
 
 
@@ -154,40 +155,40 @@ namespace Yorsh.Activities
         private async Task GetInventory()
         {
             //Get available products
-            _taskProducts = await _billingHelper.QueryInventoryAsync(new List<string>
+            _taskProducts = await _billingHandler.QueryInventoryAsync(new List<string>
             {
                 "10_task",
                 "30_task",
                 "70_task",
                 "100_task",
                 "all_task"
-            }, ItemType.InApp);
+            }, ItemType.Product);
 
-            _bonusProducts = await _billingHelper.QueryInventoryAsync(new List<string>()
+            _bonusProducts = await _billingHandler.QueryInventoryAsync(new List<string>()
             {
                 "10_bonus",
                 "30_bonus",
                 "all_bonus"
-            }, ItemType.InApp);
+            }, ItemType.Product);
 
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
-            _billingHelper.HandleActivityResult(requestCode, resultCode, data);
+            _billingHandler.HandleActivityResult(requestCode, resultCode, data);
             UpdatePurchasedItems();
 
         }
 
 
 
-        private void ErrorOccur(string message)
-        {
-            FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Gone;
-            var googleStoreNotActive = FindViewById<TextView>(Resource.Id.googleStoreNotActive);
-            googleStoreNotActive.Visibility = ViewStates.Visible;
-            googleStoreNotActive.Text = message;
-        }
+        //private void ErrorOccur(string message)
+        //{
+        //    FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Gone;
+        //    var googleStoreNotActive = FindViewById<TextView>(Resource.Id.googleStoreNotActive);
+        //    googleStoreNotActive.Visibility = ViewStates.Visible;
+        //    googleStoreNotActive.Text = message;
+        //}
 
     }
 

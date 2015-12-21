@@ -1,5 +1,5 @@
 using System;
-using Xamarin.InAppBilling.Model;
+using Xamarin.InAppBilling;
 
 namespace Yorsh.Model
 {

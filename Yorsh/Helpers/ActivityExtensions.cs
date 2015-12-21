@@ -92,7 +92,7 @@ namespace Yorsh.Helpers
             await Rep.Instance.BonusGenerateAsync();
         }
 
-        public async static void AddTask(this Activity context, int count)
+        public static async void AddTask(this Activity context, int count)
         {
             if (!(context is StoreActivity)) return;
             var path = Rep.Instance.DataBaseFile;
@@ -102,7 +102,7 @@ namespace Yorsh.Helpers
             await Rep.Instance.TaskGenerateAsync();
         }
 
-        public async static void AddBonus(this Activity context, int count)
+        public static async void AddBonus(this Activity context, int count)
         {
             if (!(context is StoreActivity)) return;
             var path = Rep.Instance.DataBaseFile;

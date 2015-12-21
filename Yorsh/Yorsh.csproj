@@ -86,6 +86,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="Xamarin.InAppBilling, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
+    </Reference>
     <Reference Include="Xamarin.Mobile">
       <HintPath>..\Components\xamarin.mobile-0.7.7\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
@@ -559,6 +563,10 @@
       <Version>1.0.8.3</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
+    <XamarinComponentReference Include="xamarin.inappbilling">
+      <Visible>False</Visible>
+      <Version>2.2</Version>
+    </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.mobile">
       <Version>0.7.7</Version>
       <Visible>False</Visible>
@@ -591,12 +599,6 @@
       <Version>2.4.2</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="C:\Users\Krotova\Downloads\AndroidInAppBillingDemo-master\AndroidInAppBillingDemo-master\InAppService\Xamarin.InAppBilling\Xamarin.InAppBilling.csproj">
-      <Project>{e540e876-ccc3-4f41-880f-8acd7221058d}</Project>
-      <Name>Xamarin.InAppBilling</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
