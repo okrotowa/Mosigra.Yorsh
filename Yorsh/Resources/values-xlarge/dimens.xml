@@ -52,8 +52,8 @@
     <dimen name="Game_TopBarCountScoreTextSize">44sp</dimen>
     <dimen name="Game_TopBarScoreTextSize">33sp</dimen>
     <dimen name="Game_TopBarTextMargin">20dp</dimen>
-    <dimen name="Game_TopBarPlayerNameTextSize">30sp</dimen>
-    <dimen name="Game_TopBarPlayerPositionTextSize">20sp</dimen>
+    <dimen name="Game_TopBarPlayerNameTextSize">31sp</dimen>
+    <dimen name="Game_TopBarPlayerPositionTextSize">21sp</dimen>
     <dimen name="Game_CardButtonHeight">520dp</dimen>
     <dimen name="Game_CardButtonWidth">378dp</dimen>
     <dimen name="Game_BottomButtonWidth">260dp</dimen>

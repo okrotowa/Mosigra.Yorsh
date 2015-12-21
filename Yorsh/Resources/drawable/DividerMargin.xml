@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="@dimen/AddPlayerItem_marginLeft" 
+    android:insetRight="@dimen/AddPlayerItem_marginRight">
+    <shape android:shape="rectangle" >
+        <solid android:color="#636166" />
+    </shape>
+
+</inset>
