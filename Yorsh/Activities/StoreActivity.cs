@@ -11,7 +11,6 @@ using Yorsh.Adapters;
 using Yorsh.Helpers;
 using System.Collections.Generic;
 using Android.Content;
-using Com.Android.Vending.Billing;
 using Yorsh.Model;
 
 namespace Yorsh.Activities
@@ -19,12 +18,13 @@ namespace Yorsh.Activities
     [Activity(Label = "@string/BuyString", ParentActivity = typeof(MainMenuActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
     public class StoreActivity : BaseActivity
     {
-        private IInAppBillingService _billingService;
-        private IInAppBillingHandler _billingHandler;
+        private InAppBillingHandler _billingHandler;
         private IList<Product> _taskProducts;
         private IList<Product> _bonusProducts;
         private InAppBillingServiceConnection _serviceConnection;
         private IList<Purchase> _purchases;
+        private ListView _taskListView;
+        private ListView _bonusListView;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -77,9 +77,11 @@ namespace Yorsh.Activities
 
         protected override void OnDestroy()
         {
-            if (_serviceConnection != null)
+            if (_serviceConnection != null && _serviceConnection.BillingHandler != null)
             {
                 _serviceConnection.Disconnect();
+                _billingHandler.OnProductPurchased -= BillingHandlerOnOnProductPurchased;
+                _billingHandler.OnProductPurchasedError -= BillingHandlerOnOnProductPurchasedError;
             }
             base.OnDestroy();
         }
@@ -87,14 +89,16 @@ namespace Yorsh.Activities
         private void UpdatePurchasedItems()
         {
             _purchases = _billingHandler.GetPurchases(ItemType.Product);
+
         }
 
         public void StartSetup()
         {
             var key = string.Concat(new string[]
             {
-                GetNumberString(2), GetNumberString(5), GetNumberString(0), GetNumberString(3), GetNumberString(6),
-                GetNumberString(7), GetNumberString(1), GetNumberString(4)
+                GetNumberString(2), GetNumberString(5), GetNumberString(0), 
+                GetNumberString(3), GetNumberString(6),GetNumberString(7), 
+                GetNumberString(1), GetNumberString(4)
             });
             _serviceConnection = new InAppBillingServiceConnection(this, key);
             _serviceConnection.OnConnected += HandleOnConnected;
@@ -104,33 +108,51 @@ namespace Yorsh.Activities
         private async void HandleOnConnected()
         {
             _billingHandler = _serviceConnection.BillingHandler;
-            _billingService = _serviceConnection.Service;
+            _billingHandler.OnProductPurchased+= BillingHandlerOnOnProductPurchased;
+            _billingHandler.OnProductPurchasedError+= BillingHandlerOnOnProductPurchasedError;
             UpdatePurchasedItems();
             await GetInventory();
             SetupInventory();
+        }
+
+        private void BillingHandlerOnOnProductPurchasedError(int responseCode, string sku)
+        {
+            
+        }
+
+        private async void BillingHandlerOnOnProductPurchased(int response, Purchase purchase, string purchaseData, string purchaseSignature)
+        {
+            int result;
+            await this.AddProduct(purchase.ProductId);
+            if (int.TryParse(purchase.ProductId.Split('_')[0], out result))
+            {
+                _billingHandler.ConsumePurchase(purchase);
+            }
+            _taskListView.InvalidateViews();
+            _bonusListView.InvalidateViews();
         }
 
         private void SetupInventory()
         {
             FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Visible;
             FindViewById<TextView>(Resource.Id.googleStoreNotActive).Visibility = ViewStates.Gone;
-            var taskListView = FindViewById<ListView>(Resource.Id.taskListView);
+            _taskListView = FindViewById<ListView>(Resource.Id.taskListView);
             var adapter = new StoreListAdapter(this, _taskProducts,
                 product => String.CompareOrdinal(product.ProductId, "all_task") == 0, TaskIsEnabled);
             adapter.ItemClick += ItemClick;
-            taskListView.Adapter = new MultiItemRowListAdapter(this, adapter, 3, 1);
-            taskListView.JustifyListViewHeightBasedOnChildren();
-            var bonusListView = FindViewById<ListView>(Resource.Id.bonusListView);
+            _taskListView.Adapter = new MultiItemRowListAdapter(this, adapter, 3, 1);
+            _taskListView.JustifyListViewHeightBasedOnChildren();
+            _bonusListView = FindViewById<ListView>(Resource.Id.bonusListView);
             var bonusAdapter = new StoreListAdapter(this, _bonusProducts,
                 product => String.CompareOrdinal(product.ProductId, "10_bonus") == 0, BonusIsEnabled);
             bonusAdapter.ItemClick += ItemClick;
-            bonusListView.Adapter = new MultiItemRowListAdapter(this, bonusAdapter, 3, 1);
-            bonusListView.JustifyListViewHeightBasedOnChildren();
+            _bonusListView.Adapter = new MultiItemRowListAdapter(this, bonusAdapter, 3, 1);
+            _bonusListView.JustifyListViewHeightBasedOnChildren();
         }
 
         void ItemClick(object sender, StoreItemClickEventArgs e)
         {
-           _billingHandler.BuyProduct(e.Product);
+            _billingHandler.BuyProduct(e.Product);
         }
 
 
@@ -177,7 +199,6 @@ namespace Yorsh.Activities
         {
             _billingHandler.HandleActivityResult(requestCode, resultCode, data);
             UpdatePurchasedItems();
-
         }
 
 

@@ -6,7 +6,6 @@ using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Android.Provider;
-using Android.Views.InputMethods;
 using Android.Widget;
 using Yorsh.Fragments;
 using Yorsh.Helpers;
@@ -52,10 +51,7 @@ namespace Yorsh.Activities
                 var text = e.Text.ToString();
 				SetConfirmButtonEnabled(!string.IsNullOrEmpty(text));
             };
-
-			var inputMethodManager = (InputMethodManager)GetSystemService(InputMethodService);
-			inputMethodManager.ShowSoftInput(_editText, ShowFlags.Implicit);
-
+            
             //Cancel
 			_cancelButton.Click += (sender, e) => this.StartActivityWithoutBackStack (ParentActivityIntent);
         }

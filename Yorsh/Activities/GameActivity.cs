@@ -95,9 +95,17 @@ namespace Yorsh.Activities
 
 		private void SetButtonsEnabled(bool enabled)
 		{
-			this.MakeButtonEnabled (_refuseButton, enabled);
-			this.MakeButtonEnabled (_makeThisButton, enabled);
+            _refuseButton.Background.Alpha = enabled ? 255 : 50;
+            _refuseButton.SetTextColor(Resources.GetColor(enabled
+                ? Resource.Color.white
+                : Resource.Color.pressed_text_color));
+
+            _makeThisButton.Background.Alpha = enabled ? 255 : 50;
+            _makeThisButton.SetTextColor(_makeThisButton.Resources.GetColor(enabled
+                ? Resource.Color.white
+                : Resource.Color.pressed_text_color));
 		}
+
 
 		public void ShowDialogOnButtonClick(TaskDialog taskDialog)
 		{

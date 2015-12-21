@@ -22,20 +22,19 @@ namespace Yorsh.Activities
 		protected  override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
-			//await this.StubInitialize ();
 			SetContentView(Resource.Layout.ResultsGame);
 			var isEndGame = Intent.GetBooleanExtra("isEnd", false);
 			var listView = FindViewById<ListView>(Resource.Id.playerTournamentListView);
-			var sortedPlayersList = Rep.Instance.Players.OrderByDescending (player => player.Score).ToList<Player>();
+			var sortedPlayersList = Rep.Instance.Players.OrderByDescending (player => player.Score).ToList();
 			SetFirstItem(sortedPlayersList.First(),isEndGame);
 			sortedPlayersList.RemoveAt (0);
-			var adapter = new ListAdapter(this, isEndGame, sortedPlayersList);
+			var adapter = new ListAdapter(this, sortedPlayersList);
 			listView.Adapter = adapter;
 
 			if (isEndGame)
-				SetButtonsAndActionBarIsNotEndGame ();
-			else
 				SetButtonsAndActionBarIsEndGame ();
+			else
+				SetButtonsAndActionBarIsNotEndGame ();
 		}
 
 		void SetFirstItem(Player player, bool isEndGame)
@@ -46,10 +45,10 @@ namespace Yorsh.Activities
 			var playerName = FindViewById<TextView>(Resource.Id.playerName);
 			var playerScore = FindViewById<TextView>(Resource.Id.playerScore);
 
-			leadString.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
-			textScore.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
-			playerName.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
-			playerScore.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+			leadString.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+			textScore.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+			playerName.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+			playerScore.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
 
 			imageView.SetImageBitmap(player.Photo);
 			playerName.Text = player.Name.ToUpper();
@@ -62,12 +61,12 @@ namespace Yorsh.Activities
 
 		void SetButtonsAndActionBarIsNotEndGame()
 		{
-			var startPlayButton = FindViewById<Button>(Resource.Id.startPlayButton);
+			var startPlayButton = FindViewById<Button>(Resource.Id.endGameButton);
 			startPlayButton.Visibility = ViewStates.Visible;
 			FindViewById<RelativeLayout> (Resource.Id.relativeLayout).Visibility = ViewStates.Gone;
-			this.ActionBar.Hide ();
+			this.ActionBar.Show ();
 			startPlayButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(startPlayButton, e);
-			startPlayButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+			startPlayButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
 			startPlayButton.Click+= delegate {
 				
 				var preferences = GetPreferences(FileCreationMode.Private);
@@ -89,27 +88,30 @@ namespace Yorsh.Activities
 
 		void SetButtonsAndActionBarIsEndGame()
 		{
-			FindViewById<Button> (Resource.Id.startPlayButton).Visibility = ViewStates.Gone;
+			FindViewById<Button> (Resource.Id.endGameButton).Visibility = ViewStates.Gone;
 			FindViewById<RelativeLayout> (Resource.Id.relativeLayout).Visibility = ViewStates.Visible;
-			this.ActionBar.Show ();
-			var completeGameButton = FindViewById<Button> (Resource.Id.completeGameButton);
-			//completeGameButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(completeGameButton, e);
-			completeGameButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
-			completeGameButton.Click+= delegate 
-			{
-				Rep.Instance.Clear();				 
-				this.StartActivityWithoutBackStack(new Intent(this,typeof(MainMenuActivity)));
-			};
+			this.ActionBar.Hide();
+
+			var startNewGameButton = FindViewById<Button> (Resource.Id.startNewGameButton);
+		    startNewGameButton.Enabled = true;
+            startNewGameButton.Click += delegate
+            {
+                Rep.Instance.Clear();
+                this.StartActivityWithoutBackStack(new Intent(this, typeof(MainMenuActivity)));
+            };
+			startNewGameButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(startNewGameButton, e);
+			startNewGameButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+
 			var shareButton = FindViewById<Button> (Resource.Id.shareButton);
 			shareButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(shareButton, e);
-			shareButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+			shareButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
 			shareButton.Click += delegate
 			{
 				//twitter
 				var contentview = FindViewById (Resource.Id.tournament);
 				contentview.BuildDrawingCache();
 				bmp = contentview.DrawingCache;
-				var sdCardPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+				var sdCardPath = Environment.ExternalStorageDirectory.AbsolutePath;
 				var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
 				using (var stream = new FileStream(filePath, FileMode.Create))
 				{
@@ -126,13 +128,11 @@ namespace Yorsh.Activities
 		private class ListAdapter : BaseAdapter<Player>
 		{
 			private readonly Activity _context;
-			bool _isEndGame;
 			private readonly IList<Player> _players;
 
-			public ListAdapter(Activity context, bool isEndGame, IList<Player> players)
+			public ListAdapter(Activity context, IList<Player> players)
 			{
 				_context = context;
-				_isEndGame = isEndGame;
 				_players = players;
 			}
 
@@ -154,8 +154,8 @@ namespace Yorsh.Activities
 				var imageView = view.FindViewById<ImageView>(Resource.Id.playerImage);
 				var playerName = view.FindViewById<TextView>(Resource.Id.playerName);
 				var playerScore = view.FindViewById<TextView>(Resource.Id.playerScore);
-				playerName.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
-				playerScore.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+				playerName.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+				playerScore.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
 				imageView.SetImageBitmap(this[position].Photo);
 				playerName.Text = this[position].Name;
 				playerScore.Text = this[position].Score.ToString();

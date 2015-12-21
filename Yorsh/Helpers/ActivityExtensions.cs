@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
@@ -73,6 +74,7 @@ namespace Yorsh.Helpers
         public static async Task CreateDataBaseAsync(this Activity context)
         {
             var path = Rep.Instance.DataBaseFile;
+            File.Delete(path);
             if (!File.Exists(path))
             {
                 var connection = new SQLiteAsyncConnection(path);
@@ -92,23 +94,45 @@ namespace Yorsh.Helpers
             await Rep.Instance.BonusGenerateAsync();
         }
 
-        public static async void AddTask(this Activity context, int count)
+        public static async Task AddProduct(this Activity context, string skuId)
         {
-            if (!(context is StoreActivity)) return;
+           // if (!(context is StoreActivity)) return;
+            var skuItems = skuId.Split('_');
+            if (skuItems.Count() != 2) return;
+
+            if (string.CompareOrdinal("task", skuItems[1]) == 0)
+            {
+                int count;
+                if (!int.TryParse(skuItems[0], out count) && string.CompareOrdinal(skuItems[0], "all") == 0)
+                    count = Rep.Instance.AllTaskCount - Rep.Instance.Tasks.Count();
+                else return;
+                await AddTask(context.Assets.Open("Task.csv"), count);
+            }
+            else if (string.CompareOrdinal("bonus", skuItems[1]) == 0)
+            {
+                int count;
+                if (!int.TryParse(skuItems[0], out count) && string.CompareOrdinal(skuItems[0], "all") == 0)
+                    count = Rep.Instance.AllBonusCount - Rep.Instance.Bonuses.Count();
+                else return;
+                await AddBonus(context.Assets.Open("Bonus.csv"), count);
+            }
+        }
+
+        private static async Task AddTask(Stream stream, int count)
+        {
             var path = Rep.Instance.DataBaseFile;
             var connection = new SQLiteAsyncConnection(path);
-            var tasks = GetTasks(context.Assets.Open("Task.csv"), count);
+            var tasks = GetTasks(stream, count);
             await connection.InsertAllAsync(tasks);
             await Rep.Instance.TaskGenerateAsync();
         }
 
-        public static async void AddBonus(this Activity context, int count)
+        private static async Task AddBonus(Stream stream, int count)
         {
-            if (!(context is StoreActivity)) return;
             var path = Rep.Instance.DataBaseFile;
             var connection = new SQLiteAsyncConnection(path);
-            var bonuses = GetBonus(context.Assets.Open("Bonus.csv"), count);
-            await connection.InsertAllAsync(bonuses); 
+            var bonuses = GetBonus(stream, count);
+            await connection.InsertAllAsync(bonuses);
             await Rep.Instance.BonusGenerateAsync();
         }
 
@@ -195,15 +219,6 @@ namespace Yorsh.Helpers
             canvas.DrawColor(activity.Resources.GetColor(opacityColor), PorterDuff.Mode.SrcAtop); //apply filter
             var index = bitmap.GetPixel(0, 0);
             return Color.Argb(index, index, index, index);
-        }
-
-        public static void MakeButtonEnabled(this Activity activity, Button button, bool enabled)
-        {
-            button.Enabled = enabled;
-            button.Background.Alpha = enabled ? 255 : 50;
-            button.SetTextColor(activity.Resources.GetColor(enabled
-                ? Resource.Color.white
-                : Resource.Color.pressed_text_color));
         }
     }
 }

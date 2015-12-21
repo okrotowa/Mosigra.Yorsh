@@ -168,7 +168,6 @@
     <Compile Include="Adapters\AddNewPlayerListAdapter.cs" />
     <Compile Include="Adapters\PlayerListAdapter.cs" />
     <Compile Include="Adapters\MultiItemRowListAdapter.cs" />
-    <Compile Include="Activities\NewGameActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Adapters\GenericFragmentPagerAdapter.cs" />
     <Compile Include="Fragments\DialogRatingFragment.cs" />
@@ -489,12 +488,19 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\values-sw600dp\dimens.xml" />
-    <AndroidResource Include="Resources\values-sw720dp\dimens.xml" />
-    <AndroidResource Include="Resources\values-sw480dp\dimens.xml" />
-    <AndroidResource Include="Resources\values-normal\dimens.xml" />
-    <AndroidResource Include="Resources\values-large\dimens.xml" />
+    <AndroidResource Include="Resources\values-sw720dp\dimens.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\values-sw480dp\dimens.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\values-normal\dimens.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\values-large\dimens.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\values-xlarge\dimens.xml" />
-    <AndroidResource Include="Resources\values-xhdpi\dimens.xml" />
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
     </None>
