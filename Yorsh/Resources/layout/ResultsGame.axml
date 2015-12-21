@@ -32,7 +32,6 @@
                 android:id="@+id/TextView01"
                 android:layout_width="@dimen/AddNewPlayers_padding"
                 android:layout_height="match_parent"
-                android:background="@android/color:black"
                 android:layout_centerHorizontal="true" />
             <Button
                 android:id="@+id/startNewGameButton"

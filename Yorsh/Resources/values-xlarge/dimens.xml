@@ -131,7 +131,7 @@
   <dimen name="EditText_TextSize">30sp</dimen>
   <dimen name="EditText_EditHeight">250dp</dimen>
   <dimen name="EditText_ButtonHeight">90dp</dimen>
-=======
+
 	<dimen name="RoundedCorners">20px</dimen>
 	<dimen name="ActionBar_TitleSize">30sp</dimen>
 	<dimen name="ActionBar_Size">100dp</dimen>
@@ -263,5 +263,4 @@
     <dimen name="EditText_TextSize">30sp</dimen>
     <dimen name="EditText_EditHeight">250dp</dimen>
     <dimen name="EditText_ButtonHeight">90dp</dimen>
->>>>>>> 0b6e1ae59c8880114c0c06b1e7b4cfdb305664a4
 </resources>
