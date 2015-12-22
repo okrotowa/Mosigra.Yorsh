@@ -13,7 +13,7 @@ using Yorsh.Model;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/GameString", MainLauncher = false, ParentActivity = typeof(MainMenuActivity),ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/GameString", MainLauncher = false, ParentActivity = typeof(MainMenuActivity), ScreenOrientation = ScreenOrientation.Portrait)]
     public class GameActivity : BaseActivity
     {
         bool _isRefusing = false;
@@ -95,12 +95,14 @@ namespace Yorsh.Activities
 
 		private void SetButtonsEnabled(bool enabled)
 		{
-            _refuseButton.Background.Alpha = enabled ? 255 : 50;
+		    _refuseButton.Enabled = enabled;
+            _refuseButton.Background.SetAlpha(enabled ? 255 : 50);
             _refuseButton.SetTextColor(Resources.GetColor(enabled
                 ? Resource.Color.white
                 : Resource.Color.pressed_text_color));
 
-            _makeThisButton.Background.Alpha = enabled ? 255 : 50;
+		    _makeThisButton.Enabled = enabled;
+            _makeThisButton.Background.SetAlpha(enabled ? 255 : 50);
             _makeThisButton.SetTextColor(_makeThisButton.Resources.GetColor(enabled
                 ? Resource.Color.white
                 : Resource.Color.pressed_text_color));

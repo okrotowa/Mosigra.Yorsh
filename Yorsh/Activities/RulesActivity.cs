@@ -6,7 +6,7 @@ using Android.Widget;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/RulesGameString",MainLauncher = false, ParentActivity = typeof(MainMenuActivity),ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/RulesGameString",ParentActivity = typeof(MainMenuActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
 	public class RulesActivity : BaseActivity
 	{
 		protected override void OnCreate(Bundle bundle)

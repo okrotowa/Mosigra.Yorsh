@@ -11,7 +11,7 @@ using Yorsh.Adapters;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/PlayersString",ParentActivity = (typeof(MainMenuActivity)), ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/PlayersString", ParentActivity = typeof(MainMenuActivity), ScreenOrientation = ScreenOrientation.Portrait)]
     public class AddPlayersActivity : BaseActivity
     {
 		Button _startGameButton;

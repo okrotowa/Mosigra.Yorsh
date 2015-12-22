@@ -9,7 +9,7 @@ using Android.Content.PM;
 
 namespace Yorsh.Activities
 {
-	[Activity(Theme = "@android:style/Theme.NoTitleBar", ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Theme = "@android:style/Theme.NoTitleBar", ParentActivity = typeof(GameActivity), ScreenOrientation = ScreenOrientation.Portrait)]
     public class ImageActivity : Activity
     {
         private int _taskId;

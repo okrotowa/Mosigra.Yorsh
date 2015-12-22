@@ -47,7 +47,7 @@
                 android:textColor="@color/bonus_blue" />
         </LinearLayout>
     <!--Separator-->
-        <View
+        <ViewStub
             android:layout_width="1px"
             android:layout_height="@dimen/Game_TopBarImageSize"
             android:id="@+id/separator"
@@ -138,7 +138,6 @@
                     android:layout_height="@dimen/Game_PointsSize"
                     android:text="1"
                     android:background="@drawable/points"
-                    android:textAlignment="center"
                     android:gravity="center"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
@@ -150,7 +149,6 @@
                     android:layout_height="@dimen/Game_x2Size"
                     android:text="x2"
                     android:background="@drawable/x2"
-                    android:textAlignment="center"
                     android:gravity="center"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"

@@ -26,7 +26,7 @@ namespace Yorsh.Adapters
 		private View _selectedView;
 		public View SelectedView {
 			get { return _selectedView;}
-			set {
+		    private set {
 				if (_selectedView == value)
 					return;
 				if (_selectedView!=null)

@@ -15,7 +15,7 @@ using Yorsh.Model;
 
 namespace Yorsh.Activities
 {
-    [Activity(Label = "@string/BuyString", ParentActivity = typeof(MainMenuActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/BuyString",ParentActivity = typeof(MainMenuActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
     public class StoreActivity : BaseActivity
     {
         private InAppBillingHandler _billingHandler;
@@ -56,6 +56,7 @@ namespace Yorsh.Activities
                 Android.Graphics.TypefaceStyle.Normal);
 
             StartSetup();
+            HandleOnConnected();
         }
 
         private string GetNumberString(int num)
@@ -89,12 +90,14 @@ namespace Yorsh.Activities
         private void UpdatePurchasedItems()
         {
             _purchases = _billingHandler.GetPurchases(ItemType.Product);
-
         }
-
+        private void UpdateStubPurchasedItems()
+        {
+            _purchases = new List<Purchase> { new Purchase() { ProductId = "10_task", PurchaseState = 0 } };
+        }
         public void StartSetup()
         {
-            var key = string.Concat(new string[]
+            var key = string.Concat(new[]
             {
                 GetNumberString(2), GetNumberString(5), GetNumberString(0), 
                 GetNumberString(3), GetNumberString(6),GetNumberString(7), 
@@ -108,16 +111,19 @@ namespace Yorsh.Activities
         private async void HandleOnConnected()
         {
             _billingHandler = _serviceConnection.BillingHandler;
-            _billingHandler.OnProductPurchased+= BillingHandlerOnOnProductPurchased;
-            _billingHandler.OnProductPurchasedError+= BillingHandlerOnOnProductPurchasedError;
-            UpdatePurchasedItems();
-            await GetInventory();
+            if (_billingHandler != null)
+            {
+                _billingHandler.OnProductPurchased += BillingHandlerOnOnProductPurchased;
+                _billingHandler.OnProductPurchasedError += BillingHandlerOnOnProductPurchasedError;
+            }
+            UpdateStubPurchasedItems();
+            GetStubInventory();
             SetupInventory();
         }
 
         private void BillingHandlerOnOnProductPurchasedError(int responseCode, string sku)
         {
-            
+
         }
 
         private async void BillingHandlerOnOnProductPurchased(int response, Purchase purchase, string purchaseData, string purchaseSignature)
@@ -137,6 +143,7 @@ namespace Yorsh.Activities
             FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Visible;
             FindViewById<TextView>(Resource.Id.googleStoreNotActive).Visibility = ViewStates.Gone;
             _taskListView = FindViewById<ListView>(Resource.Id.taskListView);
+
             var adapter = new StoreListAdapter(this, _taskProducts,
                 product => String.CompareOrdinal(product.ProductId, "all_task") == 0, TaskIsEnabled);
             adapter.ItemClick += ItemClick;
@@ -152,7 +159,8 @@ namespace Yorsh.Activities
 
         void ItemClick(object sender, StoreItemClickEventArgs e)
         {
-            _billingHandler.BuyProduct(e.Product);
+            //_billingHandler.BuyProduct(e.Product);
+            this.AddProduct(e.Product.ProductId);
         }
 
 
@@ -195,21 +203,40 @@ namespace Yorsh.Activities
 
         }
 
+        private void GetStubInventory()
+        {
+            //Get available products
+            _taskProducts = new[]
+            {
+                new Product() {Price = "24", ProductId = "10_task", Price_Currency_Code = "RUB"},
+                new Product() {Price = "26", ProductId = "30_task", Price_Currency_Code = "RUB"},
+                new Product() {Price = "46", ProductId = "70_task", Price_Currency_Code = "RUB"},
+                new Product() {Price = "67", ProductId = "100_task", Price_Currency_Code = "RUB"},
+                new Product() {Price = "1468", ProductId = "all_task", Price_Currency_Code = "RUB"}
+            };
+
+            _bonusProducts = new[]
+            {
+                new Product() {Price = "34", ProductId = "10_bonus", Price_Currency_Code = "RUB"},
+                new Product() {Price = "67", ProductId = "30_bonus", Price_Currency_Code = "RUB"},
+                new Product() {Price = "236", ProductId = "all_bonus", Price_Currency_Code = "RUB"}
+            };
+        }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             _billingHandler.HandleActivityResult(requestCode, resultCode, data);
-            UpdatePurchasedItems();
+            UpdateStubPurchasedItems();
         }
 
 
 
-        //private void ErrorOccur(string message)
-        //{
-        //    FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Gone;
-        //    var googleStoreNotActive = FindViewById<TextView>(Resource.Id.googleStoreNotActive);
-        //    googleStoreNotActive.Visibility = ViewStates.Visible;
-        //    googleStoreNotActive.Text = message;
-        //}
+        private void ErrorOccur(string message)
+        {
+            FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Gone;
+            var googleStoreNotActive = FindViewById<TextView>(Resource.Id.googleStoreNotActive);
+            googleStoreNotActive.Visibility = ViewStates.Visible;
+            googleStoreNotActive.Text = message;
+        }
 
     }
 

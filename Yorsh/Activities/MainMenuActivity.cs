@@ -15,13 +15,13 @@ namespace Yorsh.Activities
     {
         protected override void OnCreate(Bundle bundle)
         {
+            base.OnCreate(bundle);
             SetContentView(Resource.Layout.MainMenu);
             SetLinkView();
             var myriadProBoldCons = this.MyriadProFont(MyriadPro.BoldCondensed);
             SetButton(Resource.Id.StartGame, typeof(AddPlayersActivity), myriadProBoldCons);
             SetButton(Resource.Id.Rules, typeof(RulesActivity), myriadProBoldCons);
             SetButton(Resource.Id.PlusCards, typeof(StoreActivity), myriadProBoldCons);
-            base.OnCreate(bundle);
         }
 
         private void SetButton(int resorceId, Type activityOnClick, Typeface font)

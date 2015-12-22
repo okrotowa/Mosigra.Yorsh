@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Android.App;
+using Android.Graphics;
 using Android.Views;
 using Android.Widget;
 using Xamarin.InAppBilling;
@@ -16,7 +17,7 @@ namespace Yorsh.Adapters
         readonly List<StoreItem> _products;
         private readonly Func<Product, bool> _productIsEnabled;
 
-        public StoreListAdapter(Activity context, IEnumerable<Product> products, Func<Product, bool> productIsSale, Func<Product,bool> productIsEnabled)
+        public StoreListAdapter(Activity context, IEnumerable<Product> products, Func<Product, bool> productIsSale, Func<Product, bool> productIsEnabled)
         {
             _context = context;
             var productList = products.Select(prod => new StoreItem(prod, productIsSale(prod))).ToList();
@@ -60,7 +61,14 @@ namespace Yorsh.Adapters
             var button = view.FindViewById<ImageButton>(Resource.Id.storeButton);
             var drawable = _context.Resources.GetIdentifier(storeItem.ImageString, "drawable", _context.PackageName);
             button.SetImageResource(drawable);
+
             button.Enabled = _productIsEnabled(storeItem.Product);
+            if (button.Enabled)
+                button.Background.ClearColorFilter();
+            else
+                button.Background.SetColorFilter(_context.Resources.GetColor(Resource.Color.white), PorterDuff.Mode.SrcAtop);
+
+            button.Touch += (sender, args) => _context.OnTouchButtonDarker(button, args);
             button.Click += (sender, args) => OnItemClick(new StoreItemClickEventArgs(storeItem.Product));
             var saleImage = view.FindViewById<ImageView>(Resource.Id.saleImageView);
             saleImage.Visibility = storeItem.IsSale ? ViewStates.Visible : ViewStates.Invisible;
@@ -68,14 +76,9 @@ namespace Yorsh.Adapters
 
             var priceText = view.FindViewById<TextView>(Resource.Id.priceText);
             priceText.SetTypeface(_context.MyriadProFont(MyriadPro.SemiboldCondensed), Android.Graphics.TypefaceStyle.Normal);
-            priceText.Text = storeItem.Product.Price;
+            priceText.Text = storeItem.Product.Price + " " + storeItem.Product.Price_Currency_Code;
 
             return view;
-        }
-
-        public void Item_Click(object sender, EventArgs e)
-        {
-            //Buy Something
         }
     }
 }

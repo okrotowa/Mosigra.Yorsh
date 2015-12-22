@@ -16,11 +16,11 @@ namespace Yorsh.Activities
         protected override void OnCreate(Bundle bundle)
         {
 			base.OnCreate (bundle);
-			var viewGroup = (ViewGroup)LayoutInflater.Inflate (Resource.Layout.YorshActionBar,null);
+			var viewGroup = this.LayoutInflater.Inflate (Resource.Layout.YorshActionBar,null);
 			var param = new ActionBar.LayoutParams (
 				ViewGroup.LayoutParams.MatchParent, 
 				ViewGroup.LayoutParams.MatchParent);
-			var title = viewGroup.FindViewById<TextView> (Resource.Id.titleText);
+            var title = viewGroup.FindViewById<TextView>(Resource.Id.titleText);
 			title.Text = Title;
 			title.SetTypeface (this.MyriadProFont(MyriadPro.Bold),TypefaceStyle.Normal);
 			ActionBar.SetIcon(new ColorDrawable(Resources.GetColor(Android.Resource.Color.Transparent)));

@@ -14,7 +14,7 @@ using System.IO;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/ResultsString", MainLauncher = false, ParentActivity = typeof(GameActivity),ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Label = "@string/ResultsString",ParentActivity = typeof(GameActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
     public class ResultsGameActivity : BaseActivity
     {
 		Bitmap bmp;
@@ -101,7 +101,7 @@ namespace Yorsh.Activities
             };
 			startNewGameButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(startNewGameButton, e);
 			startNewGameButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-            startNewGameButton.Background.Alpha = 255;
+            startNewGameButton.Background.SetAlpha(255);
 
 			var shareButton = FindViewById<Button> (Resource.Id.shareButton);
 			shareButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(shareButton, e);

@@ -210,6 +210,28 @@ namespace Yorsh.Helpers
             };
         }
 
+        public static void OnTouchButtonDarker(this Activity activity, ImageButton sender, View.TouchEventArgs e)
+        {
+            var button = sender;
+            switch (e.Event.Action)
+            {
+                case MotionEventActions.Down:
+                    {
+                        button.Background.SetColorFilter(activity.Resources.GetColor(Resource.Color.button_shadow_gray), PorterDuff.Mode.SrcAtop);
+                        button.Invalidate();
+                        e.Handled = false;
+                        break;
+                    }
+                case MotionEventActions.Up:
+                    {
+                        button.Background.ClearColorFilter();
+                        button.Invalidate();
+                        e.Handled = false;
+                        break;
+                    }
+            };
+        }
+
         public static Color GetColorWithOpacity(this Activity activity, int normalColor, int opacityColor)
         {
             var bitmap = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888); //make a 1-pixel Bitmap

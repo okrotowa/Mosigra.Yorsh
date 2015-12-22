@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/name_black"
         android:textSize="@dimen/ActionBar_TitleSize"
-        android:layout_centerInParent="true"
-        android:textAlignment="textEnd" />
+        android:layout_centerInParent="true"/>
     <RelativeLayout
         android:id="@+id/customActionButton"
         android:layout_width="fill_parent"

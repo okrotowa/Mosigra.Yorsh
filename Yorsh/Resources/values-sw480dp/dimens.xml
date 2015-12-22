@@ -147,4 +147,5 @@
   <dimen name="Store_IconSize">60dp</dimen>
   <dimen name="Store_IconContainerSize">90dp</dimen>
   <dimen name="Store_SaleIconSize">30dp</dimen>
+  <dimen name="Store_PricePadding">13dp</dimen>
 </resources>

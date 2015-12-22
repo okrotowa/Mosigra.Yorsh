@@ -43,7 +43,7 @@ namespace Yorsh.Activities
 			//For interaction
 			_confirmButton.Click += (sender, e) => {
 				Rep.Instance.Players.Add (FindViewById<EditText> (Resource.Id.playerName).Text, PlayerImage);
-				this.StartActivityWithoutBackStack (ParentActivityIntent);
+				this.StartActivityWithoutBackStack (new Intent(this, typeof(AddPlayersActivity)));
 			};
 
 			_editText.TextChanged += (obj, e) =>
@@ -53,7 +53,7 @@ namespace Yorsh.Activities
             };
             
             //Cancel
-			_cancelButton.Click += (sender, e) => this.StartActivityWithoutBackStack (ParentActivityIntent);
+            _cancelButton.Click += (sender, e) => this.StartActivityWithoutBackStack(new Intent(this, typeof(AddPlayersActivity)));
         }
 
 		private void Initialize()

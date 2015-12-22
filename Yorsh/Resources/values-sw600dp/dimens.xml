@@ -131,4 +131,19 @@
   <dimen name="EditText_TextSize">23sp</dimen>
   <dimen name="EditText_EditHeight">150dp</dimen>
   <dimen name="EditText_ButtonHeight">60dp</dimen>
+
+  <dimen name="Store_Header_TextSize">25sp</dimen>
+  <dimen name="Store_ContentTextSize">19sp</dimen>
+  <dimen name="Store_WhiteContentView_Margin">20dp</dimen>
+  <dimen name="Store_Scroll_PaddingTop">60dp</dimen>
+  <dimen name="Store_Header_Margin">5dp</dimen>
+  <dimen name="Store_Task_MarginTop">35dp</dimen>
+  <dimen name="Store_List_Margin">5dp</dimen>
+  <dimen name="Store_More_PaddingLeftRight">70dp</dimen>
+  <dimen name="Store_More_PaddingBottom">40dp</dimen>
+  <dimen name="Store_More_TextLeftMargin">10dp</dimen>
+  <dimen name="Store_IconSize">90dp</dimen>
+  <dimen name="Store_IconContainerSize">115dp</dimen>
+  <dimen name="Store_SaleIconSize">45dp</dimen>
+  <dimen name="Store_PricePadding">20dp</dimen>
 </resources>

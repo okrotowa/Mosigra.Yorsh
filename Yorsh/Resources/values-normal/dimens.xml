@@ -137,7 +137,7 @@
   <dimen name="Store_Header_TextSize">16sp</dimen>
   <dimen name="Store_ContentTextSize">12sp</dimen>
   <dimen name="Store_WhiteContentView_Margin">10dp</dimen>
-  <dimen name="Store_Scroll_PaddingTop">30dp</dimen>
+  <dimen name="Store_Scro ll_PaddingTop">30dp</dimen>
   <dimen name="Store_Header_Margin">5dp</dimen>
   <dimen name="Store_Task_MarginTop">35dp</dimen>
   <dimen name="Store_List_Margin">5dp</dimen>
@@ -147,4 +147,5 @@
   <dimen name="Store_IconSize">60dp</dimen>
   <dimen name="Store_IconContainerSize">90dp</dimen>
   <dimen name="Store_SaleIconSize">30dp</dimen>
+  <dimen name="Store_PricePadding">13dp</dimen>
 </resources>

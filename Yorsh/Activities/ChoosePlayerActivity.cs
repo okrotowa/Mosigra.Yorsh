@@ -6,7 +6,7 @@ using Yorsh.Adapters;
 
 namespace Yorsh.Activities
 {
-	[Activity (Label = "@string/PickPlayerString", ParentActivity= typeof(GameActivity))]			
+	[Activity (Label = "@string/PickPlayerString", ParentActivity = typeof(GameActivity))]			
 	public class ChoosePlayerActivity : BaseActivity
 	{
 		TextView _readyButton;
