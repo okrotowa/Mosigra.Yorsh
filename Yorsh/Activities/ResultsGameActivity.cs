@@ -101,6 +101,7 @@ namespace Yorsh.Activities
             };
 			startNewGameButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(startNewGameButton, e);
 			startNewGameButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+            startNewGameButton.Background.Alpha = 255;
 
 			var shareButton = FindViewById<Button> (Resource.Id.shareButton);
 			shareButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(shareButton, e);

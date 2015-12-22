@@ -3,13 +3,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/background">
-    <LinearLayout
+    <ImageView
         android:orientation="vertical"
         android:id="@+id/linearLayout1"
-        android:background="@drawable/gir_top"
-        android:layout_width="match_parent"
+        android:src="@drawable/gir_top"
+        android:background="@android:color/transparent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter" />
     <LinearLayout
         android:orientation="vertical"
         android:minWidth="25px"

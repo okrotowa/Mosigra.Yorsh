@@ -69,7 +69,7 @@ namespace Yorsh.Activities
 			MoveNextStep ();
         }
         
-		private void Initialize()
+	    private void Initialize()
 		{			
 			_playerName = FindViewById<TextView> (Resource.Id.playerInGameName);
 			_playerPosition = FindViewById<TextView> (Resource.Id.playerInGamePostion);
@@ -123,7 +123,7 @@ namespace Yorsh.Activities
 			var fragmentTransaction = FragmentManager.BeginTransaction();
 			var prev = FragmentManager.FindFragmentByTag("answer");
 			if (prev != null) fragmentTransaction.Remove(prev);
-			int taskScore = Rep.Instance.Tasks.Current.Score;
+			var taskScore = Rep.Instance.Tasks.Current.Score;
 			var dialog = new TaskProgressDialog (taskDialog, currentPlayer, taskScore) { ShowsDialog = true };
 			dialog.Show (fragmentTransaction, "answer");
 
@@ -153,9 +153,9 @@ namespace Yorsh.Activities
 		void EndOfGame()
 		{
 			GetShopDialog ().Show ();
-			var intent = new Intent (this, typeof(ResultsGameActivity));
-			intent.PutExtra ("isEnd", true);
-			this.StartActivityWithoutBackStack (intent);
+            //var intent = new Intent (this, typeof(ResultsGameActivity));
+            //intent.PutExtra ("isEnd", true);
+            //this.StartActivityWithoutBackStack (intent);
 		}
 
 		private AlertDialog.Builder GetShopDialog ()
@@ -164,13 +164,15 @@ namespace Yorsh.Activities
 			builder.SetTitle (Resource.String.GoToShopingString);
 			builder.SetMessage (Resource.String.GoToSaleString);
 			builder.SetPositiveButton (GetString (Resource.String.YesString), delegate {
-				this.StartActivity(typeof(StoreActivity));
+				//this.StartActivity(typeof(StoreActivity));
+			                                                                               this.AddProduct("10_task");
 			});
 			builder.SetNegativeButton (GetString (Resource.String.NoString), delegate {
 				var intent = new Intent (this, typeof(ResultsGameActivity));
 				intent.PutExtra ("isEnd", true);
 				this.StartActivityWithoutBackStack (intent);
 			});
+		    builder.SetCancelable(false);
 			return builder;
 		}
 
@@ -193,7 +195,13 @@ namespace Yorsh.Activities
             alertDialog.Show();
         }
 
-		/// <exception cref="T:System.InvalidOperationException"></exception>
+	    protected override void OnDestroy()
+	    {
+            SetButtonsEnabled(true);
+	        base.OnDestroy();
+	    }
+
+	    /// <exception cref="T:System.InvalidOperationException"></exception>
 		protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             if (resultCode == Result.Canceled) return;

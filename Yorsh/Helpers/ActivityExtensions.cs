@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
-using Yorsh.Activities;
 using Yorsh.Model;
 using SQLite;
 using File = System.IO.File;
@@ -81,8 +80,8 @@ namespace Yorsh.Helpers
                 var results = await connection.CreateTablesAsync<TaskTable, BonusTable, CategoryTable>();
                 if (results.Results.Count == 3)
                 {
-                    var tasks = GetTasks(context.Assets.Open("Task.csv"), 74);
-                    var bonuses = GetBonus(context.Assets.Open("Bonus.csv"), 21);
+                    var tasks = GetTasks(context.Assets.Open("Task.csv"), 5);//74);
+                    var bonuses = GetBonus(context.Assets.Open("Bonus.csv"), 3);//21);
                     var category = GetCategory(context.Assets.Open("Category.csv"));
 
                     await connection.InsertAllAsync(tasks);
@@ -193,7 +192,7 @@ namespace Yorsh.Helpers
             switch (e.Event.Action)
             {
                 case MotionEventActions.Down:
-                    {
+                {
                         button.Background.SetColorFilter(activity.Resources.GetColor(Resource.Color.button_shadow_gray), PorterDuff.Mode.SrcAtop);
                         button.SetTextColor(GetColorWithOpacity(activity, Resource.Color.white, Resource.Color.button_shadow_gray));
                         button.Invalidate();

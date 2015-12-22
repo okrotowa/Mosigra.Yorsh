@@ -37,7 +37,7 @@ namespace Yorsh
 		public override Android.Views.View OnCreateView (Android.Views.LayoutInflater inflater, Android.Views.ViewGroup container, Android.OS.Bundle savedInstanceState)
 		{
 			var view = inflater.Inflate (Resource.Layout.Bonus, null);
-			view.Background.SetColorFilter (Activity.Resources.GetColor (Resource.Color.bonus_bg),PorterDuff.Mode.SrcAtop);
+		    view.Background.SetColorFilter (Activity.Resources.GetColor (Resource.Color.bonus_bg),PorterDuff.Mode.SrcAtop);
 			view.FindViewById<TextView> (Resource.Id.congrats).SetTypeface (Activity.MyriadProFont (MyriadPro.SemiboldCondensed), TypefaceStyle.Normal);
 			view.FindViewById<TextView> (Resource.Id.youHaveBonus).SetTypeface (Activity.MyriadProFont (MyriadPro.SemiboldCondensed), TypefaceStyle.Normal);	
 			view.FindViewById<TextView> (Resource.Id.bonusText).SetTypeface (Activity.MyriadProFont (MyriadPro.Condensed), TypefaceStyle.Normal);

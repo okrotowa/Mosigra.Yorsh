@@ -169,5 +169,11 @@ namespace Yorsh.Activities
 			_playerImageButton.Click -= ChooseNewPhoto;
 			base.OnStop ();
 		}
+
+	    protected override void OnDestroy()
+	    {
+            _confirmButton.Background.ClearColorFilter();
+	        base.OnDestroy();
+	    }
     }
 }

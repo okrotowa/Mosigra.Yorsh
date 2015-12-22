@@ -86,5 +86,11 @@ namespace Yorsh.Activities
 				_startGameButton.Background.SetColorFilter (Resources.GetColor (Resource.Color.button_disabled), PorterDuff.Mode.SrcAtop);
 			}
 		}
+
+	    protected override void OnDestroy()
+	    {
+            _startGameButton.Background.ClearColorFilter();
+	        base.OnDestroy();
+	    }
     }
 }
