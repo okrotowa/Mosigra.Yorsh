@@ -68,6 +68,14 @@ namespace Yorsh.Activities
             return builder;
         }
 
+	    protected override void OnPause()
+	    {
+            var prefs = GetSharedPreferences("X", FileCreationMode.Private);
+            var editor = prefs.Edit();
+            editor.PutString("lastActivity", Class.Name);
+            editor.Commit();
+            base.OnPause();
+	    }
     }
 }
 

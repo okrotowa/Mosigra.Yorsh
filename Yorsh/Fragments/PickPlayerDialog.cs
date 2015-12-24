@@ -3,6 +3,7 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Yorsh.Helpers;
 using Yorsh.Model;
 using Yorsh.Activities;
 
@@ -47,7 +48,7 @@ namespace Yorsh.Fragments
                 convertView = inflater.Inflate(Resource.Layout.PlayerItem, null);
                 var imageView = convertView.FindViewById<ImageView>(Resource.Id.playerImage);
                 var playerName = convertView.FindViewById<TextView>(Resource.Id.playerName);
-                imageView.SetImageBitmap(this[position].Photo);
+                imageView.SetImageBitmap(_context.Activity.PlayerPhoto(this[position]));
                 playerName.Text = this[position].Name;
                 convertView.Click += (sender, args) => View_Click(position); 
                 return convertView;

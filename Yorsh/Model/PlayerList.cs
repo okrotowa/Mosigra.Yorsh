@@ -17,6 +17,17 @@ namespace Yorsh.Model
             _players = new List<Player>();
         }
 
+        public PlayerList(IList<Player> players)
+        {
+            _enumerator = new PlayerEnumerator(this);
+            _players = players;
+        }
+
+        public IList<Player> Items
+        {
+            get { return _players; }
+        }
+
         public bool IsAllPlay
         {
             get
@@ -48,7 +59,8 @@ namespace Yorsh.Model
         #region Implemented elements
 
 		public event EventHandler ItemRemoved;
-		protected void OnItemRemoved()
+
+        private void OnItemRemoved()
 		{
 			var handler = ItemRemoved;
 			if (handler != null) handler(this, EventArgs.Empty); 
@@ -132,6 +144,11 @@ namespace Yorsh.Model
             return _enumerator;
         }
 
+        public int CurrentPosition
+        {
+            get { return _enumerator.CurrentPosition; }
+        }
+
         public void SetCurrent(int position)
         {
             _enumerator.SetCurrent(position);
@@ -189,6 +206,11 @@ namespace Yorsh.Model
         public Player Current
         {
             get { return _playersList[_current]; }
+        }
+
+        public int CurrentPosition
+        {
+            get { return _current; }
         }
 
         object IEnumerator.Current

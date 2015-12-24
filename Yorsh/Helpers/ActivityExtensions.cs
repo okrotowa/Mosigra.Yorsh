@@ -73,7 +73,7 @@ namespace Yorsh.Helpers
         public static async Task CreateDataBaseAsync(this Activity context)
         {
             var path = Rep.Instance.DataBaseFile;
-            File.Delete(path);
+            //File.Delete(path);
             if (!File.Exists(path))
             {
                 var connection = new SQLiteAsyncConnection(path);
@@ -89,8 +89,6 @@ namespace Yorsh.Helpers
                     await connection.InsertAllAsync(category);
                 }
             }
-            await Rep.Instance.TaskGenerateAsync();
-            await Rep.Instance.BonusGenerateAsync();
         }
 
         public static async Task AddProduct(this Activity context, string skuId)
@@ -240,6 +238,12 @@ namespace Yorsh.Helpers
             canvas.DrawColor(activity.Resources.GetColor(opacityColor), PorterDuff.Mode.SrcAtop); //apply filter
             var index = bitmap.GetPixel(0, 0);
             return Color.Argb(index, index, index, index);
+        }
+
+
+        public static Bitmap PlayerPhoto(this Activity activity, Player player)
+        {
+            return BitmapFactory.DecodeByteArray(player.Photo, 0, player.Photo.Length) ?? (BitmapFactory.DecodeResource(activity.Resources, Resource.Drawable.photo_default)).GetRoundedCornerBitmap((int)activity.Resources.GetDimension(Resource.Dimension.RoundedCorners));
         }
     }
 }

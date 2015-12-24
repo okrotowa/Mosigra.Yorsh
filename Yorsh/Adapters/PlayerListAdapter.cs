@@ -48,7 +48,7 @@ namespace Yorsh.Adapters
 			var player = _players [position];
 			convertView = _context.LayoutInflater.Inflate (Resource.Layout.ChoosePlayerItem, null);
 			var playerImage = convertView.FindViewById<ImageView> (Resource.Id.playerImage);
-			playerImage.SetImageBitmap (player.Photo);
+			playerImage.SetImageBitmap (_context.PlayerPhoto(player));
 			var doneImage = convertView.FindViewById<ImageView> (Resource.Id.choosePlayer);
 			doneImage.Visibility = convertView.Selected ? ViewStates.Visible : ViewStates.Gone;
 			var playerName = convertView.FindViewById<TextView> (Resource.Id.playerName);

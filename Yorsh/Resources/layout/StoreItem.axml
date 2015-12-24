@@ -7,7 +7,7 @@
     android:background="@android:color/transparent">
     <RelativeLayout
         android:layout_width="@dimen/Store_IconContainerSize"
-        android:gravity="center"
+        android:gravity="right"
         android:layout_gravity="center_horizontal"
         android:layout_height="@dimen/Store_IconContainerSize">
         <ImageButton
@@ -27,7 +27,7 @@
             android:layout_width="@dimen/Store_SaleIconSize"
             android:layout_height="@dimen/Store_SaleIconSize" />
         <ImageView
-            android:layout_width="120dp"
+            android:layout_width="@dimen/Store_IconSize"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:src="@drawable/shadow"
@@ -42,6 +42,5 @@
         android:textColor="#110626"
         android:gravity="center"
         android:textSize="@dimen/Store_ContentTextSize"
-        android:layout_gravity="center_horizontal"
-        android:paddingRight="@dimen/Store_PricePadding" />
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

@@ -88,5 +88,4 @@
                 android:layout_alignParentRight="true" />
         </RelativeLayout>
     </LinearLayout>
-<!-- Property Change Conflict | source:sw600dp, id:@+id/BoardGame | textColorLink=@android:color/white -->
 </RelativeLayout>

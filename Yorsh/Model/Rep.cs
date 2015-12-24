@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
+using Android.Content;
 using SQLite;
+using Exception = System.Exception;
 using Path = System.IO.Path;
 
 namespace Yorsh.Model
@@ -10,7 +14,7 @@ namespace Yorsh.Model
     public class Rep
     {
         private static Rep _instance;
-        private readonly PlayerList _players;
+        private PlayerList _players;
         private TaskList _tasks;
         private IList<BonusTable> _bonuses;
 
@@ -19,6 +23,7 @@ namespace Yorsh.Model
             _players = new PlayerList();
         }
 
+
         public static Rep Instance
         {
             get
@@ -26,6 +31,44 @@ namespace Yorsh.Model
                 if (_instance != null) return _instance;
                 _instance = new Rep();
                 return _instance;
+            }
+        }
+
+        public async Task InitializeRepositoryAsync()
+        {
+            if (System.IO.File.Exists(GetPlayersFile()))
+            {
+                try
+                {
+                    using (var playersFileStream = System.IO.File.Open(GetPlayersFile(), FileMode.Open))
+                    {
+                        var bin = new BinaryFormatter();
+                        _players = new PlayerList((IList<Player>)bin.Deserialize(playersFileStream));
+                    }
+                }
+                catch (Exception)
+                {
+                    _players = new PlayerList();
+                }
+            }
+            else _players = new PlayerList();
+            await TaskGenerateAsync();
+            await BonusGenerateAsync();
+        }
+
+        private string GetPlayersFile()
+        {
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            return Path.Combine(documentsPath, "players.bin");
+        }
+
+        public void SavePlayers()
+        {
+            using (var playersFileStream = System.IO.File.Open(GetPlayersFile(), FileMode.OpenOrCreate))
+            {
+                var bin = new BinaryFormatter();
+                var list = _players.Items;
+                bin.Serialize(playersFileStream, list);
             }
         }
 

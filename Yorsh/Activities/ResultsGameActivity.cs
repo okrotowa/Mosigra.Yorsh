@@ -50,7 +50,7 @@ namespace Yorsh.Activities
 			playerName.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
 			playerScore.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
 
-			imageView.SetImageBitmap(player.Photo);
+			imageView.SetImageBitmap(this.PlayerPhoto(player));
 			playerName.Text = player.Name.ToUpper();
 			playerScore.Text = player.Score.ToString();
 			leadString.Text = Resources.GetString(isEndGame 
@@ -80,53 +80,74 @@ namespace Yorsh.Activities
 				}
 				else
 				{
+                    var prefs = GetSharedPreferences("T", FileCreationMode.Private);
+                    var editor = prefs.Edit();
+                    editor.PutBoolean("isEndGame", false);
+                    editor.Commit();
 					Intent.PutExtra("isEnd",true);
 					this.Recreate();
 				}
 			};
 		}
 
-		void SetButtonsAndActionBarIsEndGame()
-		{
-			FindViewById<Button> (Resource.Id.endGameButton).Visibility = ViewStates.Gone;
-			FindViewById<RelativeLayout> (Resource.Id.relativeLayout).Visibility = ViewStates.Visible;
-			this.ActionBar.Hide();
+	    protected override void OnPause()
+	    {
+	        if (Intent.GetBooleanExtra("isEnd", false))
+	        {
+	            var editorX = GetSharedPreferences("X", FileCreationMode.Private).Edit();
+	            editorX.PutString("lastActivity", Class.Name);
+	            editorX.Commit();
+	        }
+	        base.OnPause();
+	    }
 
-			var startNewGameButton = FindViewById<Button> (Resource.Id.startNewGameButton);
-		    startNewGameButton.Enabled = true;
-            startNewGameButton.Click += delegate
-            {
-                Rep.Instance.Clear();
-                this.StartActivityWithoutBackStack(new Intent(this, typeof(MainMenuActivity)));
-            };
-			startNewGameButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(startNewGameButton, e);
-			startNewGameButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-            startNewGameButton.Background.SetAlpha(255);
+	    private void SetButtonsAndActionBarIsEndGame()
+	    {
+	        FindViewById<Button>(Resource.Id.endGameButton).Visibility = ViewStates.Gone;
+	        FindViewById<RelativeLayout>(Resource.Id.relativeLayout).Visibility = ViewStates.Visible;
+	        this.ActionBar.Hide();
 
-			var shareButton = FindViewById<Button> (Resource.Id.shareButton);
-			shareButton.Touch+=(sender, e)=>this.OnTouchButtonDarker(shareButton, e);
-			shareButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-			shareButton.Click += delegate
-			{
-				//twitter
-				var contentview = FindViewById (Resource.Id.tournament);
-				contentview.BuildDrawingCache();
-				bmp = contentview.DrawingCache;
-				var sdCardPath = Environment.ExternalStorageDirectory.AbsolutePath;
-				var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
-				using (var stream = new FileStream(filePath, FileMode.Create))
-				{
-					bmp.Compress(Bitmap.CompressFormat.Png, 100, stream);
-				}
+	        var startNewGameButton = FindViewById<Button>(Resource.Id.startNewGameButton);
+	        startNewGameButton.Enabled = true;
+	        startNewGameButton.Click += delegate
+	        {
+	            Rep.Instance.Clear();
+	            var prefs = GetSharedPreferences("T", FileCreationMode.Private);
+	            var editor = prefs.Edit();
+	            editor.PutInt("currentPlayer", -1);
+	            editor.PutInt("currentTask", -1);
+	            editor.Commit();
+	            this.StartActivityWithoutBackStack(new Intent(this, typeof (MainMenuActivity)));
+	        };
+	        startNewGameButton.Touch += (sender, e) => this.OnTouchButtonDarker(startNewGameButton, e);
+	        startNewGameButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+	        startNewGameButton.Background.SetAlpha(255);
 
-				var fragmentTrans = FragmentManager.BeginTransaction();
-				var prev = (DialogFragment)FragmentManager.FindFragmentByTag("share");
-				var dialogShare = prev ?? new ShareFragment() { ShowsDialog = true };
-				dialogShare.Show(fragmentTrans, "share");
-			};
-		}
+	        var shareButton = FindViewById<Button>(Resource.Id.shareButton);
+	        shareButton.Touch += (sender, e) => this.OnTouchButtonDarker(shareButton, e);
+	        shareButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+	        shareButton.Click += delegate
+	        {
+	            //twitter
+	            var contentview = FindViewById(Resource.Id.tournament);
+	            contentview.BuildDrawingCache();
+	            bmp = contentview.DrawingCache;
+	            var sdCardPath = Environment.ExternalStorageDirectory.AbsolutePath;
+	            var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
+	            using (var stream = new FileStream(filePath, FileMode.Create))
+	            {
+	                bmp.Compress(Bitmap.CompressFormat.Png, 100, stream);
+	            }
 
-		private class ListAdapter : BaseAdapter<Player>
+	            var fragmentTrans = FragmentManager.BeginTransaction();
+	            var prev = (DialogFragment) FragmentManager.FindFragmentByTag("share");
+	            var dialogShare = prev ?? new ShareFragment() {ShowsDialog = true};
+	            dialogShare.Show(fragmentTrans, "share");
+	        };
+
+	    }
+
+	    private class ListAdapter : BaseAdapter<Player>
 		{
 			private readonly Activity _context;
 			private readonly IList<Player> _players;
@@ -157,7 +178,7 @@ namespace Yorsh.Activities
 				var playerScore = view.FindViewById<TextView>(Resource.Id.playerScore);
 				playerName.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
 				playerScore.SetTypeface (_context.MyriadProFont (MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-				imageView.SetImageBitmap(this[position].Photo);
+				imageView.SetImageBitmap(_context.PlayerPhoto(this[position]));
 				playerName.Text = this[position].Name;
 				playerScore.Text = this[position].Score.ToString();
 				return view;
@@ -172,6 +193,8 @@ namespace Yorsh.Activities
 			{
 				get { return _players[position]; }
 			}
+
+          
 		}
     }
 

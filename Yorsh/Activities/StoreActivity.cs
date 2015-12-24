@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.OS;
 using Android.Content.PM;
+using Java.Security;
 using Xamarin.InAppBilling;
 using Android.Widget;
 using System;
@@ -15,7 +16,7 @@ using Yorsh.Model;
 
 namespace Yorsh.Activities
 {
-    [Activity(Label = "@string/BuyString",ParentActivity = typeof(MainMenuActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/BuyString", ParentActivity = typeof(MainMenuActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
     public class StoreActivity : BaseActivity
     {
         private InAppBillingHandler _billingHandler;
@@ -97,12 +98,12 @@ namespace Yorsh.Activities
         }
         public void StartSetup()
         {
-            var key = string.Concat(new[]
+            var key = Xamarin.InAppBilling.Utilities.Security.Unify(new[]
             {
                 GetNumberString(2), GetNumberString(5), GetNumberString(0), 
                 GetNumberString(3), GetNumberString(6),GetNumberString(7), 
                 GetNumberString(1), GetNumberString(4)
-            });
+            }, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 });
             _serviceConnection = new InAppBillingServiceConnection(this, key);
             _serviceConnection.OnConnected += HandleOnConnected;
             _serviceConnection.Connect();
@@ -238,6 +239,15 @@ namespace Yorsh.Activities
             googleStoreNotActive.Text = message;
         }
 
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+        }
     }
 
 }

@@ -14,68 +14,69 @@ using Xamarin.Contacts;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/AddNewPlayerLowCaseString",ParentActivity = typeof(AddPlayersActivity), ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/AddNewPlayerLowCaseString", ParentActivity = typeof(AddPlayersActivity), ScreenOrientation = ScreenOrientation.Portrait)]
     public class AddNewPlayerActivity : BaseActivity
     {
         Bitmap _playerImage;
-		Button _confirmButton;
-		Button _chooseFromContactsButton;
-		Button _cancelButton;
-		EditText _editText;
-		ImageButton _playerImageButton;
+        Button _confirmButton;
+        Button _chooseFromContactsButton;
+        Button _cancelButton;
+        EditText _editText;
+        ImageButton _playerImageButton;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.AddNewPlayer);
-			Initialize ();	
+            Initialize();
 
-			//Make photo or choose from gallery
-			_playerImageButton.Click += ChooseNewPhoto;
+            //Make photo or choose from gallery
+            _playerImageButton.Click += ChooseNewPhoto;
 
             //Choose from contacts realization
-			_chooseFromContactsButton.Click += delegate
+            _chooseFromContactsButton.Click += delegate
             {
                 var contactPickerIntent = new Intent(Intent.ActionPick, ContactsContract.Contacts.ContentUri);
                 StartActivityForResult(contactPickerIntent, 101);
             };
 
-			//For interaction
-			_confirmButton.Click += (sender, e) => {
-				Rep.Instance.Players.Add (FindViewById<EditText> (Resource.Id.playerName).Text, PlayerImage);
-				this.StartActivityWithoutBackStack (new Intent(this, typeof(AddPlayersActivity)));
-			};
+            //For interaction
+            _confirmButton.Click += (sender, e) =>
+            {
+                Rep.Instance.Players.Add(FindViewById<EditText>(Resource.Id.playerName).Text, PlayerImage);
+                this.StartActivityWithoutBackStack(new Intent(this, typeof(AddPlayersActivity)));
+            };
 
-			_editText.TextChanged += (obj, e) =>
+            _editText.TextChanged += (obj, e) =>
             {
                 var text = e.Text.ToString();
-				SetConfirmButtonEnabled(!string.IsNullOrEmpty(text));
+                SetConfirmButtonEnabled(!string.IsNullOrEmpty(text));
             };
-            
+
             //Cancel
             _cancelButton.Click += (sender, e) => this.StartActivityWithoutBackStack(new Intent(this, typeof(AddPlayersActivity)));
         }
 
-		private void Initialize()
-		{
-			_chooseFromContactsButton = FindViewById<Button>(Resource.Id.chooseFromContButton);
-			_confirmButton = FindViewById<Button>(Resource.Id.confirmButton);
-			_cancelButton = FindViewById<Button>(Resource.Id.cancelButton);
-			_editText = FindViewById<EditText> (Resource.Id.playerName);
-			_playerImageButton = FindViewById<ImageButton> (Resource.Id.playerImage);
+        private void Initialize()
+        {
+            _chooseFromContactsButton = FindViewById<Button>(Resource.Id.chooseFromContButton);
+            _confirmButton = FindViewById<Button>(Resource.Id.confirmButton);
+            _cancelButton = FindViewById<Button>(Resource.Id.cancelButton);
+            _editText = FindViewById<EditText>(Resource.Id.playerName);
+            _playerImageButton = FindViewById<ImageButton>(Resource.Id.playerImage);
 
-			SetFont (_cancelButton);
-			SetFont (_confirmButton);
-			SetFont (_chooseFromContactsButton);
-			SetFontItalic (_editText);
+            SetFont(_cancelButton);
+            SetFont(_confirmButton);
+            SetFont(_chooseFromContactsButton);
+            SetFontItalic(_editText);
 
-			_confirmButton.Touch += (sender, e) => this.OnTouchButtonDarker(_confirmButton, e);
-			_cancelButton.Touch += (sender, e) => this.OnTouchButtonDarker(_cancelButton, e);
-			_chooseFromContactsButton.Touch += (sender, e) => this.OnTouchButtonDarker(_chooseFromContactsButton, e);
-			_confirmButton.Enabled = true;	SetConfirmButtonEnabled(false);
-			//To set _playImage to default
-			PlayerImage = null;
-		}
+            _confirmButton.Touch += (sender, e) => this.OnTouchButtonDarker(_confirmButton, e);
+            _cancelButton.Touch += (sender, e) => this.OnTouchButtonDarker(_cancelButton, e);
+            _chooseFromContactsButton.Touch += (sender, e) => this.OnTouchButtonDarker(_chooseFromContactsButton, e);
+            _confirmButton.Enabled = true; SetConfirmButtonEnabled(false);
+            //To set _playImage to default
+            PlayerImage = null;
+        }
 
 
         private Bitmap PlayerImage
@@ -85,21 +86,20 @@ namespace Yorsh.Activities
             {
                 if (value == null)
                 {
-					_playerImageButton
-                        .SetImageDrawable(Resources.GetDrawable(Resource.Drawable.photo_default));
+                    _playerImageButton.SetImageDrawable(Resources.GetDrawable(Resource.Drawable.photo_default));
                     _playerImage = BitmapFactory.DecodeResource(Resources, Resource.Drawable.photo_default);
                 }
                 else
                 {
-					var image =  value.GetRoundedCornerBitmap((int)Resources.GetDimension (Resource.Dimension.RoundedCorners));
-					_playerImageButton.SetImageBitmap(image);
-					_playerImage = image;
+                    var image = value.GetRoundedCornerBitmap((int)Resources.GetDimension(Resource.Dimension.RoundedCorners));
+                    _playerImageButton.SetImageBitmap(image);
+                    _playerImage = image;
                 }
             }
         }
 
 
-		private void ChooseNewPhoto(object sender, EventArgs e)
+        private void ChooseNewPhoto(object sender, EventArgs e)
 		{
 			var fragmentTransaction = FragmentManager.BeginTransaction();
 			var prev = FragmentManager.FindFragmentByTag("dialog");
@@ -112,9 +112,8 @@ namespace Yorsh.Activities
 				var desireHeight = button.Height;
 				dialog = new ChoosePhotoDialog();
 				dialog.Show(fragmentTransaction, "dialog");
-				dialog.BitmapLoaded += (object obj, BitmapLoadedEventArgs args) => 
-					BitmapExtensions.DecodeBitmapAsync (args.Path, desireWidth, desireHeight)
-					.ContinueWith (t => PlayerImage = t.Result, TaskScheduler.FromCurrentSynchronizationContext ());
+				dialog.BitmapLoaded += (object obj, BitmapLoadedEventArgs args) => BitmapExtensions.DecodeBitmapAsync(args.Path, desireWidth, desireHeight)
+				    .ContinueWith(t => PlayerImage = t.Result, TaskScheduler.FromCurrentSynchronizationContext());
 			}
 			else
 			{
@@ -141,39 +140,39 @@ namespace Yorsh.Activities
                 return;
             }
 
-			_editText.Text = contact.DisplayName;
-			PlayerImage = contact.GetThumbnail();
+            _editText.Text = contact.DisplayName;
+            PlayerImage = contact.GetThumbnail();
         }
 
-		private void SetConfirmButtonEnabled(bool enabled)
-		{
-			if (_confirmButton.Enabled == enabled) return;
-			_confirmButton.Enabled = enabled;
-			_confirmButton.SetTextColor(enabled ? Resources.GetColor(Resource.Color.white) : this.GetColorWithOpacity(Resource.Color.white, Resource.Color.button_text_disabled));
-			if (enabled) _confirmButton.Background.ClearColorFilter ();
-			else _confirmButton.Background.SetColorFilter (Resources.GetColor (Resource.Color.button_disabled), PorterDuff.Mode.SrcAtop);
-		}
+        private void SetConfirmButtonEnabled(bool enabled)
+        {
+            if (_confirmButton.Enabled == enabled) return;
+            _confirmButton.Enabled = enabled;
+            _confirmButton.SetTextColor(enabled ? Resources.GetColor(Resource.Color.white) : this.GetColorWithOpacity(Resource.Color.white, Resource.Color.button_text_disabled));
+            if (enabled) _confirmButton.Background.ClearColorFilter();
+            else _confirmButton.Background.SetColorFilter(Resources.GetColor(Resource.Color.button_disabled), PorterDuff.Mode.SrcAtop);
+        }
 
-		private void SetFont(TextView textView)
-		{
-			textView.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-		}
+        private void SetFont(TextView textView)
+        {
+            textView.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+        }
 
-		private void SetFontItalic(TextView textView)
-		{
-			textView.SetTypeface(this.MyriadProFont(MyriadPro.Condensed), TypefaceStyle.Italic);
-		}
+        private void SetFontItalic(TextView textView)
+        {
+            textView.SetTypeface(this.MyriadProFont(MyriadPro.Condensed), TypefaceStyle.Italic);
+        }
 
-		protected override void OnStop ()
-		{
-			_playerImageButton.Click -= ChooseNewPhoto;
-			base.OnStop ();
-		}
+        protected override void OnStop()
+        {
+            _playerImageButton.Click -= ChooseNewPhoto;
+            base.OnStop();
+        }
 
-	    protected override void OnDestroy()
-	    {
+        protected override void OnDestroy()
+        {
             _confirmButton.Background.ClearColorFilter();
-	        base.OnDestroy();
-	    }
+            base.OnDestroy();
+        }
     }
 }

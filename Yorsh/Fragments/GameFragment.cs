@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Yorsh.Helpers;
 using Yorsh.Model;
 
 namespace Yorsh.Fragments
@@ -17,7 +18,7 @@ namespace Yorsh.Fragments
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.PlayerInGameItem, null);
-            view.FindViewById<ImageView>(Resource.Id.playerInGameImage).SetImageBitmap(_player.Photo);
+            view.FindViewById<ImageView>(Resource.Id.playerInGameImage).SetImageBitmap(this.Activity.PlayerPhoto(_player));
             view.FindViewById<TextView>(Resource.Id.playerInGameName).Text = _player.Name;
             view.FindViewById<TextView>(Resource.Id.playerInGamePostion).Text =
                 Resources.GetString(Resource.String.PositionPlayerString) + Rep.Instance.Players.GetPosition(_player);

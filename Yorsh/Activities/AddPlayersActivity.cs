@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Yorsh.Helpers;
 using Yorsh.Model;
 using Android.App;
@@ -11,10 +12,10 @@ using Yorsh.Adapters;
 
 namespace Yorsh.Activities
 {
-	[Activity(Label = "@string/PlayersString", ParentActivity = typeof(MainMenuActivity), ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/PlayersString", ParentActivity = typeof(MainMenuActivity), ScreenOrientation = ScreenOrientation.Portrait)]
     public class AddPlayersActivity : BaseActivity
     {
-		Button _startGameButton;
+        Button _startGameButton;
         AddNewPlayerListAdapter _adapter;
         bool _isPlayersCountValidate;
 
@@ -22,12 +23,12 @@ namespace Yorsh.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.AddPlayers);
-			CreateActionButton (Resource.Drawable.add_player_button).Click+=(sender,e)=>
-				StartActivity(new Intent(this, typeof(AddNewPlayerActivity)));	
-			_startGameButton = FindViewById<Button>(Resource.Id.startPlayButton);
-			_startGameButton.Touch += (sender, e) => this.OnTouchButtonDarker (_startGameButton, e);
-			_startGameButton.SetTypeface (this.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
-		}
+            CreateActionButton(Resource.Drawable.add_player_button).Click += (sender, e) =>
+                StartActivity(new Intent(this, typeof(AddNewPlayerActivity)));
+            _startGameButton = FindViewById<Button>(Resource.Id.startPlayButton);
+            _startGameButton.Touch += (sender, e) => this.OnTouchButtonDarker(_startGameButton, e);
+            _startGameButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+        }
 
         protected override void OnResume()
         {
@@ -37,14 +38,15 @@ namespace Yorsh.Activities
             listView.Adapter = _adapter;
 
             _startGameButton.Click += _startGameButton_Click;
-			IsPlayersCountValidate = Rep.Instance.Players.Count > 1;
-			Rep.Instance.Players.ItemRemoved += delegate {				
-				{
-						IsPlayersCountValidate = Rep.Instance.Players.Count > 1;
-						listView.InvalidateViews();
-				}
+            IsPlayersCountValidate = Rep.Instance.Players.Count > 1;
+            Rep.Instance.Players.ItemRemoved += delegate
+            {
+                {
+                    IsPlayersCountValidate = Rep.Instance.Players.Count > 1;
+                    listView.InvalidateViews();
+                }
 
-			};
+            };
         }
 
         private bool IsPlayersCountValidate
@@ -58,39 +60,49 @@ namespace Yorsh.Activities
                 if (_isPlayersCountValidate)
                 {
                     buttonNameString = Resource.String.StartGameButtonString;
-					SetButtonEnabled(Rep.Instance.Players.IsAllPlay);
-				}
+                    SetButtonEnabled(Rep.Instance.Players.IsAllPlay);
+                }
                 else
                 {
                     buttonNameString = Resource.String.AddNewPlayerString;
-					SetButtonEnabled(true);
+                    SetButtonEnabled(true);
                 }
-				_startGameButton.Text = Resources.GetString(buttonNameString);
+                _startGameButton.Text = Resources.GetString(buttonNameString);
             }
         }
 
         void _startGameButton_Click(object sender, EventArgs e)
         {
-            this.StartActivityWithoutBackStack (new Intent (this, !IsPlayersCountValidate ? typeof(AddNewPlayerActivity) : typeof(GameActivity)));
+            this.StartActivityWithoutBackStack(new Intent(this, !IsPlayersCountValidate ? typeof(AddNewPlayerActivity) : typeof(GameActivity)));
         }
 
-		public void SetButtonEnabled(bool enabled)
-		{	
-			if (_startGameButton.Enabled == enabled)
-				return;
-			_startGameButton.Enabled = enabled;
-			_startGameButton.SetTextColor(enabled ? Resources.GetColor(Resource.Color.white) : this.GetColorWithOpacity(Resource.Color.white, Resource.Color.button_text_disabled));
-			if (enabled)
-				_startGameButton.Background.ClearColorFilter ();
-			else {
-				_startGameButton.Background.SetColorFilter (Resources.GetColor (Resource.Color.button_disabled), PorterDuff.Mode.SrcAtop);
-			}
-		}
+        public void SetButtonEnabled(bool enabled)
+        {
+            if (_startGameButton.Enabled == enabled)
+                return;
+            _startGameButton.Enabled = enabled;
+            _startGameButton.SetTextColor(enabled ? Resources.GetColor(Resource.Color.white) : this.GetColorWithOpacity(Resource.Color.white, Resource.Color.button_text_disabled));
+            if (enabled)
+                _startGameButton.Background.ClearColorFilter();
+            else
+            {
+                _startGameButton.Background.SetColorFilter(Resources.GetColor(Resource.Color.button_disabled), PorterDuff.Mode.SrcAtop);
+            }
+        }
 
-	    protected override void OnDestroy()
-	    {
+        public override void OnBackPressed()
+        {
+
+            base.OnBackPressed();
+        }
+
+        protected override void OnPause()
+        {
             _startGameButton.Background.ClearColorFilter();
-	        base.OnDestroy();
-	    }
+            Rep.Instance.SavePlayers();
+            base.OnPause();
+        }
+        
+
     }
 }

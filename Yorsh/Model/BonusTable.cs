@@ -17,7 +17,7 @@ namespace Yorsh.Model
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string BonusName { get; set; }
-        public int Score { get; set; }
+        private int Score { get; set; }
         public override string ToString()
         {
             return "BonusTable";

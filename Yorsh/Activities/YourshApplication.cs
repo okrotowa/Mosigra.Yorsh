@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System.Runtime.Serialization.Formatters.Binary;
+using Android.App;
 using Java.Lang;
 using System;
 using Android.Runtime;
@@ -20,6 +21,8 @@ namespace Yorsh.Activities
 			AppDomain currentDomain = AppDomain.CurrentDomain;
 //			currentDomain.UnhandledException += CurrentDomain_UnhandledException;
 		}
+
+        
 
 //		void CurrentDomain_UnhandledException (object sender, UnhandledExceptionEventArgs e)
 //		{

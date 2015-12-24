@@ -12,7 +12,7 @@ namespace Yorsh.Model
         private readonly Dictionary<int, CategoryTable> _category;
         private readonly Dictionary<int, TaskTable> _taskDictionary;
         private readonly TaskEnumerator _enumerator;
-        
+
         public TaskList(IList<TaskTable> tasks, IEnumerable<CategoryTable> categories)
         {
             _tasks = tasks;
@@ -20,7 +20,7 @@ namespace Yorsh.Model
             _category = categories.ToDictionary(cat => cat.Id);
             _enumerator = new TaskEnumerator(this);
         }
-        
+
         public IEnumerator<TaskTable> GetEnumerator()
         {
             return _enumerator;
@@ -38,8 +38,8 @@ namespace Yorsh.Model
 
         public void Clear()
         {
-			_tasks.Shuffle ();
-			_enumerator.Reset();
+            _tasks.Shuffle();
+            _enumerator.Reset();
         }
 
         public bool IsBear(int categoryId)
@@ -123,6 +123,11 @@ namespace Yorsh.Model
         public void SetCurrent(int position)
         {
             _current = position;
+        }
+
+        public int CurrentPosition
+        {
+            get { return _current; }
         }
 
         public TaskTable Current
