@@ -4,7 +4,6 @@ using Android.Views;
 using Android.Widget;
 using Yorsh.Helpers;
 using Yorsh.Model;
-using Android.Graphics.Drawables;
 
 namespace Yorsh.Fragments
 {
@@ -27,16 +26,13 @@ namespace Yorsh.Fragments
 		{
 			var dialog =  base.OnCreateDialog (savedInstanceState);
 			dialog.Window.RequestFeature (WindowFeatures.NoTitle);
-			dialog.Window.SetFlags(WindowManagerFlags.ForceNotFullscreen, WindowManagerFlags.ForceNotFullscreen); 
+            dialog.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen); 
 			dialog.Window.SetBackgroundDrawableResource (Android.Resource.Color.Transparent);
 			return dialog;
 		}
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-			//this.Dialog.Window.RequestFeature (WindowFeatures.NoTitle);
-			//
-
             var view = inflater.Inflate(Resource.Layout.TaskStatus, container, false);
             var taskStrings = TaskDialogBuilder.GetTask(_taskDialog, _taskScore, _currentPlayer);
 			var color = Resources.GetColor (_taskDialog == TaskDialog.Make 

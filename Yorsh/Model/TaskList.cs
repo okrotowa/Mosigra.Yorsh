@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using BoltsSdk;
 using Yorsh.Helpers;
 
 namespace Yorsh.Model
@@ -31,6 +30,10 @@ namespace Yorsh.Model
             return _enumerator;
         }
 
+        public TaskEnumerator Enumerator
+        {
+            get { return _enumerator; }
+        }
         public CategoryTable GetCategory(int categoryId)
         {
             return _category[categoryId];
@@ -61,7 +64,7 @@ namespace Yorsh.Model
         {
             _tasks.Add(task);
         }
-
+        
         public TaskTable GetTask(int taskId)
         {
             return _taskDictionary[taskId];
@@ -97,7 +100,8 @@ namespace Yorsh.Model
 
         #endregion
     }
-    class TaskEnumerator : IEnumerator<TaskTable>
+
+    public class TaskEnumerator : IEnumerator<TaskTable>
     {
         private readonly TaskList _taskList;
         private int _current;
@@ -105,7 +109,7 @@ namespace Yorsh.Model
         public TaskEnumerator(TaskList taskList)
         {
             _taskList = taskList;
-            _current = -1;
+            _current = 0;
         }
 
         public bool MoveNext()
@@ -117,7 +121,7 @@ namespace Yorsh.Model
 
         public void Reset()
         {
-            _current = -1;
+            _current = 0;
         }
 
         public void SetCurrent(int position)

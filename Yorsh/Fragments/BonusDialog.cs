@@ -23,16 +23,10 @@ namespace Yorsh
 		{
 			var dialog =  base.OnCreateDialog (savedInstanceState);
 			dialog.Window.RequestFeature (WindowFeatures.NoTitle);
-			dialog.Window.SetFlags(WindowManagerFlags.ForceNotFullscreen, WindowManagerFlags.ForceNotFullscreen); 
+			dialog.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen); 
 			//dialog.Window.SetBackgroundDrawableResource (Android.Resource.Color.Transparent);
 			return dialog;
 		}
-
-//		public override void OnCreate (Android.OS.Bundle savedInstanceState)
-//		{
-//			base.OnCreate (savedInstanceState);
-//			this.SetStyle (DialogFragmentStyle.NoTitle, Resource.Style.Theme_WithoutActionBar);
-//		}
 
 		public override Android.Views.View OnCreateView (Android.Views.LayoutInflater inflater, Android.Views.ViewGroup container, Android.OS.Bundle savedInstanceState)
 		{

@@ -22,7 +22,9 @@ namespace Yorsh.Activities
             var category = Rep.Instance.Tasks.GetCategory(task.CategoryId);
 
             var image = FindViewById<ImageView>(Resource.Id.imageCardView);
+
             var text = FindViewById<TextView>(Resource.Id.textCard);
+
 			text.SetTypeface(this.BankirRetroFont(), TypefaceStyle.Normal);
             //TODO: Problem with often click
             using (var resourceStream = ResourceLoader.GetEmbeddedResourceStream(
@@ -34,7 +36,7 @@ namespace Yorsh.Activities
             FindViewById(Resource.Id.contentFrameLayout).Click += (sender, args) => OnBackPressed();
         }
 
-        public void SetResult()
+	    private void SetResult()
         {
             var isBear = Rep.Instance.Tasks.GetTask(_taskId).IsBear;
             SetResult(isBear ? Result.Ok : Result.Canceled);

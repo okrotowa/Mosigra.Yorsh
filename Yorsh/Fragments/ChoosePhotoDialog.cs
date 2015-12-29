@@ -10,19 +10,14 @@ using Xamarin.Media;
 
 namespace Yorsh.Fragments
 {
-    public class ChoosePhotoDialog : DialogFragment
+    public sealed class ChoosePhotoDialog : DialogFragment
     {
-		
 		public override Dialog OnCreateDialog (Bundle savedInstanceState)
 		{
-			var dialog =  base.OnCreateDialog (savedInstanceState);
-			dialog.Window.RequestFeature (WindowFeatures.NoTitle);
-			dialog.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen); 
-			dialog.Window.SetBackgroundDrawableResource (Android.Resource.Color.Transparent);
-			dialog.Window.SetGravity (GravityFlags.CenterHorizontal);
-			var param = dialog.Window.Attributes;
-			param.Width = ViewGroup.LayoutParams.MatchParent;
-			dialog.Window.Attributes = param;
+            var dialog = base.OnCreateDialog(savedInstanceState);
+            dialog.Window.RequestFeature(WindowFeatures.NoTitle);
+            dialog.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
+            dialog.Window.SetBackgroundDrawableResource(Resource.Color.white);
 			return dialog;
 		}
 
@@ -61,6 +56,7 @@ namespace Yorsh.Fragments
                 Directory = "Yoursh",
                 Name = "photo1.jpg"
             };
+
             var intent = picker.GetTakePhotoUI(store);
             StartActivityForResult(intent, 2);
         }
@@ -74,21 +70,26 @@ namespace Yorsh.Fragments
 
         public override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
-            if (resultCode == Result.Canceled) { Dismiss(); return; }
+            if (resultCode == Result.Canceled)
+            {
+                Dismiss(); 
+                return;
+            }
+
             if (requestCode == 2)
             {
                 data.GetMediaFileExtraAsync(Activity).ContinueWith(
-                    t => OnBitmapLoaded(t.Result.Path),
+                    GetPhotoFromGalery,
                     TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
 
         public event EventHandler<BitmapLoadedEventArgs> BitmapLoaded;
 
-        protected virtual void OnBitmapLoaded(string path)
+        private void GetPhotoFromGalery(Task<MediaFile> task, object obj)
         {
             var handler = BitmapLoaded;
-            if (handler != null) handler(this, new BitmapLoadedEventArgs(path));
+            if (handler != null) handler(this, new BitmapLoadedEventArgs(task.Result.Path));
             Dismiss();
         }
     }

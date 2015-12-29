@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using Android.Content;
@@ -11,7 +10,7 @@ using Path = System.IO.Path;
 
 namespace Yorsh.Model
 {
-    public class Rep
+    public sealed class Rep
     {
         private static Rep _instance;
         private PlayerList _players;
@@ -21,6 +20,14 @@ namespace Yorsh.Model
         private Rep()
         {
             _players = new PlayerList();
+        }
+
+        public event EventHandler DatabaseChanged;
+
+        private void OnDatabaseChanged()
+        {
+            var handler = DatabaseChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
 
 
@@ -36,7 +43,14 @@ namespace Yorsh.Model
 
         public async Task InitializeRepositoryAsync()
         {
-            if (System.IO.File.Exists(GetPlayersFile()))
+            await PlayersGenerateAsync();
+            await TaskGenerateAsync();
+            await BonusGenerateAsync();
+        }
+
+        private async Task PlayersGenerateAsync()
+        {
+            if (File.Exists(GetPlayersFile()))
             {
                 try
                 {
@@ -52,8 +66,6 @@ namespace Yorsh.Model
                 }
             }
             else _players = new PlayerList();
-            await TaskGenerateAsync();
-            await BonusGenerateAsync();
         }
 
         private string GetPlayersFile()
@@ -64,7 +76,7 @@ namespace Yorsh.Model
 
         public void SavePlayers()
         {
-            using (var playersFileStream = System.IO.File.Open(GetPlayersFile(), FileMode.OpenOrCreate))
+            using (var playersFileStream = File.Open(GetPlayersFile(), FileMode.OpenOrCreate))
             {
                 var bin = new BinaryFormatter();
                 var list = _players.Items;
@@ -83,12 +95,12 @@ namespace Yorsh.Model
 
         public int AllBonusCount
         {
-            get { return 81; }
+            get { return 80; }
         }
 
         public int AllTaskCount
         {
-            get { return 174; }
+            get { return 170; }
         }
         public PlayerList Players
         {
@@ -97,35 +109,59 @@ namespace Yorsh.Model
                 return _players;
             }
         }
-        public TaskList Tasks { get { return _tasks; } }
-        public IList<BonusTable> Bonuses { get { return _bonuses; } }
+
+        public TaskList Tasks
+        {
+            get { return _tasks; }
+            private set
+            {
+                _tasks = value;
+                OnDatabaseChanged();
+            }
+        }
+        public IList<BonusTable> Bonuses
+        {
+            get
+            {
+                return _bonuses;
+            }
+            private set
+            {
+                _bonuses = value;
+                OnDatabaseChanged();
+            }
+        }
 
         public async Task TaskGenerateAsync()
         {
             var connect = new SQLiteAsyncConnection(DataBaseFile);
+            var enumerator = Tasks == null ? 0 :  Tasks.Enumerator.CurrentPosition;
+            var categoryList = await connect.Table<CategoryTable>().ToListAsync();
             var taskList = await connect.Table<TaskTable>().ToListAsync();
-            if (_tasks != null)
-                foreach (var taskTable in taskList.Where(taskTable => !taskList.Contains(taskTable)))
-                {
-                    _tasks.Add(taskTable);
-                }
-            else
-            {
-                var categoryList = await connect.Table<CategoryTable>().ToListAsync();
-                _tasks = new TaskList(taskList, categoryList);
-            }
+            Tasks = new TaskList(taskList, categoryList);
+            Tasks.Enumerator.SetCurrent(enumerator);
         }
 
         public async Task BonusGenerateAsync()
         {
             var connect = new SQLiteAsyncConnection(DataBaseFile);
-            _bonuses = await connect.Table<BonusTable>().ToListAsync();
+            Bonuses = await connect.Table<BonusTable>().ToListAsync();
         }
 
-        public void Clear()
+        public void Clear(ISharedPreferencesEditor editor)
         {
             _players.Reset();
-            _tasks.Clear();
+            Tasks.Clear();
+            editor.PutInt("currentPlayer", 0);
+            editor.PutInt("currentTask", 0);
+            editor.Commit();
+        }
+
+        public void SaveContext(ISharedPreferencesEditor editor)
+        {
+            editor.PutInt("currentPlayer", Instance.Players.CurrentPosition);
+            editor.PutInt("currentTask", Tasks.Enumerator.CurrentPosition);
+            editor.Commit();
         }
     }
 }

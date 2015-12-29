@@ -1,14 +1,10 @@
-
 ﻿using System;
 using Android.App;
-﻿using System;
-using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Locations;
 using Android.OS;
 using Android.Runtime;
-using Android.Support.V4.App;
-using Android.Views;
+﻿using Android.Views;
 using Android.Widget;
 using Xamarin.Facebook;
 using Xamarin.Facebook.Share.Widget;
@@ -31,7 +27,7 @@ namespace Yorsh.Activities
 			Longitude = (-122.3331)
 		};
 
-		const String PENDING_ACTION_BUNDLE_KEY = "com.facebook.samples.hellofacebook:PendingAction";
+		const String PendingActionBundleKey = "com.facebook.samples.hellofacebook:PendingAction";
 		Button postStatusUpdateButton;
 		Button postPhotoButton;
 		ProfilePictureView profilePictureView;
@@ -115,7 +111,7 @@ namespace Yorsh.Activities
 			shareDialog.RegisterCallback (callbackManager, shareCallback);
 
 			if (savedInstanceState != null) {
-				var name = savedInstanceState.GetString (PENDING_ACTION_BUNDLE_KEY);
+				var name = savedInstanceState.GetString (PendingActionBundleKey);
 				pendingAction = (PendingAction)Enum.Parse (typeof(PendingAction), name);
 			}
 
@@ -172,7 +168,7 @@ namespace Yorsh.Activities
 		{
 			base.OnSaveInstanceState (outState);
 
-			outState.PutString (PENDING_ACTION_BUNDLE_KEY, pendingAction.ToString ());
+			outState.PutString (PendingActionBundleKey, pendingAction.ToString ());
 		}
 
 		protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)
@@ -258,10 +254,9 @@ namespace Yorsh.Activities
 			var sharePhoto = new SharePhoto.Builder ()
 				.SetBitmap (image).Build ().JavaCast<SharePhoto> ();
 
-			var photos = new List<SharePhoto> ();
-			photos.Add (sharePhoto);
+			var photos = new List<SharePhoto> {sharePhoto};
 
-			var sharePhotoContent = new SharePhotoContent.Builder ()
+		    var sharePhotoContent = new SharePhotoContent.Builder ()
 				.SetPhotos (photos).Build ();
 
 			if (canPresentShareDialogWithPhotos)
@@ -293,10 +288,9 @@ namespace Yorsh.Activities
 				}
 			}
 
-			if (allowNoToken) {
-				pendingAction = action;
-				HandlePendingAction ();
-			}
+		    if (!allowNoToken) return;
+		    pendingAction = action;
+		    HandlePendingAction ();
 		}
 	}
 

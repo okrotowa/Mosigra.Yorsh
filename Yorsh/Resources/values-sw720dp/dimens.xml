@@ -69,7 +69,7 @@
   <dimen name="Bonus_ContentPadding">50dp</dimen>
   <dimen name="Bonus_ImageHeight">450dp</dimen>
   <dimen name="Bonus_ImageWidth">325dp</dimen>
-  <dimen name="Bonus_MarginBottom">20dp</dimen>
+  <dimen name="Bonus_MarginBottom">30dp</dimen>
   <dimen name="Bonus_CongratsTextSize">47sp</dimen>
   <dimen name="Bonus_CongratsPadingTop">10dp</dimen>
   <dimen name="Bonus_YouWonBonusTextSize">35sp</dimen>
@@ -79,7 +79,7 @@
   <dimen name="Bonus_ButtonHeight">120dp</dimen>
 
   <dimen name="TaskProgress_MarginTop">200dp</dimen>
-  <dimen name="TaskProgress_MarginBottom">25dp</dimen>
+  <dimen name="TaskProgress_MarginBottom">30dp</dimen>
   <dimen name="TaskProgress_TitleTextSize">49sp</dimen>
   <dimen name="TaskProgress_DescTextSize">36sp</dimen>
   <dimen name="TaskProgress_ContinueButtonHeight">100dp</dimen>
@@ -96,7 +96,7 @@
   <dimen name="RuleFragment_ImageViewHeight">400dp</dimen>
   <dimen name="RuleFragment_HeaderTextSize">49sp</dimen>
   <dimen name="RuleFragment_HeaderTextMarginTopBottom">7dp</dimen>
-  <dimen name="RuleFragment_ContainerTextSize">33sp</dimen>
+  <dimen name="RuleFragment_ContainerTextSize">38sp</dimen>
 
   <dimen name="PlayerLeadText_Size">40sp</dimen>
   <dimen name="PlayerNameText_Size">35sp</dimen>

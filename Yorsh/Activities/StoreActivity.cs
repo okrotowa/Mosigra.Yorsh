@@ -1,9 +1,9 @@
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.OS;
 using Android.Content.PM;
-using Java.Security;
 using Xamarin.InAppBilling;
 using Android.Widget;
 using System;
@@ -31,8 +31,7 @@ namespace Yorsh.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Store);
-            FindViewById<TextView>(Resource.Id.taskHeader)
-                .SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
+            FindViewById<TextView>(Resource.Id.taskHeader).SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
             var taskDescription = FindViewById<TextView>(Resource.Id.taskDescription);
             taskDescription.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed),
                 Android.Graphics.TypefaceStyle.Bold);
@@ -44,20 +43,24 @@ namespace Yorsh.Activities
                 .SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
             var bonusDescription = FindViewById<TextView>(Resource.Id.bonusDescription);
             bonusDescription.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed),
-                Android.Graphics.TypefaceStyle.Bold);
+                Android.Graphics.TypefaceStyle.Bold);           
 
-            FindViewById<TextView>(Resource.Id.moreHeader)
-                .SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
-            var moreDescription = FindViewById<TextView>(Resource.Id.moreDescription);
-            moreDescription.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed),
-                Android.Graphics.TypefaceStyle.Bold);
+            //FindViewById<TextView>(Resource.Id.moreHeader)
+            //    .SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
+            //var moreDescription = FindViewById<TextView>(Resource.Id.moreDescription);
+            //moreDescription.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed),
+            //    Android.Graphics.TypefaceStyle.Bold);
 
-            var morePriceText = FindViewById<TextView>(Resource.Id.morePriceText);
-            morePriceText.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed),
-                Android.Graphics.TypefaceStyle.Normal);
+            //var morePriceText = FindViewById<TextView>(Resource.Id.morePriceText);
+            //morePriceText.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed),
+            //    Android.Graphics.TypefaceStyle.Normal);
 
             StartSetup();
-            HandleOnConnected();
+        }
+
+        private void InstanceOnDatabaseChanged(object sender, EventArgs eventArgs)
+        {
+            SetupInventory();
         }
 
         private string GetNumberString(int num)
@@ -88,43 +91,68 @@ namespace Yorsh.Activities
             base.OnDestroy();
         }
 
-        private void UpdatePurchasedItems()
+        private void GetPurchasedItems()
         {
             _purchases = _billingHandler.GetPurchases(ItemType.Product);
+            SetDescriptionText();
         }
+
         private void UpdateStubPurchasedItems()
         {
             _purchases = new List<Purchase> { new Purchase() { ProductId = "10_task", PurchaseState = 0 } };
         }
-        public void StartSetup()
+
+        private void StartSetup()
         {
             var key = Xamarin.InAppBilling.Utilities.Security.Unify(new[]
-            {
-                GetNumberString(2), GetNumberString(5), GetNumberString(0), 
-                GetNumberString(3), GetNumberString(6),GetNumberString(7), 
-                GetNumberString(1), GetNumberString(4)
-            }, new int[] { 0, 1, 2, 3, 4, 5, 6, 7 });
+                {
+                    GetNumberString(2), 
+                    GetNumberString(5), 
+                    GetNumberString(0), 
+                    GetNumberString(3),
+                    GetNumberString(6),
+                    GetNumberString(7), 
+                    GetNumberString(1),
+                    GetNumberString(4)
+                },
+             new[] { 0, 1, 2, 3, 4, 5, 6, 7 }
+             );
             _serviceConnection = new InAppBillingServiceConnection(this, key);
             _serviceConnection.OnConnected += HandleOnConnected;
             _serviceConnection.Connect();
+
         }
 
         private async void HandleOnConnected()
         {
-            _billingHandler = _serviceConnection.BillingHandler;
-            if (_billingHandler != null)
+            try
             {
+                _serviceConnection.OnInAppBillingError += ServiceConnectionOnOnInAppBillingError;
+                _billingHandler = _serviceConnection.BillingHandler;
                 _billingHandler.OnProductPurchased += BillingHandlerOnOnProductPurchased;
                 _billingHandler.OnProductPurchasedError += BillingHandlerOnOnProductPurchasedError;
+                
+                GetPurchasedItems();
+                await GetInventory();
+                SetupInventory();
+
+                Rep.Instance.DatabaseChanged += InstanceOnDatabaseChanged;
             }
-            UpdateStubPurchasedItems();
-            GetStubInventory();
-            SetupInventory();
+            catch (Exception ex)
+            {
+                ErrorOccur(ex.Message + "\n" + ex.InnerException);
+            }
+
+        }
+
+        private void ServiceConnectionOnOnInAppBillingError(InAppBillingErrorType error, string message)
+        {
+            ErrorOccur(error + "\n" + message);
         }
 
         private void BillingHandlerOnOnProductPurchasedError(int responseCode, string sku)
         {
-
+            ErrorOccur("Что-то пошло не так во время покупки:(");
         }
 
         private async void BillingHandlerOnOnProductPurchased(int response, Purchase purchase, string purchaseData, string purchaseSignature)
@@ -135,58 +163,110 @@ namespace Yorsh.Activities
             {
                 _billingHandler.ConsumePurchase(purchase);
             }
-            _taskListView.InvalidateViews();
-            _bonusListView.InvalidateViews();
+        }
+
+        private void SetDescriptionText()
+        {
+            var taskDescription = FindViewById<TextView>(Resource.Id.taskDescription);
+            var count = Rep.Instance.Tasks.Count;
+            var allCount = Rep.Instance.AllTaskCount - Rep.Instance.Tasks.Count;
+            taskDescription.Text = _purchases.Any(x => string.CompareOrdinal(x.ProductId, "all_task") == 0)
+                ? string.Format("Вам доступны все {0} заданий и безлимитная подписка на новые",
+                    Rep.Instance.AllTaskCount)
+                : string.Format("У вас {0} заданий, {1}", count,
+                    allCount == 0 ? "вы можете купить безлимитную подписку на новые" : "можно купить еще " + allCount);
+
+            count = Rep.Instance.Bonuses.Count;
+            allCount = Rep.Instance.AllBonusCount - Rep.Instance.Bonuses.Count;
+            var bonusDescription = FindViewById<TextView>(Resource.Id.bonusDescription);
+            bonusDescription.Text = _purchases.Any(x => string.CompareOrdinal(x.ProductId, "all_bonus") == 0)
+                ? string.Format("Вам доступны все {0} бонусов и безлимитная подписка на новые",
+                    Rep.Instance.AllBonusCount)
+                : string.Format("У вас {0} бонусов, {1}", count,
+                allCount == 0 ? "вы можете купить безлимитную подписку на новые" : "можно купить еще " + allCount);
         }
 
         private void SetupInventory()
         {
+            SetDescriptionText();
+
             FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Visible;
             FindViewById<TextView>(Resource.Id.googleStoreNotActive).Visibility = ViewStates.Gone;
             _taskListView = FindViewById<ListView>(Resource.Id.taskListView);
-
-            var adapter = new StoreListAdapter(this, _taskProducts,
-                product => String.CompareOrdinal(product.ProductId, "all_task") == 0, TaskIsEnabled);
-            adapter.ItemClick += ItemClick;
+            var adapter = new StoreListAdapter(this, _taskProducts, GetSaleForTask, TaskIsEnabled);
+            adapter.ItemClick += AdapterOnItemClick;
             _taskListView.Adapter = new MultiItemRowListAdapter(this, adapter, 3, 1);
             _taskListView.JustifyListViewHeightBasedOnChildren();
             _bonusListView = FindViewById<ListView>(Resource.Id.bonusListView);
-            var bonusAdapter = new StoreListAdapter(this, _bonusProducts,
-                product => String.CompareOrdinal(product.ProductId, "10_bonus") == 0, BonusIsEnabled);
-            bonusAdapter.ItemClick += ItemClick;
+
+            var bonusAdapter = new StoreListAdapter(this, _bonusProducts, GetSaleForBonus, BonusIsEnabled);
+            bonusAdapter.ItemClick += AdapterOnItemClick;
             _bonusListView.Adapter = new MultiItemRowListAdapter(this, bonusAdapter, 3, 1);
             _bonusListView.JustifyListViewHeightBasedOnChildren();
         }
 
-        void ItemClick(object sender, StoreItemClickEventArgs e)
+        private int GetSaleForBonus(string id)
         {
-            //_billingHandler.BuyProduct(e.Product);
-            this.AddProduct(e.Product.ProductId);
+            var splitArgs = id.Split('_');
+            int count;
+            if (splitArgs.Count() != 2 || !int.TryParse(splitArgs[0], out count)) return 0;
+            switch (count)
+            {
+                case 30:
+                    return 25;
+                default:
+                    return 0;
+            }
         }
 
+        private int GetSaleForTask(string id)
+        {
+            var splitArgs = id.Split('_');
+            int count;
+            if (splitArgs.Count() != 2 || !int.TryParse(splitArgs[0], out count)) return 0;
+            switch (count)
+            {
+                case 30:
+                    return 25;
+                case 70:
+                    return 50;
+                case 100:
+                    return 70;
+                default:
+                    return 0;
+            }
+        }
 
-        private bool TaskIsEnabled(Product product)
+        private void AdapterOnItemClick(object sender, StoreItemClickEventArgs e)
+        {
+            _billingHandler.BuyProduct(e.Product);
+        }
+
+        private bool TaskIsEnabled(string productId)
         {
             var purchase = _purchases.FirstOrDefault(x => string.CompareOrdinal(x.ProductId, "all_task") == 0);
             if (purchase != null && (purchase.PurchaseState == BillingResult.OK || purchase.PurchaseState == BillingResult.ItemAlreadyOwned)) return false;
             int result;
-            var prod = product.ProductId.Split('_');
-            return !int.TryParse(prod[0], out result) || Rep.Instance.AllTaskCount - Rep.Instance.Tasks.Count < result;
+            var prod = productId.Split('_');
+            var enabled = !int.TryParse(prod[0], out result) || Rep.Instance.AllTaskCount - Rep.Instance.Tasks.Count >= result;
+            return enabled;
         }
 
-        private bool BonusIsEnabled(Product product)
+        private bool BonusIsEnabled(string productId)
         {
             var purchase = _purchases.FirstOrDefault(x => string.CompareOrdinal(x.ProductId, "all_bonus") == 0);
             if (purchase != null && (purchase.PurchaseState == BillingResult.OK || purchase.PurchaseState == BillingResult.ItemAlreadyOwned)) return false;
             int result;
-            var prod = product.ProductId.Split('_');
-            return !int.TryParse(prod[0], out result) || Rep.Instance.AllBonusCount - Rep.Instance.Bonuses.Count < result;
+            var prod = productId.Split('_');
+            return !int.TryParse(prod[0], out result) || Rep.Instance.AllBonusCount - Rep.Instance.Bonuses.Count >= result;
         }
 
         private async Task GetInventory()
         {
-            //Get available products
-            _taskProducts = await _billingHandler.QueryInventoryAsync(new List<string>
+            try
+            {
+                //Get available products
+                _taskProducts = await _billingHandler.QueryInventoryAsync(new List<string>
             {
                 "10_task",
                 "30_task",
@@ -195,13 +275,27 @@ namespace Yorsh.Activities
                 "all_task"
             }, ItemType.Product);
 
-            _bonusProducts = await _billingHandler.QueryInventoryAsync(new List<string>()
+                _bonusProducts = await _billingHandler.QueryInventoryAsync(new List<string>()
             {
                 "10_bonus",
                 "30_bonus",
                 "all_bonus"
             }, ItemType.Product);
 
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetInventory: " + ex.Message);
+            }
+
+        }
+
+        public override bool OnKeyDown(Keycode keyCode, KeyEvent e)
+        {
+            if (keyCode != Keycode.Back) return base.OnKeyDown(keyCode, e);
+            OnBackPressed();
+            return false;
         }
 
         private void GetStubInventory()
@@ -226,10 +320,8 @@ namespace Yorsh.Activities
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             _billingHandler.HandleActivityResult(requestCode, resultCode, data);
-            UpdateStubPurchasedItems();
+            GetPurchasedItems();
         }
-
-
 
         private void ErrorOccur(string message)
         {
@@ -238,16 +330,7 @@ namespace Yorsh.Activities
             googleStoreNotActive.Visibility = ViewStates.Visible;
             googleStoreNotActive.Text = message;
         }
-
-        public override void OnBackPressed()
-        {
-            base.OnBackPressed();
-        }
-
-        protected override void OnPause()
-        {
-            base.OnPause();
-        }
     }
+
 
 }

@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization.Formatters.Binary;
-using Android.App;
-using Java.Lang;
+﻿using Android.App;
 using System;
 using Android.Runtime;
 

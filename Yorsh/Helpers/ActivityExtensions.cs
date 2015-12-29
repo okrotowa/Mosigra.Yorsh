@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Yorsh.Activities;
 using Yorsh.Model;
 using SQLite;
 using File = System.IO.File;
@@ -23,17 +24,6 @@ namespace Yorsh.Helpers
             if (fragment > 0) newActivity.PutExtra("fragment", fragment);
             mainActivity.StartActivity(newActivity);
             mainActivity.Finish();
-        }
-
-        public static async Task StubInitialize(this Activity activity)
-        {
-            if (Rep.Instance.Players.Count != 0)
-                return;
-            Rep.Instance.Players.Add("Olga", BitmapFactory.DecodeResource(activity.Resources, Resource.Drawable.photo_default), true);
-            Rep.Instance.Players.Add("Marina", BitmapFactory.DecodeResource(activity.Resources, Resource.Drawable.photo_default), true);
-            if (Rep.Instance.Tasks != null)
-                return;
-            await activity.CreateDataBaseAsync();
         }
 
         public static Typeface MyriadProFont(this Activity activity, MyriadPro myriadPro)
@@ -73,15 +63,14 @@ namespace Yorsh.Helpers
         public static async Task CreateDataBaseAsync(this Activity context)
         {
             var path = Rep.Instance.DataBaseFile;
-            //File.Delete(path);
             if (!File.Exists(path))
             {
                 var connection = new SQLiteAsyncConnection(path);
                 var results = await connection.CreateTablesAsync<TaskTable, BonusTable, CategoryTable>();
                 if (results.Results.Count == 3)
                 {
-                    var tasks = GetTasks(context.Assets.Open("Task.csv"), 5);//74);
-                    var bonuses = GetBonus(context.Assets.Open("Bonus.csv"), 3);//21);
+                    var tasks = GetTasks(context.Assets.Open("Task.csv"), 74);
+                    var bonuses = GetBonus(context.Assets.Open("Bonus.csv"), 41);
                     var category = GetCategory(context.Assets.Open("Category.csv"));
 
                     await connection.InsertAllAsync(tasks);
@@ -93,7 +82,7 @@ namespace Yorsh.Helpers
 
         public static async Task AddProduct(this Activity context, string skuId)
         {
-           // if (!(context is StoreActivity)) return;
+            if (!(context is StoreActivity)) return;
             var skuItems = skuId.Split('_');
             if (skuItems.Count() != 2) return;
 
@@ -102,7 +91,6 @@ namespace Yorsh.Helpers
                 int count;
                 if (!int.TryParse(skuItems[0], out count) && string.CompareOrdinal(skuItems[0], "all") == 0)
                     count = Rep.Instance.AllTaskCount - Rep.Instance.Tasks.Count();
-                else return;
                 await AddTask(context.Assets.Open("Task.csv"), count);
             }
             else if (string.CompareOrdinal("bonus", skuItems[1]) == 0)
@@ -110,7 +98,6 @@ namespace Yorsh.Helpers
                 int count;
                 if (!int.TryParse(skuItems[0], out count) && string.CompareOrdinal(skuItems[0], "all") == 0)
                     count = Rep.Instance.AllBonusCount - Rep.Instance.Bonuses.Count();
-                else return;
                 await AddBonus(context.Assets.Open("Bonus.csv"), count);
             }
         }
@@ -208,28 +195,13 @@ namespace Yorsh.Helpers
             };
         }
 
-        public static void OnTouchButtonDarker(this Activity activity, ImageButton sender, View.TouchEventArgs e)
+        public static void SaveAsStartupActivity(this Activity activity, string activityName)
         {
-            var button = sender;
-            switch (e.Event.Action)
-            {
-                case MotionEventActions.Down:
-                    {
-                        button.Background.SetColorFilter(activity.Resources.GetColor(Resource.Color.button_shadow_gray), PorterDuff.Mode.SrcAtop);
-                        button.Invalidate();
-                        e.Handled = false;
-                        break;
-                    }
-                case MotionEventActions.Up:
-                    {
-                        button.Background.ClearColorFilter();
-                        button.Invalidate();
-                        e.Handled = false;
-                        break;
-                    }
-            };
+            Rep.Instance.SaveContext(activity.GetSharedPreferences("T", FileCreationMode.Private).Edit());
+            var editorX = activity.GetSharedPreferences("X", FileCreationMode.Private).Edit();
+            editorX.PutString("lastActivity", activityName);
+            editorX.Commit();
         }
-
         public static Color GetColorWithOpacity(this Activity activity, int normalColor, int opacityColor)
         {
             var bitmap = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888); //make a 1-pixel Bitmap
@@ -240,13 +212,16 @@ namespace Yorsh.Helpers
             return Color.Argb(index, index, index, index);
         }
 
-
+        public const string ResultGameActivity = "ResultGameAcitivity";
+        public const string MainMenuActivity = "MainMenuActivity";
+        public const string GameActivity = "GameActivity";
         public static Bitmap PlayerPhoto(this Activity activity, Player player)
         {
             return BitmapFactory.DecodeByteArray(player.Photo, 0, player.Photo.Length) ?? (BitmapFactory.DecodeResource(activity.Resources, Resource.Drawable.photo_default)).GetRoundedCornerBitmap((int)activity.Resources.GetDimension(Resource.Dimension.RoundedCorners));
         }
     }
 }
+
 
 public enum MyriadPro
 {

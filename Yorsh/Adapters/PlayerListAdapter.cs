@@ -1,7 +1,5 @@
-﻿using System;
-using Android.Widget;
+﻿using Android.Widget;
 using Yorsh.Model;
-using Android.App;
 using Android.Views;
 using Yorsh.Helpers;
 using Yorsh.Activities;

@@ -4,26 +4,21 @@
     android:layout_height="fill_parent"
     android:background="@drawable/background">
     <ImageView
-        android:orientation="vertical"
         android:id="@+id/linearLayout1"
         android:src="@drawable/gir_top"
         android:background="@android:color/transparent"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:adjustViewBounds="true"
-        android:cropToPadding="true"
-        android:scaleType="fitCenter" />
-    <LinearLayout
-        android:orientation="vertical"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:id="@+id/linearLayout2"
-        android:background="@drawable/gir_bott"
-        android:gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="match_parent"
+        android:scaleType="fitStart"
+        android:adjustViewBounds="true" />
+    <ImageView
+        android:id="@+id/linearLayout2"
+        android:background="@android:color/transparent"
+        android:src="@drawable/gir_bott"        
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitEnd"
+        android:adjustViewBounds="true"  />
     <LinearLayout
         android:layout_centerInParent="true"
         android:orientation="vertical"

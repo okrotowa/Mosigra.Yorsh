@@ -10,7 +10,7 @@ namespace Yorsh.Fragments
 	public class DialogRatingFragment : DialogFragment
 	{
 	    private ISharedPreferencesEditor _editor;
-		private bool editorIsPutted = false;
+		private bool _editorIsPutted = false;
 		public override Dialog OnCreateDialog(Bundle savedInstanceState)
 		{
 			var dialog = base.OnCreateDialog(savedInstanceState);
@@ -20,12 +20,12 @@ namespace Yorsh.Fragments
 			return dialog;
 		}
 
-        public override Android.Views.View OnCreateView(Android.Views.LayoutInflater inflater, Android.Views.ViewGroup container, Android.OS.Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.DialogRating, null);
-			Button buttonEasy = view.FindViewById<Button>(Resource.Id.buttonEasy);
-			Button buttonYester = view.FindViewById<Button>(Resource.Id.buttonYester);
-			Button buttonNo = view.FindViewById<Button>(Resource.Id.buttonNo);
+			var buttonEasy = view.FindViewById<Button>(Resource.Id.buttonEasy);
+			var buttonYester = view.FindViewById<Button>(Resource.Id.buttonYester);
+			var buttonNo = view.FindViewById<Button>(Resource.Id.buttonNo);
 
             var preferences = Activity.GetPreferences(FileCreationMode.Private);
             _editor = preferences.Edit();   
@@ -35,7 +35,7 @@ namespace Yorsh.Fragments
 				var  url = Android.Net.Uri.Parse("https://itunes.apple.com/ua/app/ers/id604886527?mt=8");
                 var intent = new Intent(Intent.ActionView, url);
                 StartActivity(intent);
-			    PutEditor(false);
+			    PutEditor(true);
                 this.Dismiss();
 			};
 
@@ -52,15 +52,15 @@ namespace Yorsh.Fragments
         }
 		private void PutEditor(bool value)
 		{
-			editorIsPutted = true;
+			_editorIsPutted = true;
 			_editor.PutBoolean("isShow", value);
 		}
 
         public override void Dismiss()
         {
-			if (!editorIsPutted) PutEditor (false);
+			if (!_editorIsPutted) PutEditor (true);
 			_editor.Commit();
-			Activity.Intent.PutExtra("isEnd",true);
+			Activity.Intent.PutExtra("isEnd", true);
             Activity.Recreate();
             base.Dismiss();
         }

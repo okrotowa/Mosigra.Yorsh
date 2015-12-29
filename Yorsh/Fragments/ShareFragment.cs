@@ -4,10 +4,6 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Xamarin.Auth;
-using System.Xml;
-using System.Net;
-using System.IO;
 using Yorsh.Activities;
 
 namespace Yorsh.Fragments

@@ -14,14 +14,14 @@ namespace Yorsh.Activities
 			base.OnCreate (bundle);
 			SetContentView (Resource.Layout.Rules);
 
-			var adapter =
-				new Yorsh.Adapters.GenericFragmentPagerAdapter(SupportFragmentManager,
+			var adapter = new Adapters.GenericFragmentPagerAdapter(SupportFragmentManager,
 					new RuleFragment(Rules.ShortAboutGame)
 					,new RuleFragment(Rules.HowToPlay)
 					,new RuleFragment(Rules.Bear));
 			var viewPager = FindViewById<ViewPager>(Resource.Id.viewPager);
 			viewPager.Adapter = adapter;
-			viewPager.PageScrollStateChanged += delegate {
+			viewPager.PageScrollStateChanged += delegate 
+			{
 				var rulesCirle = Resources.GetStringArray (Resource.Array.RulesCirle);
 				var imageScrollId = Resources.GetIdentifier ("rules_" + rulesCirle [viewPager.CurrentItem] + "_sroll_page", "drawable", this.PackageName);
 				var imageScroll = FindViewById<ImageView> (Resource.Id.imageScroll);

@@ -26,19 +26,10 @@
     <WarningLevel>0</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <AndroidSupportedAbis>
-    </AndroidSupportedAbis>
     <AssemblyName>Yorsh</AssemblyName>
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <Debugger>Xamarin</Debugger>
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
-    <AndroidLinkSkip>
-    </AndroidLinkSkip>
-    <AndroidStoreUncompressedFileExtensions>
-    </AndroidStoreUncompressedFileExtensions>
-    <MandroidI18n>
-    </MandroidI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -50,6 +41,7 @@
     <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <AssemblyName>Yorsh</AssemblyName>
+    <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -88,34 +80,14 @@
     <Reference Include="Xamarin.Mobile">
       <HintPath>..\Components\xamarin.mobile-0.7.7\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Auth.Android">
-      <HintPath>..\Components\xamarin.auth-1.2.3.1\lib\android\Xamarin.Auth.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="Twitter4J.Binding">
-      <HintPath>..\Components\Twitter4j-1.0\lib\android\Twitter4J.Binding.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\Components\xamandroidsupportv4-18-4.19.0.1\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Bolts">
-      <HintPath>..\packages\Xamarin.Facebook.Android.4.8.2.2\lib\MonoAndroid403\Xamarin.Bolts.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Xamarin.Facebook">
-      <HintPath>..\packages\Xamarin.Facebook.Android.4.8.2.2\lib\MonoAndroid403\Xamarin.Facebook.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Facebook">
       <HintPath>..\Components\facebook-sdk-6.2.2\lib\android\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="ModernHttpClient">
-      <HintPath>..\Components\modernhttpclient-2.4.2\lib\android\ModernHttpClient.dll</HintPath>
-    </Reference>
-    <Reference Include="OkHttp">
-      <HintPath>..\Components\modernhttpclient-2.4.2\lib\android\OkHttp.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.InAppBilling">
       <HintPath>..\Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
@@ -159,7 +131,6 @@
     <Compile Include="Activities\SplashScreenActivity.cs">
       <DeployService-Deploy>True</DeployService-Deploy>
     </Compile>
-    <Compile Include="Activities\YourshApplication.cs" />
     <Compile Include="Helpers\BitmapExtensions.cs" />
     <Compile Include="Fragments\BonusDialog.cs" />
     <Compile Include="Activities\ChoosePlayerActivity.cs" />
@@ -168,12 +139,8 @@
     <Compile Include="Adapters\MultiItemRowListAdapter.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Adapters\GenericFragmentPagerAdapter.cs" />
-    <Compile Include="Fragments\DialogRatingFragment.cs" />
-    <Compile Include="Fragments\ShareFragment.cs" />
     <Compile Include="Activities\RuleFragment.cs" />
-    <Compile Include="Activities\ShareToTwitterActivity.cs" />
-    <Compile Include="Activities\ShareToVkActivity.cs" />
-    <Compile Include="Activities\ShareToFacebookActivity.cs" />
+    <Compile Include="Fragments\DialogRatingFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Bonus.csv" />
@@ -213,7 +180,6 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\PlayerItem.axml" />
-    <AndroidResource Include="Resources\layout\FirstPlayerItem.axml" />
     <AndroidResource Include="Resources\drawable\splash.png" />
     <AndroidResource Include="Resources\drawable-hdpi\logo.png" />
     <AndroidResource Include="Resources\drawable-mdpi\logo.png" />
@@ -361,18 +327,15 @@
     <AndroidResource Include="Resources\drawable\rules_one_page.png" />
     <AndroidResource Include="Resources\drawable\table_list_background.xml" />
     <AndroidResource Include="Resources\drawable\shop_task_background.xml" />
-    <AndroidResource Include="Resources\layout\DialogRating.axml" />
     <AndroidResource Include="Resources\mipmap-mdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-hdpi\icon.jpg" />
     <AndroidResource Include="Resources\mipmap-xhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap\icon.png" />
-    <AndroidResource Include="Resources\drawable\fbicon.png" />
     <AndroidResource Include="Resources\drawable\twicon.png" />
     <AndroidResource Include="Resources\drawable\vk.png" />
     <AndroidResource Include="Resources\layout\PickPlayerItem.axml" />
-    <AndroidResource Include="Resources\layout\ShareSoc.axml" />
     <AndroidResource Include="Resources\drawable-hdpi\bonus_sale.png" />
     <AndroidResource Include="Resources\drawable-hdpi\bonus_store_icon.png" />
     <AndroidResource Include="Resources\drawable-hdpi\first_player_icon.png" />
@@ -425,15 +388,10 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\task_store_icon.png" />
     <AndroidResource Include="Resources\layout\RuleFragment.axml" />
     <AndroidResource Include="Resources\layout\StoreItem.axml" />
-    <AndroidResource Include="Resources\drawable\fb72.png" />
     <AndroidResource Include="Resources\drawable\tw72.png" />
     <AndroidResource Include="Resources\drawable\vk72.png" />
-    <AndroidResource Include="Resources\layout\MosDialog.axml" />
     <AndroidResource Include="Resources\drawable\shop_bonus_background.xml" />
     <AndroidResource Include="Resources\drawable\shop_more_background.xml" />
-    <AndroidResource Include="Resources\layout\Autorize.axml" />
-    <AndroidResource Include="Resources\layout\EditText.axml" />
-    <AndroidResource Include="Resources\layout\Facebook.axml" />
     <None Include="packages.config" />
     <AndroidResource Include="Resources\drawable\shop_background_toplight.xml" />
     <AndroidResource Include="Resources\drawable\shop_background_bottomlight.xml" />
@@ -498,7 +456,9 @@
     <AndroidResource Include="Resources\values-large\dimens.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\values-xlarge\dimens.xml" />
+    <AndroidResource Include="Resources\values-xlarge\dimens.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
     </None>
@@ -517,9 +477,16 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\gir_bott.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\gir_top.png" />
     <AndroidResource Include="Resources\drawable\DividerMargin.xml" />
+    <AndroidResource Include="Resources\layout\DialogRating.axml" />
+    <AndroidResource Include="Resources\drawable\bonus_sale_25.png" />
+    <AndroidResource Include="Resources\drawable\task_sale_25.png" />
+    <AndroidResource Include="Resources\drawable\task_sale_50.png" />
+    <AndroidResource Include="Resources\drawable\task_sale_70.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\MainMenu.axml" />
+    <AndroidResource Include="Resources\layout\MainMenu.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Icon.png" />
@@ -576,18 +543,6 @@
       <Version>0.7.7</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
-    <XamarinComponentReference Include="xamarin.auth">
-      <Version>1.2.3.1</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="Twitter4j">
-      <Version>1.0</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="facebookandroid">
-      <Version>4.8.2.2</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
     <XamarinComponentReference Include="xamandroidsupportv4-18">
       <Version>4.19.0.1</Version>
       <Visible>False</Visible>
@@ -598,10 +553,6 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="json.net">
       <Version>7.0.1</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="modernhttpclient">
-      <Version>2.4.2</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>

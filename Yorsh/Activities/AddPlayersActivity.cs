@@ -16,7 +16,6 @@ namespace Yorsh.Activities
     public class AddPlayersActivity : BaseActivity
     {
         Button _startGameButton;
-        AddNewPlayerListAdapter _adapter;
         bool _isPlayersCountValidate;
 
         protected override void OnCreate(Bundle bundle)
@@ -34,8 +33,7 @@ namespace Yorsh.Activities
         {
             base.OnResume();
             var listView = FindViewById<ListView>(Resource.Id.playersList);
-            _adapter = new AddNewPlayerListAdapter(this);
-            listView.Adapter = _adapter;
+			listView.Adapter = new AddNewPlayerListAdapter(this);
 
             _startGameButton.Click += _startGameButton_Click;
             IsPlayersCountValidate = Rep.Instance.Players.Count > 1;
@@ -43,7 +41,7 @@ namespace Yorsh.Activities
             {
                 {
                     IsPlayersCountValidate = Rep.Instance.Players.Count > 1;
-                    listView.InvalidateViews();
+					listView.Adapter = new AddNewPlayerListAdapter(this);
                 }
 
             };
@@ -90,11 +88,6 @@ namespace Yorsh.Activities
             }
         }
 
-        public override void OnBackPressed()
-        {
-
-            base.OnBackPressed();
-        }
 
         protected override void OnPause()
         {

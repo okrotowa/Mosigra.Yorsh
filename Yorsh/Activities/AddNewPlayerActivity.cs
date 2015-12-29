@@ -112,7 +112,8 @@ namespace Yorsh.Activities
 				var desireHeight = button.Height;
 				dialog = new ChoosePhotoDialog();
 				dialog.Show(fragmentTransaction, "dialog");
-				dialog.BitmapLoaded += (object obj, BitmapLoadedEventArgs args) => BitmapExtensions.DecodeBitmapAsync(args.Path, desireWidth, desireHeight)
+				dialog.BitmapLoaded += (obj, args) => 
+                    BitmapExtensions.DecodeBitmapAsync(args.Path, desireWidth, desireHeight)
 				    .ContinueWith(t => PlayerImage = t.Result, TaskScheduler.FromCurrentSynchronizationContext());
 			}
 			else
@@ -161,12 +162,6 @@ namespace Yorsh.Activities
         private void SetFontItalic(TextView textView)
         {
             textView.SetTypeface(this.MyriadProFont(MyriadPro.Condensed), TypefaceStyle.Italic);
-        }
-
-        protected override void OnStop()
-        {
-            _playerImageButton.Click -= ChooseNewPhoto;
-            base.OnStop();
         }
 
         protected override void OnDestroy()

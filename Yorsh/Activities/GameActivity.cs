@@ -1,5 +1,4 @@
 using System;
-using System.CodeDom.Compiler;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
@@ -65,24 +64,16 @@ namespace Yorsh.Activities
                 StartActivity(intent);
             };
 
-            _taskEnumerator = (TaskEnumerator)Rep.Instance.Tasks.GetEnumerator();
-
-            if (_taskEnumerator.CurrentPosition < 0) _taskEnumerator.MoveNext();
-            if (Rep.Instance.Players.CurrentPosition < 0) MoveNextStep();
-            else InitPlayers();
-
-            if (GetSharedPreferences("T", FileCreationMode.Private).GetBoolean("isEndGame", false))
-            {
-                GetShopDialog().Show();
-            }
+            _taskEnumerator = Rep.Instance.Tasks.Enumerator;
+            InitPlayers();
         }
 
         protected override void OnResume()
         {
             base.OnResume();
-            //GoHereFrom
+            if (Rep.Instance.Tasks.Count == _taskEnumerator.CurrentPosition + 1)
+                GetShopDialog().Show();
         }
-
 
         private void Initialize()
         {
@@ -172,10 +163,6 @@ namespace Yorsh.Activities
 
         void EndOfGame()
         {
-            var prefs = GetSharedPreferences("T", FileCreationMode.Private);
-            var editor = prefs.Edit();
-            editor.PutBoolean("isEndGame", true);
-            editor.Commit();
             GetShopDialog().Show();
         }
 
@@ -186,16 +173,12 @@ namespace Yorsh.Activities
             builder.SetMessage(Resource.String.GoToSaleString);
             builder.SetPositiveButton(GetString(Resource.String.YesString), delegate
             {
-                this.StartActivityWithoutBackStack(new Intent(this, typeof(StoreActivity)));
+                this.StartActivity(new Intent(this, typeof(StoreActivity)));
             });
             builder.SetNegativeButton(GetString(Resource.String.NoString), delegate
             {
                 var intent = new Intent(this, typeof(ResultsGameActivity));
                 intent.PutExtra("isEnd", true);
-                var prefs = GetSharedPreferences("T", FileCreationMode.Private);
-                var editor = prefs.Edit();
-                editor.PutBoolean("isEndGame", false);
-                editor.Commit();
                 this.StartActivityWithoutBackStack(intent);
             });
             builder.SetCancelable(false);
@@ -209,12 +192,7 @@ namespace Yorsh.Activities
             builder.SetCancelable(true);
             builder.SetPositiveButton(GetString(Resource.String.YesString), (sender, args) =>
             {
-                Rep.Instance.Clear();
-                var prefs = GetSharedPreferences("T", FileCreationMode.Private);
-                var editor = prefs.Edit();
-                editor.PutInt("currentPlayer", -1);
-                editor.PutInt("currentTask", -1);
-                editor.Commit();
+                Rep.Instance.Clear(GetSharedPreferences("T", FileCreationMode.Private).Edit());
                 this.StartActivityWithoutBackStack(new Intent(this, typeof(MainMenuActivity)));
             });
             builder.SetNegativeButton(GetString(Resource.String.NoString), (sender, args) =>
@@ -250,13 +228,7 @@ namespace Yorsh.Activities
 
         protected override void OnPause()
         {
-            var editorT = GetSharedPreferences("T", FileCreationMode.Private).Edit();
-            editorT.PutInt("currentPlayer", Rep.Instance.Players.CurrentPosition);
-            editorT.PutInt("currentTask", _taskEnumerator.CurrentPosition);
-            editorT.Commit();
-            var editorX = GetSharedPreferences("X", FileCreationMode.Private).Edit();
-            editorX.PutString("lastActivity", Class.Name);
-            editorX.Commit();
+            this.SaveAsStartupActivity(ActivityExtensions.GameActivity);
             base.OnPause();
         }
     }

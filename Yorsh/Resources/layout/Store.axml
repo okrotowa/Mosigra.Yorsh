@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/Store_List_Margin" />
                 </LinearLayout>
-                <LinearLayout
+            <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -140,10 +140,10 @@
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@id/removeAdButton" />
                     </RelativeLayout>
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
         </ScrollView>
-        <ImageView
+    <!--        <ImageView
             android:layout_width="match_parent"
             android:layout_alignParentTop="true"
             android:src="@drawable/light_top"
@@ -159,6 +159,6 @@
             android:background="@drawable/shop_background_bottomlight"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
     </RelativeLayout>
 </RelativeLayout>

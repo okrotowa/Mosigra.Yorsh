@@ -2,29 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/transparent"
-    android:minWidth="@dimen/Dialog_MinWidth"
-    android:paddingTop="@dimen/Bonus_ContentPadding"
-    android:paddingBottom="@dimen/Bonus_ContentPadding">
+    android:background="@drawable/taskprogress_background">
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@drawable/taskprogress_background">
+        android:layout_height="fill_parent">
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
             android:src="@drawable/light_top"
-            android:adjustViewBounds="true"
-            android:layout_marginTop="-15dp" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitStart"
+            android:adjustViewBounds="true" />
         <ImageView
             android:id="@+id/light_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:src="@drawable/light_bottom"
-            android:adjustViewBounds="true"
-            android:layout_marginBottom="-15dp" />
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitEnd"
+            android:adjustViewBounds="true" />
         <TextView
             android:id="@+id/statusTitleText"
             android:text="ПОЗДРАВЛЯЕМ"

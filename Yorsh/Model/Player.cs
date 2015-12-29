@@ -1,7 +1,5 @@
 ﻿using System;
-using Android.Content.Res;
 using Android.Graphics;
-using Java.IO;
 using Yorsh.Helpers;
 
 namespace Yorsh.Model
@@ -9,7 +7,7 @@ namespace Yorsh.Model
     [Serializable]
     public class Player
     {
-        public Player(string name, Bitmap photo, bool isPlay = false, int score = 0)
+        public Player(string name, Bitmap photo, bool isPlay = true, int score = 0)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("Name of Player");
             if (photo == null) throw new ArgumentNullException("PlayerPhoto of Player");
@@ -19,7 +17,7 @@ namespace Yorsh.Model
             Score = score;
         }
 
-        public Player(string name, byte[] photo, bool isPlay = false, int score = 0)
+        public Player(string name, byte[] photo, bool isPlay = true, int score = 0)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("Name of Player");
             if (photo == null) throw new ArgumentNullException("PlayerPhoto of Player");

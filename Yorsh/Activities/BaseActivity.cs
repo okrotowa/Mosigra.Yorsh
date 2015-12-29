@@ -7,6 +7,7 @@ using Android.Widget;
 using Yorsh.Helpers;
 using Android.Graphics.Drawables;
 using Android.Graphics;
+using Yorsh.Model;
 
 namespace Yorsh.Activities
 {
@@ -55,25 +56,12 @@ namespace Yorsh.Activities
             layout.AddView(_actionButton, param);
             return _actionButton;
         }
-
+        
         protected View ActionButton
         {
             get { return _actionButton; }
         }
 
-        protected override void OnPause()
-        {
-            base.OnPause();
-        }
-
-        public override void OnBackPressed()
-        {
-            
-
-                base.OnBackPressed();
-
-
-        }
     }
 
 }

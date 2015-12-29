@@ -36,7 +36,7 @@ namespace Yorsh.Model
             }
         }
 
-        public void Add(string name, Bitmap image, bool isPlay = false)
+        public void Add(string name, Bitmap image, bool isPlay = true)
         {
             _players.Add(new Player(name, image, isPlay));
         }
@@ -186,8 +186,7 @@ namespace Yorsh.Model
 
         public bool MoveNext()
         {
-            if (_current >= _playersList.Count - 1)
-                _current = 0;
+            if (_current >= _playersList.Count - 1) _current = 0;
             else
                 _current++;
             return true;
@@ -195,7 +194,7 @@ namespace Yorsh.Model
 
         public void Reset()
         {
-            _current = -1;
+            _current = 0;
         }
 
         public void SetCurrent(int position)

@@ -4,16 +4,16 @@ namespace Yorsh.Model
 {
     public sealed class StoreItem
     {
-        public StoreItem(Product product, bool isSale = false)
+		public StoreItem(Product product, int saleProcent = 0)
         {
             Product = product;
             var splitProductId = Product.ProductId.Split('_');
             int count;
             CountForSort = int.TryParse(splitProductId[0], out count) ? count : 1000;
             BuyElement = splitProductId[1];
-            IsSale = isSale;
+			IsSale = saleProcent != 0;
             ImageString = string.Format("shop_{0}_{1}", BuyElement, splitProductId[0]);
-            SaleImageString = isSale ? BuyElement + "_sale" : null;
+			SaleImageString = BuyElement + "_sale_" + saleProcent;
         }
 
         public Product Product { get; private set; }

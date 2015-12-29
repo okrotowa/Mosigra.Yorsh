@@ -1,13 +1,13 @@
-﻿<Properties StartupItem="Yorsh\Yorsh.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Xamarin_Android_API_23" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Resources\drawable\DividerMargin.xml">
+﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.Nexus 5 (Lollipop)" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\GameActivity.cs">
     <Files>
-      <File FileName="Yorsh\Resources\drawable\DividerMargin.xml" Line="10" Column="1" />
+      <File FileName="Yorsh\Activities\GameActivity.cs" Line="66" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus 4" />
+  <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus 5" />
 </Properties>
