@@ -23,7 +23,17 @@
             android:layout_height="@dimen/PlayersList_buttonHeight"
             android:textSize="@dimen/PlayersList_buttonTextSize"
             android:layout_gravity="center" />
-        <RelativeLayout
+        <Button
+            android:id="@+id/startNewGameButton"
+            android:text="@string/NewGameString"
+            android:visibility="visible"
+            android:layout_width="@dimen/PlayersList_buttonWidth"
+            android:gravity="center"
+            android:background="@drawable/start_game_button"
+            android:layout_height="@dimen/PlayersList_buttonHeight"
+            android:textSize="@dimen/PlayersList_buttonTextSize"
+            android:layout_gravity="center" />
+    <!--<RelativeLayout
             android:id="@+id/relativeLayout"
             android:visibility="visible"
             android:layout_width="fill_parent"
@@ -51,7 +61,7 @@
                 android:layout_toRightOf="@id/TextView01"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ResultGameButton_Text_Size" />
-        </RelativeLayout>
+        </RelativeLayout>-->
     </FrameLayout>
     <LinearLayout
         android:layout_width="fill_parent"

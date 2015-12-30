@@ -1,13 +1,8 @@
 ﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.Nexus 5 (Lollipop)" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\GameActivity.cs">
-    <Files>
-      <File FileName="Yorsh\Activities\GameActivity.cs" Line="66" Column="4" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus 5" />
 </Properties>

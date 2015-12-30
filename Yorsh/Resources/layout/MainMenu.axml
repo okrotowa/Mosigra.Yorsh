@@ -3,22 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/background">
-    <ImageView
-        android:id="@+id/linearLayout1"
-        android:src="@drawable/gir_top"
-        android:background="@android:color/transparent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitStart"
-        android:adjustViewBounds="true" />
-    <ImageView
-        android:id="@+id/linearLayout2"
-        android:background="@android:color/transparent"
-        android:src="@drawable/gir_bott"        
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitEnd"
-        android:adjustViewBounds="true"  />
     <LinearLayout
         android:layout_centerInParent="true"
         android:orientation="vertical"

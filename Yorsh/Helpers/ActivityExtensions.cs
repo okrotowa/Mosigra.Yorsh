@@ -69,8 +69,8 @@ namespace Yorsh.Helpers
                 var results = await connection.CreateTablesAsync<TaskTable, BonusTable, CategoryTable>();
                 if (results.Results.Count == 3)
                 {
-                    var tasks = GetTasks(context.Assets.Open("Task.csv"), 74);
-                    var bonuses = GetBonus(context.Assets.Open("Bonus.csv"), 41);
+                    var tasks = GetTasks(context.Assets.Open("Task.csv"), 100);
+                    var bonuses = GetBonus(context.Assets.Open("Bonus.csv"), 40);
                     var category = GetCategory(context.Assets.Open("Category.csv"));
 
                     await connection.InsertAllAsync(tasks);

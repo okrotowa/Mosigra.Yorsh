@@ -41,7 +41,6 @@
     <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <AssemblyName>Yorsh</AssemblyName>
-    <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -73,7 +72,6 @@
       <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
@@ -192,10 +190,6 @@
     <AndroidResource Include="Resources\drawable\start_game_button.png" />
     <AndroidResource Include="Resources\drawable\logo.png" />
     <AndroidResource Include="Resources\drawable\background.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\background.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\background.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\background.png" />
-    <AndroidResource Include="Resources\drawable-xxxhdpi\background.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\logo.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\logo.png" />
     <AndroidAsset Include="Assets\MyriadProBoldCondensed.ttf" />
@@ -241,22 +235,9 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\ready_button.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\cancel_button.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ready_button.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\add_new_player.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\back_button.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\background.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\logo.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\plus_tasks_button.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\rules_button.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\splash.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\start_game_button.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\delete_button.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\cancel_button.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\ready_button.png" />
     <AndroidResource Include="Resources\drawable\ready_button.png" />
     <AndroidResource Include="Resources\drawable-hdpi\cancel_button.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\game_background.png" />
     <AndroidAsset Include="Assets\BankirRetro.ttf" />
-    <AndroidResource Include="Resources\drawable-nodpi\card_backside.jpg" />
     <AndroidAsset Include="Assets\MyriadProCondensed.ttf" />
     <AndroidResource Include="Resources\drawable\back_button_pressed.xml" />
     <AndroidResource Include="Resources\drawable\back_button_selector.xml" />
@@ -349,7 +330,6 @@
     <AndroidResource Include="Resources\drawable-mdpi\task_sale.png" />
     <AndroidResource Include="Resources\drawable-mdpi\task_store_icon.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\add_new_player.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\background.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\back_button.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\bonus.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\bonus_sale.png" />
@@ -372,7 +352,6 @@
     <AndroidResource Include="Resources\drawable-xhdpi\start_game_button.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\task_sale.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\task_store_icon.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\Thumbs.db" />
     <AndroidResource Include="Resources\drawable-xhdpi\x2.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\bonus_sale.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\bonus_store_icon.png" />
@@ -468,8 +447,6 @@
     <AndroidResource Include="Resources\drawable-hdpi\gir_top.png" />
     <AndroidResource Include="Resources\drawable-mdpi\gir_bott.png" />
     <AndroidResource Include="Resources\drawable-mdpi\gir_top.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\gir_bott.png" />
-    <AndroidResource Include="Resources\drawable-nodpi\gir_top.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\gir_bott.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\gir_top.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\gir_bott.png" />
@@ -482,6 +459,10 @@
     <AndroidResource Include="Resources\drawable\task_sale_25.png" />
     <AndroidResource Include="Resources\drawable\task_sale_50.png" />
     <AndroidResource Include="Resources\drawable\task_sale_70.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\background.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\background.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\background.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\background.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainMenu.axml">
@@ -555,6 +536,9 @@
       <Version>7.0.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\background.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

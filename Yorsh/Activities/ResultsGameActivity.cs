@@ -69,7 +69,8 @@ namespace Yorsh.Activities
         {
             var startPlayButton = FindViewById<Button>(Resource.Id.endGameButton);
             startPlayButton.Visibility = ViewStates.Visible;
-            FindViewById<RelativeLayout>(Resource.Id.relativeLayout).Visibility = ViewStates.Gone;
+            //FindViewById<RelativeLayout>(Resource.Id.relativeLayout).Visibility = ViewStates.Gone;
+            FindViewById<Button>(Resource.Id.startNewGameButton).Visibility = ViewStates.Gone;
             this.ActionBar.Show();
             startPlayButton.Touch += (sender, e) => this.OnTouchButtonDarker(startPlayButton, e);
             startPlayButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
@@ -81,18 +82,24 @@ namespace Yorsh.Activities
                 {
                     var fragmentTransaction = FragmentManager.BeginTransaction();
                     var prev = (DialogFragment)FragmentManager.FindFragmentByTag("rating");
-                    var dialog = prev ?? new DialogRatingFragment()
+                    var dialog = (DialogRatingFragment) (prev ?? new DialogRatingFragment()
                     {
                         ShowsDialog = true
-                    };
+                    });
                     dialog.Show(fragmentTransaction, "rating");
+                    dialog.Dissmissed += (sender, args) => this.Recreate();
                 }
                 else
                 {
-                    Intent.PutExtra("isEnd", true);
                     this.Recreate();
                 }
             };
+        }
+
+        public override void Recreate()
+        {
+            Intent.PutExtra("isEnd", true);
+            base.Recreate();
         }
 
         protected override void OnPause()
@@ -109,7 +116,8 @@ namespace Yorsh.Activities
         private void SetButtonsAndActionBarIsEndGame()
         {
             FindViewById<Button>(Resource.Id.endGameButton).Visibility = ViewStates.Gone;
-            FindViewById<RelativeLayout>(Resource.Id.relativeLayout).Visibility = ViewStates.Visible;
+            //FindViewById<RelativeLayout>(Resource.Id.relativeLayout).Visibility = ViewStates.Visible;
+            FindViewById<Button>(Resource.Id.startNewGameButton).Visibility = ViewStates.Visible;
             this.ActionBar.Hide();
 
             var startNewGameButton = FindViewById<Button>(Resource.Id.startNewGameButton);
@@ -121,27 +129,26 @@ namespace Yorsh.Activities
             startNewGameButton.Touch += (sender, e) => this.OnTouchButtonDarker(startNewGameButton, e);
             startNewGameButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
             startNewGameButton.Background.SetAlpha(255);
-
-            var shareButton = FindViewById<Button>(Resource.Id.shareButton);
-            shareButton.Touch += (sender, e) => this.OnTouchButtonDarker(shareButton, e);
-            shareButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-            shareButton.Click += delegate
-            {
-//                var contentview = FindViewById(Resource.Id.tournament);
-//                contentview.BuildDrawingCache();
-//                _screenShot = contentview.DrawingCache;
-//                var sdCardPath = Environment.ExternalStorageDirectory.AbsolutePath;
-//                var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
-//                using (var stream = new FileStream(filePath, FileMode.Create))
-//                {
-//                    _screenShot.Compress(Bitmap.CompressFormat.Png, 100, stream);
-//                }
-//
-//                var fragmentTrans = FragmentManager.BeginTransaction();
-//                var prev = (DialogFragment)FragmentManager.FindFragmentByTag("share");
-//                var dialogShare = prev ?? new ShareFragment() { ShowsDialog = true };
-//                dialogShare.Show(fragmentTrans, "share");
-            };
+//            var shareButton = FindViewById<Button>(Resource.Id.shareButton);
+//            shareButton.Touch += (sender, e) => this.OnTouchButtonDarker(shareButton, e);
+//            shareButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+//            shareButton.Click += delegate
+//            {
+////                var contentview = FindViewById(Resource.Id.tournament);
+////                contentview.BuildDrawingCache();
+////                _screenShot = contentview.DrawingCache;
+////                var sdCardPath = Environment.ExternalStorageDirectory.AbsolutePath;
+////                var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
+////                using (var stream = new FileStream(filePath, FileMode.Create))
+////                {
+////                    _screenShot.Compress(Bitmap.CompressFormat.Png, 100, stream);
+////                }
+////
+////                var fragmentTrans = FragmentManager.BeginTransaction();
+////                var prev = (DialogFragment)FragmentManager.FindFragmentByTag("share");
+////                var dialogShare = prev ?? new ShareFragment() { ShowsDialog = true };
+////                dialogShare.Show(fragmentTrans, "share");
+//            };
 
         }
 

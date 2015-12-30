@@ -811,32 +811,32 @@ namespace Yorsh
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0a0021
-			public const int BoardGame = 2131361825;
-			
-			// aapt resource value: 0x7f0a0024
-			public const int PlusCards = 2131361828;
+			// aapt resource value: 0x7f0a0020
+			public const int BoardGame = 2131361824;
 			
 			// aapt resource value: 0x7f0a0023
-			public const int Rules = 2131361827;
+			public const int PlusCards = 2131361827;
 			
 			// aapt resource value: 0x7f0a0022
-			public const int StartGame = 2131361826;
+			public const int Rules = 2131361826;
+			
+			// aapt resource value: 0x7f0a0021
+			public const int StartGame = 2131361825;
 			
 			// aapt resource value: 0x7f0a0004
 			public const int TextView01 = 2131361796;
 			
-			// aapt resource value: 0x7f0a005d
-			public const int addPlayer = 2131361885;
+			// aapt resource value: 0x7f0a005a
+			public const int addPlayer = 2131361882;
 			
-			// aapt resource value: 0x7f0a004d
-			public const int bonusDescription = 2131361869;
+			// aapt resource value: 0x7f0a004a
+			public const int bonusDescription = 2131361866;
 			
-			// aapt resource value: 0x7f0a004c
-			public const int bonusHeader = 2131361868;
+			// aapt resource value: 0x7f0a0049
+			public const int bonusHeader = 2131361865;
 			
-			// aapt resource value: 0x7f0a004e
-			public const int bonusListView = 2131361870;
+			// aapt resource value: 0x7f0a004b
+			public const int bonusListView = 2131361867;
 			
 			// aapt resource value: 0x7f0a0012
 			public const int bonusText = 2131361810;
@@ -844,11 +844,11 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0019
 			public const int buttonEasy = 2131361817;
 			
-			// aapt resource value: 0x7f0a002e
-			public const int buttonFrameLayout = 2131361838;
+			// aapt resource value: 0x7f0a002d
+			public const int buttonFrameLayout = 2131361837;
 			
-			// aapt resource value: 0x7f0a0040
-			public const int buttonLayout = 2131361856;
+			// aapt resource value: 0x7f0a003d
+			public const int buttonLayout = 2131361853;
 			
 			// aapt resource value: 0x7f0a001b
 			public const int buttonNo = 2131361819;
@@ -859,8 +859,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0005
 			public const int cancelButton = 2131361797;
 			
-			// aapt resource value: 0x7f0a0058
-			public const int changeCountScoreText = 2131361880;
+			// aapt resource value: 0x7f0a0055
+			public const int changeCountScoreText = 2131361877;
 			
 			// aapt resource value: 0x7f0a0003
 			public const int chooseFromContButton = 2131361795;
@@ -871,8 +871,8 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0016
 			public const int choosePlayer = 2131361814;
 			
-			// aapt resource value: 0x7f0a0033
-			public const int circle_crop = 2131361843;
+			// aapt resource value: 0x7f0a0030
+			public const int circle_crop = 2131361840;
 			
 			// aapt resource value: 0x7f0a0006
 			public const int confirmButton = 2131361798;
@@ -886,41 +886,41 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0011
 			public const int continueButton = 2131361809;
 			
-			// aapt resource value: 0x7f0a005a
-			public const int currentScoreText = 2131361882;
-			
-			// aapt resource value: 0x7f0a005c
-			public const int customActionButton = 2131361884;
-			
 			// aapt resource value: 0x7f0a0057
-			public const int descLayout = 2131361879;
+			public const int currentScoreText = 2131361879;
+			
+			// aapt resource value: 0x7f0a0059
+			public const int customActionButton = 2131361881;
+			
+			// aapt resource value: 0x7f0a0054
+			public const int descLayout = 2131361876;
 			
 			// aapt resource value: 0x7f0a0008
 			public const int doneImage = 2131361800;
 			
-			// aapt resource value: 0x7f0a0059
-			public const int endDescriptionText = 2131361881;
+			// aapt resource value: 0x7f0a0056
+			public const int endDescriptionText = 2131361878;
 			
-			// aapt resource value: 0x7f0a002f
-			public const int endGameButton = 2131361839;
+			// aapt resource value: 0x7f0a002e
+			public const int endGameButton = 2131361838;
 			
-			// aapt resource value: 0x7f0a0048
-			public const int googleStoreActive = 2131361864;
+			// aapt resource value: 0x7f0a0045
+			public const int googleStoreActive = 2131361861;
 			
-			// aapt resource value: 0x7f0a0047
-			public const int googleStoreNotActive = 2131361863;
+			// aapt resource value: 0x7f0a0044
+			public const int googleStoreNotActive = 2131361860;
 			
-			// aapt resource value: 0x7f0a0037
-			public const int imageBackgroundRules = 2131361847;
+			// aapt resource value: 0x7f0a0034
+			public const int imageBackgroundRules = 2131361844;
 			
 			// aapt resource value: 0x7f0a001d
 			public const int imageCardView = 2131361821;
 			
-			// aapt resource value: 0x7f0a0026
-			public const int imagePickPlayer = 2131361830;
+			// aapt resource value: 0x7f0a0025
+			public const int imagePickPlayer = 2131361829;
 			
-			// aapt resource value: 0x7f0a003a
-			public const int imageScroll = 2131361850;
+			// aapt resource value: 0x7f0a0037
+			public const int imageScroll = 2131361847;
 			
 			// aapt resource value: 0x7f0a000e
 			public const int imageView = 2131361806;
@@ -928,47 +928,44 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a000b
 			public const int isPlayText = 2131361803;
 			
-			// aapt resource value: 0x7f0a004f
-			public const int layout = 2131361871;
+			// aapt resource value: 0x7f0a004c
+			public const int layout = 2131361868;
 			
-			// aapt resource value: 0x7f0a0034
-			public const int leadText = 2131361844;
+			// aapt resource value: 0x7f0a0031
+			public const int leadText = 2131361841;
 			
-			// aapt resource value: 0x7f0a0054
-			public const int light_bottom = 2131361876;
+			// aapt resource value: 0x7f0a0051
+			public const int light_bottom = 2131361873;
 			
 			// aapt resource value: 0x7f0a0017
 			public const int linearLayout1 = 2131361815;
 			
 			// aapt resource value: 0x7f0a001f
-			public const int linearLayout2 = 2131361823;
-			
-			// aapt resource value: 0x7f0a0020
-			public const int logoImage = 2131361824;
+			public const int logoImage = 2131361823;
 			
 			// aapt resource value: 0x7f0a0013
 			public const int makePhotoButton = 2131361811;
 			
-			// aapt resource value: 0x7f0a0042
-			public const int makeThisButton = 2131361858;
+			// aapt resource value: 0x7f0a003f
+			public const int makeThisButton = 2131361855;
 			
-			// aapt resource value: 0x7f0a0027
-			public const int namePickPlayer = 2131361831;
+			// aapt resource value: 0x7f0a0026
+			public const int namePickPlayer = 2131361830;
 			
 			// aapt resource value: 0x7f0a0001
 			public const int playerImage = 2131361793;
 			
+			// aapt resource value: 0x7f0a0027
+			public const int playerInGameImage = 2131361831;
+			
 			// aapt resource value: 0x7f0a0028
-			public const int playerInGameImage = 2131361832;
+			public const int playerInGameName = 2131361832;
 			
 			// aapt resource value: 0x7f0a0029
-			public const int playerInGameName = 2131361833;
+			public const int playerInGamePostion = 2131361833;
 			
 			// aapt resource value: 0x7f0a002a
-			public const int playerInGamePostion = 2131361834;
-			
-			// aapt resource value: 0x7f0a002b
-			public const int playerInGameScore = 2131361835;
+			public const int playerInGameScore = 2131361834;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int playerLayout = 2131361792;
@@ -982,29 +979,26 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a000a
 			public const int playerNameLayout = 2131361802;
 			
-			// aapt resource value: 0x7f0a0025
-			public const int playerPickList = 2131361829;
+			// aapt resource value: 0x7f0a0024
+			public const int playerPickList = 2131361828;
 			
-			// aapt resource value: 0x7f0a002c
-			public const int playerScore = 2131361836;
+			// aapt resource value: 0x7f0a002b
+			public const int playerScore = 2131361835;
 			
-			// aapt resource value: 0x7f0a0036
-			public const int playerTournamentListView = 2131361846;
+			// aapt resource value: 0x7f0a0033
+			public const int playerTournamentListView = 2131361843;
 			
 			// aapt resource value: 0x7f0a000d
 			public const int playersList = 2131361805;
 			
-			// aapt resource value: 0x7f0a0044
-			public const int points = 2131361860;
-			
-			// aapt resource value: 0x7f0a0053
-			public const int priceText = 2131361875;
-			
 			// aapt resource value: 0x7f0a0041
-			public const int refuseButton = 2131361857;
+			public const int points = 2131361857;
 			
-			// aapt resource value: 0x7f0a0030
-			public const int relativeLayout = 2131361840;
+			// aapt resource value: 0x7f0a0050
+			public const int priceText = 2131361872;
+			
+			// aapt resource value: 0x7f0a003e
+			public const int refuseButton = 2131361854;
 			
 			// aapt resource value: 0x7f0a0009
 			public const int removeButton = 2131361801;
@@ -1012,86 +1006,83 @@ namespace Yorsh
 			// aapt resource value: 0x7f0a0007
 			public const int removeLayout = 2131361799;
 			
-			// aapt resource value: 0x7f0a0051
-			public const int saleImageView = 2131361873;
+			// aapt resource value: 0x7f0a004e
+			public const int saleImageView = 2131361870;
 			
-			// aapt resource value: 0x7f0a003d
-			public const int scoreLayout = 2131361853;
+			// aapt resource value: 0x7f0a003a
+			public const int scoreLayout = 2131361850;
 			
-			// aapt resource value: 0x7f0a003e
-			public const int scoreString = 2131361854;
-			
-			// aapt resource value: 0x7f0a0035
-			public const int scoreText = 2131361845;
-			
-			// aapt resource value: 0x7f0a003f
-			public const int separator = 2131361855;
-			
-			// aapt resource value: 0x7f0a0052
-			public const int shadow = 2131361874;
+			// aapt resource value: 0x7f0a003b
+			public const int scoreString = 2131361851;
 			
 			// aapt resource value: 0x7f0a0032
-			public const int shareButton = 2131361842;
+			public const int scoreText = 2131361842;
 			
 			// aapt resource value: 0x7f0a003c
-			public const int startGameLayout = 2131361852;
+			public const int separator = 2131361852;
 			
-			// aapt resource value: 0x7f0a0031
-			public const int startNewGameButton = 2131361841;
+			// aapt resource value: 0x7f0a004f
+			public const int shadow = 2131361871;
+			
+			// aapt resource value: 0x7f0a0039
+			public const int startGameLayout = 2131361849;
+			
+			// aapt resource value: 0x7f0a002f
+			public const int startNewGameButton = 2131361839;
 			
 			// aapt resource value: 0x7f0a000c
 			public const int startPlayButton = 2131361804;
 			
-			// aapt resource value: 0x7f0a0056
-			public const int statusDescriptionText = 2131361878;
+			// aapt resource value: 0x7f0a0053
+			public const int statusDescriptionText = 2131361875;
 			
-			// aapt resource value: 0x7f0a0055
-			public const int statusTitleText = 2131361877;
+			// aapt resource value: 0x7f0a0052
+			public const int statusTitleText = 2131361874;
 			
-			// aapt resource value: 0x7f0a0050
-			public const int storeButton = 2131361872;
+			// aapt resource value: 0x7f0a004d
+			public const int storeButton = 2131361869;
 			
-			// aapt resource value: 0x7f0a005e
-			public const int tableButton = 2131361886;
-			
-			// aapt resource value: 0x7f0a0046
-			public const int tableShop = 2131361862;
-			
-			// aapt resource value: 0x7f0a004a
-			public const int taskDescription = 2131361866;
-			
-			// aapt resource value: 0x7f0a0049
-			public const int taskHeader = 2131361865;
+			// aapt resource value: 0x7f0a005b
+			public const int tableButton = 2131361883;
 			
 			// aapt resource value: 0x7f0a0043
-			public const int taskImageButton = 2131361859;
+			public const int tableShop = 2131361859;
 			
-			// aapt resource value: 0x7f0a004b
-			public const int taskListView = 2131361867;
+			// aapt resource value: 0x7f0a0047
+			public const int taskDescription = 2131361863;
+			
+			// aapt resource value: 0x7f0a0046
+			public const int taskHeader = 2131361862;
+			
+			// aapt resource value: 0x7f0a0040
+			public const int taskImageButton = 2131361856;
+			
+			// aapt resource value: 0x7f0a0048
+			public const int taskListView = 2131361864;
 			
 			// aapt resource value: 0x7f0a001e
 			public const int textCard = 2131361822;
 			
-			// aapt resource value: 0x7f0a0039
-			public const int textContainer = 2131361849;
+			// aapt resource value: 0x7f0a0036
+			public const int textContainer = 2131361846;
 			
-			// aapt resource value: 0x7f0a0038
-			public const int textHeader = 2131361848;
+			// aapt resource value: 0x7f0a0035
+			public const int textHeader = 2131361845;
 			
 			// aapt resource value: 0x7f0a0018
 			public const int textView1 = 2131361816;
 			
-			// aapt resource value: 0x7f0a005b
-			public const int titleText = 2131361883;
+			// aapt resource value: 0x7f0a0058
+			public const int titleText = 2131361880;
 			
-			// aapt resource value: 0x7f0a002d
-			public const int tournament = 2131361837;
+			// aapt resource value: 0x7f0a002c
+			public const int tournament = 2131361836;
 			
-			// aapt resource value: 0x7f0a003b
-			public const int viewPager = 2131361851;
+			// aapt resource value: 0x7f0a0038
+			public const int viewPager = 2131361848;
 			
-			// aapt resource value: 0x7f0a0045
-			public const int x2 = 2131361861;
+			// aapt resource value: 0x7f0a0042
+			public const int x2 = 2131361858;
 			
 			// aapt resource value: 0x7f0a0010
 			public const int youHaveBonus = 2131361808;

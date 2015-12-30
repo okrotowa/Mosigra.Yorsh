@@ -11,7 +11,16 @@ namespace Yorsh.Fragments
 	{
 	    private ISharedPreferencesEditor _editor;
 		private bool _editorIsPutted = false;
-		public override Dialog OnCreateDialog(Bundle savedInstanceState)
+
+	    public event EventHandler Dissmissed;
+
+	    protected virtual void OnDissmissed()
+	    {
+	        var handler = Dissmissed;
+	        if (handler != null) handler(this, EventArgs.Empty);
+	    }
+
+	    public override Dialog OnCreateDialog(Bundle savedInstanceState)
 		{
 			var dialog = base.OnCreateDialog(savedInstanceState);
 			dialog.Window.RequestFeature(WindowFeatures.NoTitle);
@@ -30,12 +39,19 @@ namespace Yorsh.Fragments
             var preferences = Activity.GetPreferences(FileCreationMode.Private);
             _editor = preferences.Edit();   
      
-			buttonEasy.Click += (object sender, EventArgs e) => {
-				//TODO::GOOGLE STORE URL
-				var  url = Android.Net.Uri.Parse("https://itunes.apple.com/ua/app/ers/id604886527?mt=8");
-                var intent = new Intent(Intent.ActionView, url);
-                StartActivity(intent);
-			    PutEditor(true);
+			buttonEasy.Click += (object sender, EventArgs e) => 
+            {
+                var uri = Android.Net.Uri.Parse("market://details?id=" + Activity.PackageName);
+                var goToMarket = new Intent(Intent.ActionView, uri);
+                try
+                {
+                    StartActivity(goToMarket);
+                }
+                catch (ActivityNotFoundException)
+                {
+                    StartActivity(new Intent(Intent.ActionView, Android.Net.Uri.Parse(@"http://play.google.com/store/apps/details?id=" + Activity.PackageName)));
+                }
+                PutEditor(true);
                 this.Dismiss();
 			};
 
@@ -56,12 +72,12 @@ namespace Yorsh.Fragments
 			_editor.PutBoolean("isShow", value);
 		}
 
-        public override void Dismiss()
+
+	    public override void Dismiss()
         {
 			if (!_editorIsPutted) PutEditor (true);
 			_editor.Commit();
-			Activity.Intent.PutExtra("isEnd", true);
-            Activity.Recreate();
+            OnDissmissed();
             base.Dismiss();
         }
 	}
