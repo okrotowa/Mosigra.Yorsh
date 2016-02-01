@@ -92,12 +92,6 @@ namespace Yorsh.Model
 
         }
 
-        public async Task LoadBitmapAsync(int desiredSize)
-        {
-            Task.Factory.StartNew(() => LoadBitmap(desiredSize));
-        }
-
-
         internal PlayerModel GetModel()
         {
             return _playerModel;

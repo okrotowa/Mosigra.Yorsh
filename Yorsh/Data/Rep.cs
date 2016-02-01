@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Gms.Analytics;
 using Yorsh.Helpers;
-using Exception = System.Exception;
-using Path = System.IO.Path;
+using Yorsh.Model;
 
-namespace Yorsh.Model
+namespace Yorsh.Data
 {
     public sealed class Rep
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Gms.Analytics;
+using Yorsh.Data;
 using Yorsh.Model;
 
 namespace Yorsh.Helpers

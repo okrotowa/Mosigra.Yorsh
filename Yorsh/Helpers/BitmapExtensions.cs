@@ -49,11 +49,12 @@ namespace Yorsh.Helpers
 
        public static Bitmap GetRoundedCornerBitmap(this Bitmap bitmap, int? roundPixelSize = null)
        {
+            var chooseSize = bitmap.Width > bitmap.Height ? bitmap.Height : bitmap.Width;
             roundPixelSize = roundPixelSize ?? (int) Application.Context.Resources.GetDimension(Resource.Dimension.RoundedCorners);
-            var output = Bitmap.CreateBitmap(bitmap.Width, bitmap.Width, Bitmap.Config.Argb8888);
+            var output = Bitmap.CreateBitmap(chooseSize, chooseSize, Bitmap.Config.Argb8888);
             var canvas = new Canvas(output);
             var paint = new Paint();
-            var rect = new Rect(0, 0, bitmap.Width, bitmap.Width);
+            var rect = new Rect(0, 0, chooseSize, chooseSize);
             var rectF = new RectF(rect);
             var roundPx = roundPixelSize.Value;
             paint.AntiAlias = true;

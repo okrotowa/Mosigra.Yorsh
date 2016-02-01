@@ -8,6 +8,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using SQLite;
+using Yorsh.Data;
 using Yorsh.Helpers;
 using Yorsh.Model;
 

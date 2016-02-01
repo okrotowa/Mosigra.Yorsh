@@ -142,7 +142,7 @@
     <Compile Include="Model\PlayerModel.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\ErshPurchase.cs" />
-    <Compile Include="Model\Rep.cs" />
+    <Compile Include="Data\Rep.cs" />
     <Compile Include="Model\StoreItem.cs" />
     <Compile Include="Model\StoreItemClickEventArgs.cs" />
     <Compile Include="Model\TaskDialogEnum.cs" />

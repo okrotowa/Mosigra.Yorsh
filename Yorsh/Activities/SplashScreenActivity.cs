@@ -8,6 +8,7 @@ using Android.Content.PM;
 using Android.Gms.Analytics;
 using Android.OS;
 using Xamarin.InAppBilling;
+using Yorsh.Data;
 using Yorsh.Helpers;
 using Yorsh.Model;
 using Android.Widget;

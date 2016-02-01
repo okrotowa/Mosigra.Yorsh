@@ -8,6 +8,7 @@ using Android.Provider;
 using Android.Widget;
 using Xamarin.Contacts;
 using Xamarin.Media;
+using Yorsh.Data;
 using Yorsh.Fragments;
 using Yorsh.Helpers;
 using Yorsh.Model;
@@ -113,18 +114,23 @@ namespace Yorsh.Activities
             }
             set
             {
-                try
+                RunOnUiThread(() =>
                 {
-                    _player.PhotoPath = value;
-                    _player.LoadBitmap(this.Resources.GetDimensionPixelSize(
-                        Resource.Dimension.AddPlayerItem_imageSize));
-                    _playerImageButton.SetImageBitmap(_player.Image);
-                }
-                catch (Exception exception)
-                {
-                    GaService.TrackAppException(this.Class.SimpleName, "PlayerImagePath", exception, false);
-                    _playerImageButton.SetImageResource(Resource.Drawable.photo_default);
-                }
+                    try
+                    {
+
+                        _player.PhotoPath = value;
+                        _player.LoadBitmap(this.Resources.GetDimensionPixelSize(
+                            Resource.Dimension.AddPlayerItem_imageSize));
+                        _playerImageButton.SetImageBitmap(_player.Image);
+
+                    }
+                    catch (Exception exception)
+                    {
+                        GaService.TrackAppException(this.Class.SimpleName, "PlayerImagePath", exception, false);
+                        _playerImageButton.SetImageResource(Resource.Drawable.photo_default);
+                    }
+                });
 
             }
         }
@@ -277,7 +283,7 @@ namespace Yorsh.Activities
             {
                 GaService.TrackAppException(this.Class.SimpleName, "SetConfirmButtonEnabled", exception, false);
             }
-            
+
         }
 
         private void SetFont(TextView textView)
