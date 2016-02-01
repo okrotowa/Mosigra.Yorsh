@@ -7,7 +7,7 @@ using Android.Widget;
 namespace Yorsh.Activities
 {
 	[Activity(Label = "@string/RulesGameString",ParentActivity = typeof(MainMenuActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
-	public class RulesActivity : BaseActivity
+	public class RulesActivity : BaseFragmentActivity
 	{
 		protected override void OnCreate(Bundle bundle)
 		{
@@ -25,7 +25,7 @@ namespace Yorsh.Activities
 				var rulesCirle = Resources.GetStringArray (Resource.Array.RulesCirle);
 				var imageScrollId = Resources.GetIdentifier ("rules_" + rulesCirle [viewPager.CurrentItem] + "_sroll_page", "drawable", this.PackageName);
 				var imageScroll = FindViewById<ImageView> (Resource.Id.imageScroll);
-				imageScroll.SetImageDrawable (Resources.GetDrawable (imageScrollId));
+				imageScroll.SetImageResource (imageScrollId);
 			};
 		}
 	}

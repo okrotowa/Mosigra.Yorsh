@@ -14,6 +14,7 @@ namespace Yorsh.Activities
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
+
 			SetContentView (Resource.Layout.ChoosePlayer);
 			SetHomeButtonEnabled (false);
 			var list = this.FindViewById<ListView>(Resource.Id.playerList);
@@ -24,12 +25,13 @@ namespace Yorsh.Activities
 			SetTextButtonEnabled (false);
 			_readyButton.SetText (Resource.String.ConfirmString);
 			_readyButton.SetTextColor (Resources.GetColorStateList(Resource.Drawable.ready_label_enable));
-			_readyButton.Click+= delegate {
+			_readyButton.Click+= delegate 
+            {
 				SetResult(Result.Ok, new Intent().PutExtra("player_id",_adapter.SelectedPosition));
-				base.OnBackPressed();
+				this.Finish();
 			};
-
 		}
+
 		//After ReadyButton Initialization
 		public void SetTextButtonEnabled(bool enabled)
 		{
@@ -37,8 +39,9 @@ namespace Yorsh.Activities
 		}
 
 
-		public override void OnBackPressed ()
+		public override void OnPreBackPressed ()
 		{
+			AllowBackPressed = false;
 			var toast = Toast.MakeText (this, _adapter.SelectedView == null 
 					? Resource.String.PleaseSelectThePlayerString
 					: Resource.String.PressReadyButtonString, 

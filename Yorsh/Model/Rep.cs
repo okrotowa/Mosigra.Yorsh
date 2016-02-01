@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
-using Android.Content;
-using SQLite;
+using Android.App;
+using Android.Gms.Analytics;
+using Yorsh.Helpers;
 using Exception = System.Exception;
 using Path = System.IO.Path;
 
@@ -14,23 +16,13 @@ namespace Yorsh.Model
     {
         private static Rep _instance;
         private PlayerList _players;
-        private TaskList _tasks;
-        private IList<BonusTable> _bonuses;
+        public Tracker GaTracker { get; set; }
+        public GoogleAnalytics GaInstance { get; set; }
 
         private Rep()
         {
             _players = new PlayerList();
         }
-
-        public event EventHandler DatabaseChanged;
-
-        private void OnDatabaseChanged()
-        {
-            var handler = DatabaseChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
-
-
         public static Rep Instance
         {
             get
@@ -41,50 +33,92 @@ namespace Yorsh.Model
             }
         }
 
-        public async Task InitializeRepositoryAsync()
+        private DatabaseHelper _helper;
+        public static DatabaseHelper DatabaseHelper
         {
-            await PlayersGenerateAsync();
-            await TaskGenerateAsync();
-            await BonusGenerateAsync();
+            get { return Instance._helper; }
+        }
+        public void InitDataBase(Application application)
+        {
+            _helper = new DatabaseHelper(application, 1);
         }
 
-        private async Task PlayersGenerateAsync()
+        public Task<bool> InitPlayersAsync()
         {
-            if (File.Exists(GetPlayersFile()))
+            return Task<bool>.Factory.StartNew(() =>
             {
+                _players = new PlayerList();
+                if (!File.Exists(PlayersFile)) return false;
                 try
                 {
-                    using (var playersFileStream = System.IO.File.Open(GetPlayersFile(), FileMode.Open))
+                    using (var playersFileStream = File.Open(PlayersFile, FileMode.Open))
                     {
                         var bin = new BinaryFormatter();
-                        _players = new PlayerList((IList<Player>)bin.Deserialize(playersFileStream));
+                        var players = bin.Deserialize(playersFileStream) as IList<PlayerModel>;
+                        if (players == null)
+                        {
+                            File.Delete(PlayersFile);
+                            return false;
+                        }
+                        foreach (var player in players.Select(playerModel => new Player(playerModel)))
+                        {
+                            player.LoadBitmap(
+                                (int)
+                                    Application.Context.Resources.GetDimension(
+                                        Resource.Dimension.AddPlayerItem_imageSize));
+                            _players.Add(player);
+                        }
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    _players = new PlayerList();
+                    GaService.TrackAppException(this.ToString(), "InitPlayersAsync", ex, false);
+                    File.Delete(PlayersFile);
+                    return false;
                 }
-            }
-            else _players = new PlayerList();
+                return true;
+            });
         }
 
-        private string GetPlayersFile()
+        private string PlayersFile
         {
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            return Path.Combine(documentsPath, "players.bin");
+            get
+            {
+                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                return Path.Combine(documentsPath, "players.bin");
+            }
         }
 
         public void SavePlayers()
         {
-            using (var playersFileStream = File.Open(GetPlayersFile(), FileMode.OpenOrCreate))
+            try
             {
-                var bin = new BinaryFormatter();
-                var list = _players.Items;
-                bin.Serialize(playersFileStream, list);
+                using (var playersFileStream = File.Create(PlayersFile))
+                {
+                    var bin = new BinaryFormatter();
+                    var list = _players.Items.Any()
+                        ? _players.Items.Select(player => player.GetModel()).ToList()
+                        : new List<PlayerModel>();
+                    bin.Serialize(playersFileStream, list);
+                }
             }
+            catch (Exception exception)
+            {
+                GaService.TrackAppException("Rep", "SavePlayers", exception, false);
+            }
+            
         }
 
         public string DataBaseFile
+        {
+            get
+            {
+                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                return Path.Combine(documentsPath, "Ersh.db");
+            }
+        }
+
+        public string OldDataBaseFile
         {
             get
             {
@@ -93,15 +127,6 @@ namespace Yorsh.Model
             }
         }
 
-        public int AllBonusCount
-        {
-            get { return 80; }
-        }
-
-        public int AllTaskCount
-        {
-            get { return 170; }
-        }
         public PlayerList Players
         {
             get
@@ -110,58 +135,18 @@ namespace Yorsh.Model
             }
         }
 
-        public TaskList Tasks
+        public async Task ClearAsync()
         {
-            get { return _tasks; }
-            private set
+            try
             {
-                _tasks = value;
-                OnDatabaseChanged();
+                _players.Reset();
+                _helper.ClearAsync();
             }
-        }
-        public IList<BonusTable> Bonuses
-        {
-            get
+            catch (Exception exception)
             {
-                return _bonuses;
-            }
-            private set
-            {
-                _bonuses = value;
-                OnDatabaseChanged();
+                GaService.TrackAppException("Rep", "ClearAsync", exception, false);
             }
         }
 
-        public async Task TaskGenerateAsync()
-        {
-            var connect = new SQLiteAsyncConnection(DataBaseFile);
-            var enumerator = Tasks == null ? 0 :  Tasks.Enumerator.CurrentPosition;
-            var categoryList = await connect.Table<CategoryTable>().ToListAsync();
-            var taskList = await connect.Table<TaskTable>().ToListAsync();
-            Tasks = new TaskList(taskList, categoryList);
-            Tasks.Enumerator.SetCurrent(enumerator);
-        }
-
-        public async Task BonusGenerateAsync()
-        {
-            var connect = new SQLiteAsyncConnection(DataBaseFile);
-            Bonuses = await connect.Table<BonusTable>().ToListAsync();
-        }
-
-        public void Clear(ISharedPreferencesEditor editor)
-        {
-            _players.Reset();
-            Tasks.Clear();
-            editor.PutInt("currentPlayer", 0);
-            editor.PutInt("currentTask", 0);
-            editor.Commit();
-        }
-
-        public void SaveContext(ISharedPreferencesEditor editor)
-        {
-            editor.PutInt("currentPlayer", Instance.Players.CurrentPosition);
-            editor.PutInt("currentTask", Tasks.Enumerator.CurrentPosition);
-            editor.Commit();
-        }
     }
 }

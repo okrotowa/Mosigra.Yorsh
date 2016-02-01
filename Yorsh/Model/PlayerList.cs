@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Android.Graphics;
 
 namespace Yorsh.Model
 {
@@ -16,14 +15,8 @@ namespace Yorsh.Model
             _enumerator = new PlayerEnumerator(this);
             _players = new List<Player>();
         }
-
-        public PlayerList(IList<Player> players)
-        {
-            _enumerator = new PlayerEnumerator(this);
-            _players = players;
-        }
-
-        public IList<Player> Items
+        
+        public IEnumerable<Player> Items
         {
             get { return _players; }
         }
@@ -36,27 +29,25 @@ namespace Yorsh.Model
             }
         }
 
-        public void Add(string name, Bitmap image, bool isPlay = true)
+        public void Add(Player item)
         {
-            _players.Add(new Player(name, image, isPlay));
+            _players.Add(item);
         }
 
         public int GetPosition(Player player)
         {
-            return _players.Count(p => p.Score > player.Score);
+			return _players.All(p=>player.Score==0) ? 0 : _players.Count(p => p.Score > player.Score) + 1;
         }
 
         public void Reset()
         {
             foreach (var player in _players)
             {
-                player.IsPlay = false;
                 player.Score = 0;
             }
             _enumerator.Reset();
         }
 
-        #region Implemented elements
 
 		public event EventHandler ItemRemoved;
 
@@ -69,11 +60,6 @@ namespace Yorsh.Model
         public int Count
         {
             get { return _players.Count; }
-        }
-
-        public void Add(Player item)
-        {
-            _players.Add(item);
         }
 
         public bool IsReadOnly
@@ -124,11 +110,7 @@ namespace Yorsh.Model
             get { return _players[index]; }
             set { _players[index] = value; }
         }
-
-        #endregion
-
-        #region Enumerator
-
+        
         public PlayerEnumerator Enumerator
         {
             get { return _enumerator; }
@@ -143,84 +125,5 @@ namespace Yorsh.Model
         {
             return _enumerator;
         }
-
-        public int CurrentPosition
-        {
-            get { return _enumerator.CurrentPosition; }
-        }
-
-        public void SetCurrent(int position)
-        {
-            _enumerator.SetCurrent(position);
-        }
-
-        public void SetCurrent(Player player)
-        {
-            _enumerator.SetCurrent(_players.IndexOf(player));
-        }
-
-        public bool MoveNext()
-        {
-            return _enumerator.MoveNext();
-        }
-
-        public Player Current
-        {
-            get { return _enumerator.Current; }
-        }
-        #endregion
     }
-
-    #region Enumerator [class]
-
-    public class PlayerEnumerator : IEnumerator<Player>
-    {
-        private readonly PlayerList _playersList;
-        private int _current;
-
-        public PlayerEnumerator(PlayerList playersList)
-        {
-            _playersList = playersList;
-            _current = -1;
-        }
-
-        public bool MoveNext()
-        {
-            if (_current >= _playersList.Count - 1) _current = 0;
-            else
-                _current++;
-            return true;
-        }
-
-        public void Reset()
-        {
-            _current = 0;
-        }
-
-        public void SetCurrent(int position)
-        {
-            _current = position;
-        }
-
-        public Player Current
-        {
-            get { return _playersList[_current]; }
-        }
-
-        public int CurrentPosition
-        {
-            get { return _current; }
-        }
-
-        object IEnumerator.Current
-        {
-            get { return Current; }
-        }
-
-        public void Dispose()
-        {
-        }
-    }
-
-    #endregion
 }

@@ -16,7 +16,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/Store_Header_TextSize"
             android:id="@+id/googleStoreNotActive"
-            android:text="Something bad happened:("
             android:layout_centerInParent="true" />
         <ScrollView
             android:layout_width="match_parent"
@@ -44,7 +43,6 @@
                         android:layout_marginTop="@dimen/Store_Task_MarginTop"
                         android:layout_gravity="center" />
                     <TextView
-                        android:text="У вас 70 заданий, можно купить еще 160"
                         android:textSize="@dimen/Store_ContentTextSize"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -74,7 +72,6 @@
                         android:layout_margin="@dimen/Store_Header_Margin"
                         android:layout_gravity="center" />
                     <TextView
-                        android:text="У вас 20 бонусов, можно купить еще 80"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/bonusDescription"

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
-using Yorsh.Activities;
+using Android.Database.Sqlite;
+using Yorsh.Data;
 using Yorsh.Model;
 using SQLite;
-using File = System.IO.File;
 using Stream = System.IO.Stream;
 using Android.Graphics;
 using Android.Widget;
@@ -18,10 +18,10 @@ namespace Yorsh.Helpers
 {
     public static class ActivityExtensions
     {
-        public static void StartActivityWithoutBackStack(this Activity mainActivity, Intent newActivity,
-            int fragment = -1)
+        private static readonly object Locker = new object();
+
+        public static void StartActivityWithoutBackStack(this Activity mainActivity, Intent newActivity)
         {
-            if (fragment > 0) newActivity.PutExtra("fragment", fragment);
             mainActivity.StartActivity(newActivity);
             mainActivity.Finish();
         }
@@ -60,116 +60,97 @@ namespace Yorsh.Helpers
             return Typeface.CreateFromAsset(activity.Assets, "BankirRetro.ttf");
         }
 
-        public static async Task CreateDataBaseAsync(this Activity context)
-        {
-            var path = Rep.Instance.DataBaseFile;
-            if (!File.Exists(path))
-            {
-                var connection = new SQLiteAsyncConnection(path);
-                var results = await connection.CreateTablesAsync<TaskTable, BonusTable, CategoryTable>();
-                if (results.Results.Count == 3)
-                {
-                    var tasks = GetTasks(context.Assets.Open("Task.csv"), 100);
-                    var bonuses = GetBonus(context.Assets.Open("Bonus.csv"), 40);
-                    var category = GetCategory(context.Assets.Open("Category.csv"));
+        //public static async Task CreateOrOpenDataBaseAsync(this Activity context)
+        //{
+        //    try
+        //    {
+        //        var connection = Rep.Instance.DataBaseConnection;
+        //        var results = await connection.CreateTablesAsync<TaskTable, BonusTable, CategoryTable>();
 
-                    await connection.InsertAllAsync(tasks);
-                    await connection.InsertAllAsync(bonuses);
-                    await connection.InsertAllAsync(category);
-                }
-            }
-        }
+        //        if (results.Results.Count == 3)
+        //        {
+        //            var tasks = GetTasks(context.Assets.Open("Task.csv"), 0, IntConst.DefaultTaskCount);
+        //            var bonuses = GetBonus(context.Assets.Open("Bonus.csv"), 0, IntConst.DefaultBonusCount);
+        //            var category = GetCategory(context.Assets.Open("Category.csv"));
 
-        public static async Task AddProduct(this Activity context, string skuId)
-        {
-            if (!(context is StoreActivity)) return;
-            var skuItems = skuId.Split('_');
-            if (skuItems.Count() != 2) return;
+        //            await connection.InsertAllAsync(tasks);
+        //            await connection.InsertAllAsync(bonuses);
+        //            await connection.InsertAllAsync(category);
+        //        }
 
-            if (string.CompareOrdinal("task", skuItems[1]) == 0)
-            {
-                int count;
-                if (!int.TryParse(skuItems[0], out count) && string.CompareOrdinal(skuItems[0], "all") == 0)
-                    count = Rep.Instance.AllTaskCount - Rep.Instance.Tasks.Count();
-                await AddTask(context.Assets.Open("Task.csv"), count);
-            }
-            else if (string.CompareOrdinal("bonus", skuItems[1]) == 0)
-            {
-                int count;
-                if (!int.TryParse(skuItems[0], out count) && string.CompareOrdinal(skuItems[0], "all") == 0)
-                    count = Rep.Instance.AllBonusCount - Rep.Instance.Bonuses.Count();
-                await AddBonus(context.Assets.Open("Bonus.csv"), count);
-            }
-        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        GaService.TrackAppException(context.Class.SimpleName, "CreateOrOpenDataBaseAsync", exception, true);
+        //    }
 
-        private static async Task AddTask(Stream stream, int count)
-        {
-            var path = Rep.Instance.DataBaseFile;
-            var connection = new SQLiteAsyncConnection(path);
-            var tasks = GetTasks(stream, count);
-            await connection.InsertAllAsync(tasks);
-            await Rep.Instance.TaskGenerateAsync();
-        }
+        //}
 
-        private static async Task AddBonus(Stream stream, int count)
-        {
-            var path = Rep.Instance.DataBaseFile;
-            var connection = new SQLiteAsyncConnection(path);
-            var bonuses = GetBonus(stream, count);
-            await connection.InsertAllAsync(bonuses);
-            await Rep.Instance.BonusGenerateAsync();
-        }
+        
 
-        static IEnumerable<TaskTable> GetTasks(Stream stream, int count)
-        {
-            var list = new List<TaskTable>();
-            using (var reader = new StreamReader(stream, System.Text.Encoding.UTF8))
-            {
-                var taskCount = Rep.Instance.Tasks == null ? 0 : Rep.Instance.Tasks.Count;
-                for (var index = 0; index < taskCount + count; index++)
-                {
-                    var line = reader.ReadLine();
-                    if (index < taskCount || line == null) continue;
-                    var values = line.Split(';');
-                    list.Add(new TaskTable(int.Parse(values[0]), values[1], int.Parse(values[2])));
-                }
-            }
-            list.Shuffle();
-            return list;
-        }
+        //public static async Task AddProductAsync(this Activity context, string countProduct, string name)
+        //{
+        //    try
+        //    {
+        //        if (string.CompareOrdinal("task", name) == 0)
+        //        {
+        //            var count = 0;
+        //            if (!int.TryParse(countProduct, out count) && string.CompareOrdinal(countProduct, "all") == 0)
+        //                count = IntConst.AllTaskCount - Rep.Instance.Tasks.Count();
+        //            if (count == 0)
+        //                return;
+        //            await AddTask(context.Assets.Open("Task.csv"), count);
+        //        }
+        //        else if (string.CompareOrdinal("bonus", name) == 0)
+        //        {
+        //            int count = 0;
+        //            if (!int.TryParse(countProduct, out count) && string.CompareOrdinal(countProduct, "all") == 0)
+        //                count = IntConst.AllBonusCount - Rep.Instance.Bonuses.Count();
+        //            if (count == 0)
+        //                return;
+        //            await AddBonus(context.Assets.Open("Bonus.csv"), count);
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        GaService.TrackAppException(context.Class.SimpleName, "AddProductAsync", exception, true);
+        //    }
 
-        static IEnumerable<CategoryTable> GetCategory(Stream stream)
-        {
-            var list = new List<CategoryTable>();
-            using (var reader = new StreamReader(stream))
-            {
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    if (line == null) continue;
-                    var values = line.Split(';');
-                    list.Add(new CategoryTable(int.Parse(values[0]), values[1], values[2]));
-                }
-            }
-            return list;
-        }
+        //}
+        //public static async Task AddProductAsync(this Activity context, string skuId)
+        //{
+        //    try
+        //    {
+        //        var skuItems = skuId.Split('_');
+        //        if (skuItems.Count() != 2) return;
 
-        private static IEnumerable<BonusTable> GetBonus(Stream stream, int count)
-        {
-            var list = new List<BonusTable>();
-            using (var reader = new StreamReader(stream, System.Text.Encoding.UTF8))
-            {
-                var bonusCount = Rep.Instance.Bonuses == null ? 0 : Rep.Instance.Bonuses.Count;
-                for (var index = 0; index < bonusCount + count; index++)
-                {
-                    var line = reader.ReadLine();
-                    if (index < bonusCount || line == null) continue;
-                    var values = line.Split(';');
-                    list.Add(new BonusTable(values[0], int.Parse(values[1])));
-                }
-            }
-            return list;
-        }
+        //        if (string.CompareOrdinal("task", skuItems[1]) == 0)
+        //        {
+        //            var count = 0;
+        //            if (!int.TryParse(skuItems[0], out count) && string.CompareOrdinal(skuItems[0], "all") == 0)
+        //                count = IntConst.AllTaskCount - Rep.Instance.Tasks.Count();
+        //            if (count == 0)
+        //                return;
+        //            await AddTask(context.Assets.Open("Task.csv"), count);
+        //        }
+        //        else if (string.CompareOrdinal("bonus", skuItems[1]) == 0)
+        //        {
+        //            int count = 0;
+        //            if (!int.TryParse(skuItems[0], out count) && string.CompareOrdinal(skuItems[0], "all") == 0)
+        //                count = IntConst.AllBonusCount - Rep.Instance.Bonuses.Count();
+        //            if (count == 0)
+        //                return;
+        //            await AddBonus(context.Assets.Open("Bonus.csv"), count);
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        GaService.TrackAppException(context.Class.SimpleName, "AddProductAsync", exception, true);
+        //    }
+
+        //}
+
+
 
         public static void OnTouchButtonDarker(this Activity activity, Button sender, View.TouchEventArgs e)
         {
@@ -177,7 +158,7 @@ namespace Yorsh.Helpers
             switch (e.Event.Action)
             {
                 case MotionEventActions.Down:
-                {
+                    {
                         button.Background.SetColorFilter(activity.Resources.GetColor(Resource.Color.button_shadow_gray), PorterDuff.Mode.SrcAtop);
                         button.SetTextColor(GetColorWithOpacity(activity, Resource.Color.white, Resource.Color.button_shadow_gray));
                         button.Invalidate();
@@ -192,16 +173,36 @@ namespace Yorsh.Helpers
                         e.Handled = false;
                         break;
                     }
-            };
+            }
+        }
+        public static void SaveCurrentPlayer(this Activity activity, int player)
+        {
+            var editor = activity.GetSharedPreferences("T", FileCreationMode.Private).Edit();
+            editor.PutInt("currentPlayer", player);
+            editor.Commit();
+        }
+
+        public static int GetCurrentPlayer(this Activity activity)
+        {
+            var prefs = activity.GetSharedPreferences("T", FileCreationMode.Private);
+            var count = prefs.GetInt("currentPlayer", 0);
+            return count < 0 ? 0 : count;
         }
 
         public static void SaveAsStartupActivity(this Activity activity, string activityName)
         {
-            Rep.Instance.SaveContext(activity.GetSharedPreferences("T", FileCreationMode.Private).Edit());
-            var editorX = activity.GetSharedPreferences("X", FileCreationMode.Private).Edit();
-            editorX.PutString("lastActivity", activityName);
-            editorX.Commit();
+            try
+            {
+                var editorX = activity.GetSharedPreferences("X", FileCreationMode.Private).Edit();
+                editorX.PutString("lastActivity", activityName);
+                editorX.Commit();
+            }
+            catch (Exception ex)
+            {
+                GaService.TrackAppException(activity.Class.SimpleName, "SaveAsStartupActivity", ex, false);
+            }
         }
+
         public static Color GetColorWithOpacity(this Activity activity, int normalColor, int opacityColor)
         {
             var bitmap = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888); //make a 1-pixel Bitmap
@@ -212,13 +213,6 @@ namespace Yorsh.Helpers
             return Color.Argb(index, index, index, index);
         }
 
-        public const string ResultGameActivity = "ResultGameAcitivity";
-        public const string MainMenuActivity = "MainMenuActivity";
-        public const string GameActivity = "GameActivity";
-        public static Bitmap PlayerPhoto(this Activity activity, Player player)
-        {
-            return BitmapFactory.DecodeByteArray(player.Photo, 0, player.Photo.Length) ?? (BitmapFactory.DecodeResource(activity.Resources, Resource.Drawable.photo_default)).GetRoundedCornerBitmap((int)activity.Resources.GetDimension(Resource.Dimension.RoundedCorners));
-        }
     }
 }
 

@@ -30,6 +30,7 @@
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <Debugger>Xamarin</Debugger>
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
+    <JavaMaximumHeapSize>500m</JavaMaximumHeapSize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -41,6 +42,8 @@
     <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <AssemblyName>Yorsh</AssemblyName>
+    <JavaMaximumHeapSize>500m</JavaMaximumHeapSize>
+    <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -75,62 +78,80 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="Xamarin.GooglePlayServices.Ads">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Ads.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Ads.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Analytics">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Analytics.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.AppIndexing">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.AppIndexing.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.AppIndexing.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Basement">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Basement.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Basement.dll</HintPath>
+    </Reference>
     <Reference Include="Xamarin.Mobile">
       <HintPath>..\Components\xamarin.mobile-0.7.7\lib\android\Xamarin.Mobile.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\Components\xamandroidsupportv4-18-4.19.0.1\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
     <Reference Include="Facebook">
       <HintPath>..\Components\facebook-sdk-6.2.2\lib\android\Facebook.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.InAppBilling">
       <HintPath>..\Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.23.1.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\AddNewPlayerActivity.cs" />
+    <Compile Include="Activities\BaseFragmentActivity.cs" />
     <Compile Include="Activities\BaseActivity.cs" />
     <Compile Include="Activities\GameActivity.cs" />
+    <Compile Include="Activities\IBaseActivity.cs" />
     <Compile Include="Activities\ImageActivity.cs" />
     <Compile Include="Activities\MainMenuActivity.cs" />
+    <Compile Include="Activities\ResultsGameActivity.cs" />
     <Compile Include="Activities\RulesActivity.cs" />
     <Compile Include="Activities\AddPlayersActivity.cs" />
     <Compile Include="Activities\StoreActivity.cs" />
-    <Compile Include="Activities\ResultsGameActivity.cs" />
     <Compile Include="Adapters\StoreListAdapter.cs" />
+    <Compile Include="Data\ITable.cs" />
+    <Compile Include="Data\Parser.cs" />
     <Compile Include="Fragments\ChoosePhotoDialog.cs" />
-    <Compile Include="Fragments\GameFragment.cs" />
-    <Compile Include="Fragments\ImageFragment.cs" />
-    <Compile Include="Fragments\PickPlayerDialog.cs" />
-    <Compile Include="Fragments\TaskProgressDialog.cs" />
     <Compile Include="Helpers\ActivityExtensions.cs" />
     <Compile Include="Helpers\BearTask.cs" />
+    <Compile Include="Helpers\BillingErrorExtensions.cs" />
     <Compile Include="Helpers\BitmapLoadedEventArgs.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
+    <Compile Include="Helpers\IntConst.cs" />
     <Compile Include="Helpers\ListExtensions.cs" />
     <Compile Include="Helpers\MakeTask.cs" />
     <Compile Include="Helpers\RefuseAndMoveTask.cs" />
     <Compile Include="Helpers\RefuseTask.cs" />
     <Compile Include="Helpers\ResourceLoader.cs" />
+    <Compile Include="Helpers\SQLiteExtensions.cs" />
+    <Compile Include="Helpers\StringConst.cs" />
     <Compile Include="Helpers\TaskDialogBuilder.cs" />
-    <Compile Include="Model\BonusTable.cs" />
-    <Compile Include="Model\CategoryTable.cs" />
+    <Compile Include="Model\PlayerEnumerator.cs" />
     <Compile Include="Model\PlayerList.cs" />
+    <Compile Include="Model\PlayerModel.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\ErshPurchase.cs" />
     <Compile Include="Model\Rep.cs" />
     <Compile Include="Model\StoreItem.cs" />
     <Compile Include="Model\StoreItemClickEventArgs.cs" />
+    <Compile Include="Model\TaskDialogEnum.cs" />
     <Compile Include="Model\TaskList.cs" />
-    <Compile Include="Model\TaskTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Activities\SplashScreenActivity.cs">
       <DeployService-Deploy>True</DeployService-Deploy>
     </Compile>
     <Compile Include="Helpers\BitmapExtensions.cs" />
-    <Compile Include="Fragments\BonusDialog.cs" />
     <Compile Include="Activities\ChoosePlayerActivity.cs" />
     <Compile Include="Adapters\AddNewPlayerListAdapter.cs" />
     <Compile Include="Adapters\PlayerListAdapter.cs" />
@@ -139,6 +160,12 @@
     <Compile Include="Adapters\GenericFragmentPagerAdapter.cs" />
     <Compile Include="Activities\RuleFragment.cs" />
     <Compile Include="Fragments\DialogRatingFragment.cs" />
+    <Compile Include="Activities\BonusActivity.cs" />
+    <Compile Include="Helpers\Common.cs" />
+    <Compile Include="Helpers\GaService.cs" />
+    <Compile Include="Data\BonusTable.cs" />
+    <Compile Include="Data\CategoryTable.cs" />
+    <Compile Include="Data\TaskTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Bonus.csv" />
@@ -181,7 +208,6 @@
     <AndroidResource Include="Resources\drawable\splash.png" />
     <AndroidResource Include="Resources\drawable-hdpi\logo.png" />
     <AndroidResource Include="Resources\drawable-mdpi\logo.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\splash.png" />
     <AndroidResource Include="Resources\drawable-hdpi\plus_tasks_button.png" />
     <AndroidResource Include="Resources\drawable-hdpi\rules_button.png" />
     <AndroidResource Include="Resources\drawable-hdpi\start_game_button.png" />
@@ -415,7 +441,9 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\shop_task_100.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\shop_task_all.png" />
     <AndroidResource Include="Resources\values\arrays.xml" />
-    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\values\colors.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\values\strings.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -441,18 +469,6 @@
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
     </None>
-    <AndroidResource Include="Resources\drawable\gir_bott.png" />
-    <AndroidResource Include="Resources\drawable\gir_top.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\gir_bott.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\gir_top.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\gir_bott.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\gir_top.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\gir_bott.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\gir_top.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\gir_bott.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\gir_top.png" />
-    <AndroidResource Include="Resources\drawable-xxxhdpi\gir_bott.png" />
-    <AndroidResource Include="Resources\drawable-xxxhdpi\gir_top.png" />
     <AndroidResource Include="Resources\drawable\DividerMargin.xml" />
     <AndroidResource Include="Resources\layout\DialogRating.axml" />
     <AndroidResource Include="Resources\drawable\bonus_sale_25.png" />
@@ -463,6 +479,9 @@
     <AndroidResource Include="Resources\drawable-xhdpi\background.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\background.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\background.png" />
+    <AndroidResource Include="Resources\drawable\task_status.xml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\MainMenu.axml">
@@ -507,10 +526,7 @@
     <EmbeddedResource Include="Assets\cards\фото_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\фото_bg_NY.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Resources\menu\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <XamarinComponentReference Include="sqlite-net">
       <Version>1.0.8.3</Version>
@@ -522,10 +538,6 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.mobile">
       <Version>0.7.7</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="xamandroidsupportv4-18">
-      <Version>4.19.0.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
     <XamarinComponentReference Include="facebook-sdk">

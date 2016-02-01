@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Yorsh.Helpers;
+using Yorsh.Data;
 
 namespace Yorsh.Model
 {
@@ -12,15 +13,18 @@ namespace Yorsh.Model
         private readonly Dictionary<int, TaskTable> _taskDictionary;
         private readonly TaskEnumerator _enumerator;
 
-        public TaskList(IList<TaskTable> tasks, IEnumerable<CategoryTable> categories)
+        public TaskList(IEnumerable<TaskTable> tasks, IEnumerable<CategoryTable> categories, int currentPosition = 0)
         {
-            _tasks = tasks;
+            _tasks = tasks.ToList();
             _taskDictionary = _tasks.ToDictionary(task => task.Id);
             _category = categories.ToDictionary(cat => cat.Id);
-            _enumerator = new TaskEnumerator(this);
+            _enumerator = new TaskEnumerator(this) {CurrentPosition = currentPosition};
         }
 
-        public IEnumerator<TaskTable> GetEnumerator()
+        public IEnumerable<TaskTable> Tasks
+        { get { return _tasks; } }
+
+    public IEnumerator<TaskTable> GetEnumerator()
         {
             return _enumerator;
         }
@@ -41,7 +45,10 @@ namespace Yorsh.Model
 
         public void Clear()
         {
-            _tasks.Shuffle();
+            foreach (var taskTable in _tasks)
+            {
+                taskTable.Position = 0;
+            }
             _enumerator.Reset();
         }
 
@@ -64,7 +71,7 @@ namespace Yorsh.Model
         {
             _tasks.Add(task);
         }
-        
+
         public TaskTable GetTask(int taskId)
         {
             return _taskDictionary[taskId];
@@ -78,19 +85,9 @@ namespace Yorsh.Model
 
         #region TaskEnumerator
 
-        public bool MoveNext()
-        {
-            return _enumerator.MoveNext();
-        }
-
-        public void Reset()
-        {
-            _enumerator.Reset();
-        }
-
         public void SetCurrent(int position)
         {
-            _enumerator.SetCurrent(position);
+            _enumerator.CurrentPosition = position;
         }
 
         public TaskTable Current
@@ -104,11 +101,13 @@ namespace Yorsh.Model
     public class TaskEnumerator : IEnumerator<TaskTable>
     {
         private readonly TaskList _taskList;
+        private IList<int> _ids;
         private int _current;
 
         public TaskEnumerator(TaskList taskList)
         {
             _taskList = taskList;
+            _ids = new List<int>();
             _current = 0;
         }
 
@@ -116,6 +115,7 @@ namespace Yorsh.Model
         {
             if (_current >= _taskList.Count - 1) return false;
             _current++;
+            _taskList.Current.Position = _current;
             return true;
         }
 
@@ -124,14 +124,10 @@ namespace Yorsh.Model
             _current = 0;
         }
 
-        public void SetCurrent(int position)
-        {
-            _current = position;
-        }
-
         public int CurrentPosition
         {
             get { return _current; }
+            set { _current = value; }
         }
 
         public TaskTable Current

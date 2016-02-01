@@ -132,7 +132,11 @@
         <ListView
             android:id="@+id/playerTournamentListView"
             android:background="@drawable/round_rect_shape_white_background"
+            android:listSelector="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="fill_parent"
+            android:divider="@drawable/dividermargin"
+            android:dividerHeight="1dp" />
     </LinearLayout>
 </RelativeLayout>

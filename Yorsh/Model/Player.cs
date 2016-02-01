@@ -1,39 +1,106 @@
-﻿using System;
-using Android.Graphics;
+using System;
+using System.Threading.Tasks;
+using Xamarin.Contacts;
 using Yorsh.Helpers;
+using Android.Graphics;
+using Android.App;
 
 namespace Yorsh.Model
 {
-    [Serializable]
     public class Player
     {
-        public Player(string name, Bitmap photo, bool isPlay = true, int score = 0)
+        private readonly PlayerModel _playerModel;
+        public Player(PlayerModel player)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("Name of Player");
-            if (photo == null) throw new ArgumentNullException("PlayerPhoto of Player");
-            Name = name;
-            Photo = photo.ToByteArray();
-            IsPlay = isPlay;
-            Score = score;
+            _playerModel = player;
         }
 
-        public Player(string name, byte[] photo, bool isPlay = true, int score = 0)
+        public Player()
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("Name of Player");
-            if (photo == null) throw new ArgumentNullException("PlayerPhoto of Player");
-            Name = name;
-            Photo = photo;
-            IsPlay = isPlay;
-            Score = score;
+            _playerModel = new PlayerModel();
+        }
+        public string PhotoPath
+        {
+            get { return _playerModel.PhotoPath; }
+            set { _playerModel.PhotoPath = value; }
         }
 
-        public byte[] Photo { get; private set; }
+        public string Name
+        {
+            get { return _playerModel.Name; }
+            set { _playerModel.Name = value; }
+        }
 
-        public string Name { get; private set; }
+        public bool IsPlay
+        {
+            get { return _playerModel.IsPlay; }
+            set { _playerModel.IsPlay = value; }
+        }
 
-        public bool IsPlay { get; set; }
+        public int Score
+        {
+            get { return _playerModel.Score; }
+            set { _playerModel.Score = value; }
+        }
 
-        public int Score { get; set; }
+        public bool FromContacts
+        {
+            get { return _playerModel.FromContacts; }
+            set { _playerModel.FromContacts = value; }
+        }
 
+        public Bitmap Image { get; private set; }
+
+        private void SetDefaultImage()
+        {
+            Image = BitmapFactory.DecodeResource(Application.Context.Resources, Resource.Drawable.photo_default);
+
+        }
+
+        private Bitmap GetDefaultImage()
+        {
+            return BitmapFactory.DecodeResource(Application.Context.Resources, Resource.Drawable.photo_default);
+        }
+
+        public void LoadBitmap(int desiredSize)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(PhotoPath))
+                {
+                    SetDefaultImage();
+                }
+                else if (FromContacts)
+                {
+                    var addressBook = new AddressBook(Application.Context) { PreferContactAggregation = false };
+                    var contact = addressBook.Load(PhotoPath);
+                    var image = contact.GetThumbnail();
+                    Image = image == null ? GetDefaultImage() : image.GetRoundedCornerBitmap();
+                }
+                else
+                {
+                    var image = BitmapExtensions.DecodeBitmap(PhotoPath, desiredSize, desiredSize);
+                    Image = image == null ? GetDefaultImage() : image.GetRoundedCornerBitmap();
+                }
+            }
+            catch (Exception ex)
+            {
+                GaService.TrackAppException("Player","LoadBitmap", ex, false);
+                SetDefaultImage();
+                if (!string.IsNullOrEmpty(PhotoPath)) PhotoPath = null;
+            }
+
+        }
+
+        public async Task LoadBitmapAsync(int desiredSize)
+        {
+            Task.Factory.StartNew(() => LoadBitmap(desiredSize));
+        }
+
+
+        internal PlayerModel GetModel()
+        {
+            return _playerModel;
+        }
     }
 }

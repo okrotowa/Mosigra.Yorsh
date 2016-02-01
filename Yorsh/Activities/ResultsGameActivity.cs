@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -16,7 +18,7 @@ namespace Yorsh.Activities
     [Activity(Label = "@string/ResultsString", ParentActivity = typeof(GameActivity), MainLauncher = false, ScreenOrientation = ScreenOrientation.Portrait)]
     public class ResultsGameActivity : BaseActivity
     {
-       // Bitmap _screenShot;
+        // Bitmap _screenShot;
         private bool _isEndGame;
 
         protected override void OnCreate(Bundle bundle)
@@ -50,18 +52,18 @@ namespace Yorsh.Activities
             playerName.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
             playerScore.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
 
-            imageView.SetImageBitmap(this.PlayerPhoto(player));
+            imageView.SetImageBitmap(player.Image);
             playerName.Text = player.Name.ToUpper();
             playerScore.Text = player.Score.ToString();
             leadString.Text = Resources.GetString(isEndGame
                 ? Resource.String.WinnerString
                 : Resource.String.LeadString);
 
-        } 
+        }
 
-        public override void OnBackPressed()
+        public async override void OnBackPressed()
         {
-            if (_isEndGame) StartNewGame();
+            if (_isEndGame) await StartNewGameAsync();
             else base.OnBackPressed();
         }
 
@@ -82,10 +84,10 @@ namespace Yorsh.Activities
                 {
                     var fragmentTransaction = FragmentManager.BeginTransaction();
                     var prev = (DialogFragment)FragmentManager.FindFragmentByTag("rating");
-                    var dialog = (DialogRatingFragment) (prev ?? new DialogRatingFragment()
+                    var dialog = (DialogRatingFragment)prev ?? new DialogRatingFragment()
                     {
                         ShowsDialog = true
-                    });
+                    };
                     dialog.Show(fragmentTransaction, "rating");
                     dialog.Dissmissed += (sender, args) => this.Recreate();
                 }
@@ -104,14 +106,19 @@ namespace Yorsh.Activities
 
         protected override void OnPause()
         {
-            this.SaveAsStartupActivity(ActivityExtensions.ResultGameActivity);
+            if (_isEndGame)
+            {
+                this.SaveAsStartupActivity(StringConst.ResultGameActivity);
+            }
             base.OnPause();
         }
 
-        private void StartNewGame()
+        private async Task StartNewGameAsync()
         {
-            Rep.Instance.Clear(GetSharedPreferences("T", FileCreationMode.Private).Edit());
-            this.StartActivityWithoutBackStack(new Intent(this, typeof(MainMenuActivity)));
+            await Rep.Instance.ClearAsync();
+            this.SaveCurrentPlayer(0);
+            var intent = new Intent(this, typeof (MainMenuActivity));
+            this.StartActivityWithoutBackStack(intent);
         }
         private void SetButtonsAndActionBarIsEndGame()
         {
@@ -122,33 +129,32 @@ namespace Yorsh.Activities
 
             var startNewGameButton = FindViewById<Button>(Resource.Id.startNewGameButton);
             startNewGameButton.Enabled = true;
-            startNewGameButton.Click += delegate
-            {
-                StartNewGame();
-            };
+            startNewGameButton.Click += async (sender, args) => await StartNewGameAsync();
             startNewGameButton.Touch += (sender, e) => this.OnTouchButtonDarker(startNewGameButton, e);
             startNewGameButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
             startNewGameButton.Background.SetAlpha(255);
-//            var shareButton = FindViewById<Button>(Resource.Id.shareButton);
-//            shareButton.Touch += (sender, e) => this.OnTouchButtonDarker(shareButton, e);
-//            shareButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-//            shareButton.Click += delegate
-//            {
-////                var contentview = FindViewById(Resource.Id.tournament);
-////                contentview.BuildDrawingCache();
-////                _screenShot = contentview.DrawingCache;
-////                var sdCardPath = Environment.ExternalStorageDirectory.AbsolutePath;
-////                var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
-////                using (var stream = new FileStream(filePath, FileMode.Create))
-////                {
-////                    _screenShot.Compress(Bitmap.CompressFormat.Png, 100, stream);
-////                }
-////
-////                var fragmentTrans = FragmentManager.BeginTransaction();
-////                var prev = (DialogFragment)FragmentManager.FindFragmentByTag("share");
-////                var dialogShare = prev ?? new ShareFragment() { ShowsDialog = true };
-////                dialogShare.Show(fragmentTrans, "share");
-//            };
+
+
+            //            var shareButton = FindViewById<Button>(Resource.Id.shareButton);
+            //            shareButton.Touch += (sender, e) => this.OnTouchButtonDarker(shareButton, e);
+            //            shareButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+            //            shareButton.Click += delegate
+            //            {
+            ////                var contentview = FindViewById(Resource.Id.tournament);
+            ////                contentview.BuildDrawingCache();
+            ////                _screenShot = contentview.DrawingCache;
+            ////                var sdCardPath = Environment.ExternalStorageDirectory.AbsolutePath;
+            ////                var filePath = System.IO.Path.Combine(sdCardPath, "test.png");
+            ////                using (var stream = new FileStream(filePath, FileMode.Create))
+            ////                {
+            ////                    _screenShot.Compress(Bitmap.CompressFormat.Png, 100, stream);
+            ////                }
+            ////
+            ////                var fragmentTrans = FragmentManager.BeginTransaction();
+            ////                var prev = (DialogFragment)FragmentManager.FindFragmentByTag("share");
+            ////                var dialogShare = prev ?? new ShareFragment() { ShowsDialog = true };
+            ////                dialogShare.Show(fragmentTrans, "share");
+            //            };
 
         }
 
@@ -183,7 +189,7 @@ namespace Yorsh.Activities
                 var playerScore = view.FindViewById<TextView>(Resource.Id.playerScore);
                 playerName.SetTypeface(_context.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
                 playerScore.SetTypeface(_context.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-                imageView.SetImageBitmap(_context.PlayerPhoto(this[position]));
+                imageView.SetImageBitmap(_players[position].Image);
                 playerName.Text = this[position].Name;
                 playerScore.Text = this[position].Score.ToString();
                 return view;

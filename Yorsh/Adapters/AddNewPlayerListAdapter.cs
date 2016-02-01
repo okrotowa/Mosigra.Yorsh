@@ -33,7 +33,7 @@ namespace Yorsh.Adapters
 			var inflater = (LayoutInflater)_context.GetSystemService(Context.LayoutInflaterService);
 
 			convertView = inflater.Inflate(Resource.Layout.AddPlayerItem, null);
-			convertView.FindViewById<ImageView>(Resource.Id.playerImage).SetImageBitmap(_context.PlayerPhoto(player));
+			convertView.FindViewById<ImageView>(Resource.Id.playerImage).SetImageBitmap(player.Image);
 
 			var playerName = convertView.FindViewById<TextView> (Resource.Id.playerName);
 			playerName.Text = player.Name;

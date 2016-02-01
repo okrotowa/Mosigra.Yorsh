@@ -7,7 +7,7 @@ namespace Yorsh.Helpers
 {
     public class TaskDialogBuilder
     {
-        public static TaskDialogAbstract GetTask(TaskDialog taskDialog, int taskScore, Player player)
+        public static TaskDialogAbstract GetTask(TaskDialog taskDialog, int taskScore, PlayerModel player)
         {
             switch (taskDialog)
             {

@@ -10,7 +10,7 @@ using Android.Graphics;
 
 namespace Yorsh.Activities
 {
-	[Activity(Theme = "@android:style/Theme.NoTitleBar", MainLauncher=false,  ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity(Theme = "@android:style/Theme.NoTitleBar", ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainMenuActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
@@ -24,11 +24,11 @@ namespace Yorsh.Activities
             SetButton(Resource.Id.PlusCards, typeof(StoreActivity), myriadProBoldCons);
         }
 
-        private void SetButton(int resorceId, Type activityOnClick, Typeface font)
+	    private void SetButton(int resorceId, Type activityOnClick, Typeface font)
         {
             var startGameButton = FindViewById<Button>(resorceId);
             startGameButton.Touch += (sender, e) => this.OnTouchButtonDarker(startGameButton, e);
-            startGameButton.Click += (sender, e) => StartActivity(new Intent(this, activityOnClick));
+            startGameButton.Click += (sender, e) => this.StartActivityWithoutBackStack(new Intent(this, activityOnClick));
             startGameButton.SetTypeface(font, TypefaceStyle.Normal);
         }
 
@@ -49,8 +49,7 @@ namespace Yorsh.Activities
                 GetAlertDialog().Show();
             };
         }
-
-
+        
         private AlertDialog.Builder GetAlertDialog()
         {
             var builder = new AlertDialog.Builder(this);
@@ -68,9 +67,9 @@ namespace Yorsh.Activities
             return builder;
         }
 
-        protected override void OnPause()
+	    protected override void OnPause()
         {
-            this.SaveAsStartupActivity(ActivityExtensions.MainMenuActivity);
+            this.SaveAsStartupActivity(StringConst.MainMenuActivity);
             base.OnPause();
         }
     }

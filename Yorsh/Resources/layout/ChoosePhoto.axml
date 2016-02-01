@@ -15,7 +15,7 @@
         android:layout_marginBottom="-1dp"
         android:textSize="@dimen/ChoosePhotoButton_TextSize"
         android:textColor="#ff039be5"
-        android:background="?android:attr/colorForeground" />
+        android:background="@color/white" />
     <Button
         android:id="@+id/choosePhotoButton"
         android:text="@string/ChooseFromGalleryString"
@@ -24,7 +24,7 @@
         android:textSize="@dimen/ChoosePhotoButton_TextSize"
         android:layout_marginBottom="@dimen/ChoosePhotoButton_MarginBottom"
         android:textColor="#ff039be5"
-        android:background="?android:attr/colorForeground" />
+        android:background="@color/white" />
     <Button
         android:id="@+id/cancelButton"
         android:text="@string/CancelString"
@@ -33,5 +33,5 @@
         android:textSize="@dimen/ChoosePhotoButton_TextSize"
         android:textColor="#ff039be5"
         android:textStyle="bold"
-        android:background="?android:attr/colorForeground" />
+        android:background="@color/white" />
 </LinearLayout>

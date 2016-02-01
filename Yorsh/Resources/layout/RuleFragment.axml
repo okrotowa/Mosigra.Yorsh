@@ -49,17 +49,13 @@
             android:textColor="@color/name_black"
             android:layout_marginTop="@dimen/RuleFragment_HeaderTextMarginTopBottom"
             android:layout_marginBottom="@dimen/RuleFragment_HeaderTextMarginTopBottom" />
-        <ScrollView
+        <TextView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:text="Собери компанию, в которой планируешь хорошо повеселиться.  Приготовь напитки: они могут быть любыми.Разумеется, особую пикантность игре придаёт алкоголь. Определи обьём штрафной, которую будет выпивать игрок, если откажется от задания или не сможет его выполнить."
             android:layout_width="match_parent"
-            android:layout_height="fill_parent">
-            <TextView
-                android:text="Собери компанию, в которой планируешь хорошо повеселиться.  Приготовь напитки: они могут быть любыми.Разумеется, особую пикантность игре придаёт алкоголь. Определи обьём штрафной, которую будет выпивать игрок, если откажется от задания или не сможет его выполнить."
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textContainer"
-                android:textColor="@color/name_black"
-                android:textSize="@dimen/RuleFragment_ContainerTextSize"
-                android:layout_gravity="left" />
-        </ScrollView>
+            android:layout_height="fill_parent"
+            android:id="@+id/textContainer"
+            android:textColor="@color/name_black"
+            android:textSize="@dimen/RuleFragment_ContainerTextSize"
+            android:layout_gravity="left" />
     </LinearLayout>
 </RelativeLayout>

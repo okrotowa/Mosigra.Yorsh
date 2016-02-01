@@ -3,11 +3,12 @@
 	 <color name="bonus_blue">#349FDC</color>
 	 <color name="bonus_green">#13bf5b</color>
 	 <color name="tournament_green">#38C771</color>
-	 <color name="task_progress_bg">#D93a2f4f</color>
+	 <color name="task_progress_bg">#3a2f4f</color>
 	 <color name="task_progress_green">#2c7a44</color>
 	 <color name="task_progress_black">#4a4a4a</color>
 	 <color name="task_progress_red">#f6542e</color>
 	 <color name="black">#000000</color>
+	 <color name="half_black">#4D000000</color>
 	 <color name="white">#ffffff</color>
 	 <color name="bonus_bg">#84110626</color>
 	 <color name="pressed_text_color">#80ffffff</color>

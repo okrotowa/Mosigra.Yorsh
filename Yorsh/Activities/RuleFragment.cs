@@ -20,7 +20,7 @@ namespace Yorsh.Activities
 			var imageBackgroundRules= view.FindViewById<ImageView> (Resource.Id.imageBackgroundRules);
 			var arr = Resources.GetStringArray (Resources.GetIdentifier(GetRuleName(_rule),"array", Activity.PackageName));
 			var imageId = Resources.GetIdentifier ("rules_" + GetRuleIdentifier(_rule) + "_page", "drawable", Activity.PackageName);
-			imageBackgroundRules.SetImageDrawable(Resources.GetDrawable(imageId));
+			imageBackgroundRules.SetImageResource(imageId);
 			var textHeader = view.FindViewById<TextView> (Resource.Id.textHeader);
 			textHeader.Text = arr [0];
 			textHeader.SetTypeface (this.Activity.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);

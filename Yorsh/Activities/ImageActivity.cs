@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Android.App;
 using Android.Graphics;
 using Android.OS;
@@ -15,38 +16,45 @@ namespace Yorsh.Activities
         private int _taskId;
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.ImageCard);
-            _taskId = Intent.Extras.GetInt("taskId");
-            var task = Rep.Instance.Tasks.GetTask(_taskId);
-            var category = Rep.Instance.Tasks.GetCategory(task.CategoryId);
-
-            var image = FindViewById<ImageView>(Resource.Id.imageCardView);
-
-            var text = FindViewById<TextView>(Resource.Id.textCard);
-
-			text.SetTypeface(this.BankirRetroFont(), TypefaceStyle.Normal);
-            //TODO: Problem with often click
-            using (var resourceStream = ResourceLoader.GetEmbeddedResourceStream(
-                Assembly.GetAssembly(typeof(ResourceLoader)), category.ImageName))
+            try
             {
-                image.SetImageBitmap(BitmapFactory.DecodeStream(resourceStream));
-            }
-            text.Text = task.TaskName;
-            FindViewById(Resource.Id.contentFrameLayout).Click += (sender, args) => OnBackPressed();
-        }
 
+                base.OnCreate(savedInstanceState);
+                SetContentView(Resource.Layout.ImageCard);
+                _taskId = Intent.Extras.GetInt("taskId");
+                var task = Rep.DatabaseHelper.Tasks.GetTask(_taskId);
+                var category = Rep.DatabaseHelper.Tasks.GetCategory(task.CategoryId);
+
+                var image = FindViewById<ImageView>(Resource.Id.imageCardView);
+
+                var text = FindViewById<TextView>(Resource.Id.textCard);
+
+                text.SetTypeface(this.BankirRetroFont(), TypefaceStyle.Normal);
+                //TODO: Problem with often click
+                using (var resourceStream = ResourceLoader.GetEmbeddedResourceStream(
+                    Assembly.GetAssembly(typeof (ResourceLoader)), category.ImageName))
+                {
+                    image.SetImageBitmap(BitmapFactory.DecodeStream(resourceStream));
+                }
+                text.Text = task.TaskName;
+                FindViewById(Resource.Id.contentFrameLayout).Click += (sender, args) =>
+                {
+                    SetResult();
+                    Finish();
+                };
+            }
+            catch (Exception exception)
+            {
+                GaService.TrackAppException(this.Class.SimpleName, "OnCreate", exception, false);
+                Finish();
+            }
+        }
+        
 	    private void SetResult()
         {
-            var isBear = Rep.Instance.Tasks.GetTask(_taskId).IsBear;
+            var isBear = Rep.DatabaseHelper.Tasks.GetTask(_taskId).IsBear;
             SetResult(isBear ? Result.Ok : Result.Canceled);
         }
 
-        public override void OnBackPressed()
-        {
-            SetResult();
-            base.OnBackPressed();
-            Finish();
-        }
     }
 }

@@ -3,158 +3,254 @@
     android:id="@+id/startGameLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/game_background"
     android:paddingBottom="@dimen/Game_ContentPaddingTopBottom"
     android:paddingTop="@dimen/Game_ContentPaddingTopBottom"
     android:paddingLeft="@dimen/Game_ContentPaddingLeftRight"
-    android:paddingRight="@dimen/Game_ContentPaddingLeftRight">
+    android:paddingRight="@dimen/Game_ContentPaddingLeftRight"
+    android:background="@drawable/game_background">
     <RelativeLayout
-        android:id="@+id/playerLayout"
-        android:background="@drawable/round_rect_shape_white_background"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/Game_TopBarHeight">
-    <!--Image-->
-        <ImageView
-            android:id="@+id/playerInGameImage"
-            android:background="@android:color/transparent"
-            android:layout_width="@dimen/Game_TopBarImageSize"
-            android:layout_height="@dimen/Game_TopBarImageSize"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/Game_TopBarMargin" />
-    <!--Score-->
-        <LinearLayout
-            android:id="@+id/scoreLayout"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_margin="@dimen/Game_TopBarTextMargin">
-            <TextView
-                android:id="@+id/playerInGameScore"
-                android:text="100"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/bonus_blue"
-                android:textSize="@dimen/Game_TopBarCountScoreTextSize" />
-            <TextView
-                android:id="@+id/scoreString"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ScoreString"
-                android:textSize="@dimen/Game_TopBarScoreTextSize"
-                android:textColor="@color/bonus_blue" />
-        </LinearLayout>
-    <!--Separator-->
-        <ViewStub
-            android:layout_width="1px"
-            android:layout_height="@dimen/Game_TopBarImageSize"
-            android:id="@+id/separator"
-            android:background="@android:color/darker_gray"
-            android:layout_toLeftOf="@id/scoreLayout"
-            android:layout_centerInParent="true" />
-    <!--Player name and position-->
-        <RelativeLayout
-            android:id="@+id/playerNameLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/playerInGameImage"
-            android:layout_toLeftOf="@id/separator"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/Game_TopBarTextMargin"
-            android:layout_marginRight="@dimen/Game_TopBarTextMargin">
-            <TextView
-                android:text="Default Default"
-                android:id="@+id/playerInGameName"
-                android:gravity="top"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#110626"
-                android:layout_marginBottom="3dp"
-                android:textSize="@dimen/Game_TopBarPlayerNameTextSize" />
-            <TextView
-                android:id="@+id/playerInGamePostion"
-                android:text="Позиция игрока 2"
-                android:layout_below="@id/playerInGameName"
-                android:layout_width="fill_parent"
-                android:textSize="@dimen/Game_TopBarPlayerPositionTextSize"
-                android:layout_height="wrap_content"
-                android:textColor="#636166" />
-        </RelativeLayout>
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-        <Button
-            android:id="@+id/refuseButton"
-            android:text="@string/RefuseString"
-            android:layout_width="@dimen/Game_BottomButtonWidth"
-            android:layout_height="@dimen/Game_BottomButtonHeight"
-            android:textColor="@android:color/white"
-            android:background="@drawable/cancel_button"
-            android:textSize="@dimen/Game_BottomButtonTextSize"
-            android:layout_marginRight="@dimen/Game_BottomButtonLeftRightMargin" />
-        <Button
-            android:id="@+id/makeThisButton"
-            android:text="@string/MakeThisString"
-            android:layout_width="@dimen/Game_BottomButtonWidth"
-            android:layout_height="@dimen/Game_BottomButtonHeight"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"
-            android:background="@drawable/ready_button"
-            android:textSize="@dimen/Game_BottomButtonTextSize"
-            android:layout_toRightOf="@id/refuseButton"
-            android:layout_marginLeft="@dimen/Game_BottomButtonLeftRightMargin" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_below="@id/playerLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/buttonLayout"
-        android:background="@android:color/transparent">
-        <ImageButton
-            android:id="@+id/taskImageButton"
-            android:src="@drawable/card_backside"
-            android:layout_width="@dimen/Game_CardButtonWidth"
-            android:layout_height="@dimen/Game_CardButtonHeight"
-            android:layout_centerInParent="true"
-            android:scaleType="centerCrop" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/Game_CardButtonHeight"
-            android:orientation="vertical"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true">
-            <RelativeLayout
+        android:background="@android:color/transparent"
+        android:id="@+id/gameContent">
+        <RelativeLayout
+            android:id="@+id/playerLayout"
+            android:background="@drawable/round_rect_shape_white_background"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/Game_TopBarHeight">
+        <!--Image-->
+            <ImageView
+                android:id="@+id/playerInGameImage"
+                android:background="@android:color/transparent"
+                android:layout_width="@dimen/Game_TopBarImageSize"
+                android:layout_height="@dimen/Game_TopBarImageSize"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/Game_TopBarMargin" />
+        <!--Score-->
+            <LinearLayout
+                android:id="@+id/scoreLayout"
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/Game_PointsLayoutHeight">
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/Game_TopBarTextMargin">
                 <TextView
-                    android:id="@+id/points"
-                    android:layout_width="@dimen/Game_PointsSize"
-                    android:layout_height="@dimen/Game_PointsSize"
-                    android:text="1"
-                    android:background="@drawable/points"
-                    android:gravity="center"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/Game_PointsTextSize" />
+                    android:id="@+id/playerInGameScore"
+                    android:text="100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bonus_blue"
+                    android:textSize="@dimen/Game_TopBarCountScoreTextSize" />
                 <TextView
-                    android:id="@+id/x2"
-                    android:layout_width="@dimen/Game_x2Size"
-                    android:layout_height="@dimen/Game_x2Size"
-                    android:text="x2"
-                    android:background="@drawable/x2"
-                    android:gravity="center"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/Game_x2TextSize" />
+                    android:id="@+id/scoreString"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ScoreString"
+                    android:textSize="@dimen/Game_TopBarScoreTextSize"
+                    android:textColor="@color/bonus_blue" />
+            </LinearLayout>
+        <!--Separator-->
+            <ViewStub
+                android:layout_width="1px"
+                android:layout_height="@dimen/Game_TopBarImageSize"
+                android:id="@+id/separator"
+                android:background="@android:color/darker_gray"
+                android:layout_toLeftOf="@id/scoreLayout"
+                android:layout_centerInParent="true" />
+        <!--Player name and position-->
+            <RelativeLayout
+                android:id="@+id/playerNameLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/playerInGameImage"
+                android:layout_toLeftOf="@id/separator"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/Game_TopBarTextMargin"
+                android:layout_marginRight="@dimen/Game_TopBarTextMargin">
+                <TextView
+                    android:text="Default Default"
+                    android:id="@+id/playerInGameName"
+                    android:gravity="top"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#110626"
+                    android:layout_marginBottom="3dp"
+                    android:textSize="@dimen/Game_TopBarPlayerNameTextSize" />
+                <TextView
+                    android:id="@+id/playerInGamePostion"
+                    android:text="Позиция игрока 2"
+                    android:layout_below="@id/playerInGameName"
+                    android:layout_width="fill_parent"
+                    android:textSize="@dimen/Game_TopBarPlayerPositionTextSize"
+                    android:layout_height="wrap_content"
+                    android:textColor="#636166" />
             </RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+            <Button
+                android:id="@+id/refuseButton"
+                android:text="@string/RefuseString"
+                android:layout_width="@dimen/Game_BottomButtonWidth"
+                android:layout_height="@dimen/Game_BottomButtonHeight"
+                android:textColor="@android:color/white"
+                android:background="@drawable/cancel_button"
+                android:textSize="@dimen/Game_BottomButtonTextSize"
+                android:layout_marginRight="@dimen/Game_BottomButtonLeftRightMargin" />
+            <Button
+                android:id="@+id/makeThisButton"
+                android:text="@string/MakeThisString"
+                android:layout_width="@dimen/Game_BottomButtonWidth"
+                android:layout_height="@dimen/Game_BottomButtonHeight"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:background="@drawable/ready_button"
+                android:textSize="@dimen/Game_BottomButtonTextSize"
+                android:layout_toRightOf="@id/refuseButton"
+                android:layout_marginLeft="@dimen/Game_BottomButtonLeftRightMargin" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@id/playerLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/buttonLayout"
+            android:background="@android:color/transparent">
+            <ImageButton
+                android:id="@+id/taskImageButton"
+                android:src="@drawable/card_backside"
+                android:layout_width="@dimen/Game_CardButtonWidth"
+                android:layout_height="@dimen/Game_CardButtonHeight"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/Game_CardButtonHeight"
+                android:orientation="vertical"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/Game_PointsLayoutHeight">
+                    <TextView
+                        android:id="@+id/points"
+                        android:layout_width="@dimen/Game_PointsSize"
+                        android:layout_height="@dimen/Game_PointsSize"
+                        android:text="1"
+                        android:background="@drawable/points"
+                        android:gravity="center"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/Game_PointsTextSize" />
+                    <TextView
+                        android:id="@+id/x2"
+                        android:layout_width="@dimen/Game_x2Size"
+                        android:layout_height="@dimen/Game_x2Size"
+                        android:text="x2"
+                        android:background="@drawable/x2"
+                        android:gravity="center"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/Game_x2TextSize" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+<!--Task Progress Dialog-->
+    <RelativeLayout
+        android:id="@+id/taskProgressView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        android:background="@drawable/taskprogress_background">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <ImageView
+                android:layout_alignParentTop="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/light_top"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitStart"
+                android:adjustViewBounds="true" />
+            <ImageView
+                android:id="@+id/light_bottom"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/light_bottom"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitEnd"
+                android:adjustViewBounds="true" />
+            <TextView
+                android:id="@+id/statusTitleText"
+                android:text="ПОЗДРАВЛЯЕМ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/TaskProgress_MarginTop"
+                android:textSize="@dimen/TaskProgress_TitleTextSize"
+                android:layout_alignParentTop="true" />
+            <TextView
+                android:id="@+id/statusDescriptionText"
+                android:text="ЗАДАНИЕ УСПЕШНО ВЫПОЛНЕНО"
+                android:layout_below="@id/statusTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/TaskProgress_DescTextSize" />
+            <RelativeLayout
+                android:id="@+id/descLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:layout_below="@id/statusDescriptionText"
+                android:layout_centerHorizontal="true"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/changeCountScoreText"
+                    android:text="+ 2 очков"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/TaskProgress_CurrentScoreTextSize"
+                    android:textColor="@color/task_progress_black" />
+                <TextView
+                    android:id="@+id/endDescriptionText"
+                    android:text="Зарабатывает Вася"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/task_progress_black"
+                    android:layout_below="@id/changeCountScoreText"
+                    android:textSize="@dimen/TaskProgress_EndDescTextSize" />
+            </RelativeLayout>
+            <ImageButton
+                android:id="@+id/continueButton"
+                android:layout_marginBottom="@dimen/Bonus_MarginBottom"
+                android:layout_width="@dimen/Bonus_ButtonWidth"
+                android:layout_height="@dimen/Bonus_ButtonHeight"
+                android:background="@drawable/bonus_button_selector"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/currentScoreText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_above="@id/continueButton"
+                android:layout_below="@id/descLayout"
+                android:textColor="@color/task_progress_black"
+                android:text="Всего очков: 12"
+                android:textSize="@dimen/TaskProgress_CurrentScoreTextSize" />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -16,6 +16,8 @@
         android:textSize="@dimen/PlayersList_buttonTextSize" />
     <ListView
         android:id="@+id/playersList"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
         android:background="@drawable/round_rect_shape_white_background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
