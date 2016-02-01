@@ -1,0 +1,41 @@
+﻿<Properties StartupItem="Android.Sample\Android.Sample.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.Nexus 5 (KitKat)" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\Yorsh\Helpers\ActivityExtensions.cs">
+    <Files>
+      <File FileName="..\..\..\..\Yorsh\Activities\AddNewPlayerActivity.cs" Line="82" Column="31" />
+      <File FileName="..\..\..\..\Yorsh\Activities\RulesActivity.cs" Line="7" Column="27" />
+      <File FileName="..\..\..\..\Yorsh\Activities\MainMenuActivity.cs" Line="73" Column="49" />
+      <File FileName="..\..\..\..\Yorsh\Helpers\ActivityExtensions.cs" Line="192" Column="43" />
+      <File FileName="..\..\..\..\Yorsh\Activities\SplashScreenActivity.cs" Line="67" Column="4" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Android.Sample" expanded="True">
+            <Node name="Android.Sample" expanded="True" />
+          </Node>
+          <Node name="Yorsh" expanded="True">
+            <Node name="Yorsh" expanded="True">
+              <Node name="ComponentReferenceFolder" expanded="True" />
+              <Node name="Activities" expanded="True" />
+              <Node name="Helpers" expanded="True">
+                <Node name="ActivityExtensions.cs" selected="True" />
+              </Node>
+              <Node name="Resources" expanded="True">
+                <Node name="layout" expanded="True" />
+                <Node name="values" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="e:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Activities\GameActivity.cs" line="70" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Helpers\ActivityExtensions.cs" line="202" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
