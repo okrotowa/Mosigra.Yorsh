@@ -51,7 +51,7 @@ namespace Yorsh.Fragments
                 {
                     StartActivity(new Intent(Intent.ActionView, Android.Net.Uri.Parse(@"http://play.google.com/store/apps/details?id=" + Activity.PackageName)));
                 }
-                PutEditor(true);
+                PutEditor(false);
                 this.Dismiss();
 			};
 

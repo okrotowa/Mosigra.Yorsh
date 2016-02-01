@@ -31,7 +31,6 @@ namespace Yorsh.Activities
                 var text = FindViewById<TextView>(Resource.Id.textCard);
 
                 text.SetTypeface(this.BankirRetroFont(), TypefaceStyle.Normal);
-                //TODO: Problem with often click
                 using (var resourceStream = ResourceLoader.GetEmbeddedResourceStream(
                     Assembly.GetAssembly(typeof (ResourceLoader)), category.ImageName))
                 {
