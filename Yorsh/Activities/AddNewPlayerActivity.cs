@@ -50,7 +50,7 @@ namespace Yorsh.Activities
                     var name = FindViewById<EditText>(Resource.Id.playerName).Text;
                     _player.Name = name;
                     Rep.Instance.Players.Add(_player);
-                    StartActivity(new Intent(this, typeof(AddPlayersActivity)));
+                    this.StartActivityWithoutBackStack(new Intent(this, typeof(AddPlayersActivity)));
                 };
 
                 _editText.TextChanged += (obj, e) =>
@@ -64,7 +64,7 @@ namespace Yorsh.Activities
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "OnCreate", exception, false);
+                GaService.TrackAppException(this.Class, "OnCreate", exception, false);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Yorsh.Activities
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "Initialize", exception, false);
+                GaService.TrackAppException(this.Class, "Initialize", exception, false);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Yorsh.Activities
                     }
                     catch (Exception exception)
                     {
-                        GaService.TrackAppException(this.Class.SimpleName, "PlayerImagePath", exception, false);
+                        GaService.TrackAppException(this.Class, "PlayerImagePath", exception, false);
                         _playerImageButton.SetImageResource(Resource.Drawable.photo_default);
                     }
                 });
@@ -151,7 +151,7 @@ namespace Yorsh.Activities
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "ChoosePhoto_Click", exception, false);
+                GaService.TrackAppException(this.Class, "ChoosePhoto_Click", exception, false);
             }
 
         }
@@ -178,7 +178,7 @@ namespace Yorsh.Activities
 
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "MakePhoto_Click", exception, false);
+                GaService.TrackAppException(this.Class, "MakePhoto_Click", exception, false);
             }
 
         }
@@ -209,7 +209,7 @@ namespace Yorsh.Activities
 
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "ChooseNewPhoto", exception, false);
+                GaService.TrackAppException(this.Class, "ChooseNewPhoto", exception, false);
             }
         }
 
@@ -262,7 +262,7 @@ namespace Yorsh.Activities
 
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "OnActivityResult", exception, false);
+                GaService.TrackAppException(this.Class, "OnActivityResult", exception, false);
             }
         }
 
@@ -281,7 +281,7 @@ namespace Yorsh.Activities
 
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "SetConfirmButtonEnabled", exception, false);
+                GaService.TrackAppException(this.Class, "SetConfirmButtonEnabled", exception, false);
             }
 
         }

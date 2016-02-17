@@ -60,7 +60,8 @@ namespace Yorsh.Adapters
 				enableTextView.Text = _context.Resources.GetString(Resource.String.IsNotPlayString);
 			}
 
-			removeButton.Click += (sender, e) => Rep.Instance.Players.RemoveAt(position);
+			removeButton.Click += (sender, e) => 
+                Rep.Instance.Players.RemoveAt(position);
 
 			convertView.FindViewById<RelativeLayout>(Resource.Id.playerNameLayout).Click += (sender, e) =>
 			{

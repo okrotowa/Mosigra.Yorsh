@@ -31,7 +31,7 @@ namespace Yorsh.Helpers
             listView.RequestLayout();
         }
 
-        public static void Shuffle(this IList<TaskTable> list)
+        private static void Shuffle(this IList<TaskTable> list)
         {
             var random = new Random();
             var n = list.Count;
@@ -61,10 +61,12 @@ namespace Yorsh.Helpers
                     nonPositioinList.Add(taskTable);
                 }
             }
+            nonPositioinList.Shuffle();
 
             var sortedPositionList = positioinList.OrderBy(x => x.Position);
-            nonPositioinList.Shuffle();
-            position = positioinList.Any() ? positioinList.Count() - 1 : 0;
+            var positionListCount = positioinList.Count();
+            position = positionListCount > 0 ? positionListCount - 1 : 0;
+
             return sortedPositionList.Union(nonPositioinList).ToList();
         }
     }

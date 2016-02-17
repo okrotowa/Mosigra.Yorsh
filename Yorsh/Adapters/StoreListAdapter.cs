@@ -5,9 +5,9 @@ using Android.App;
 using Android.Graphics;
 using Android.Views;
 using Android.Widget;
-using Xamarin.InAppBilling;
 using Yorsh.Helpers;
 using Yorsh.Model;
+using Yorsh.Model.EventAgruments;
 
 namespace Yorsh.Adapters
 {
@@ -15,19 +15,17 @@ namespace Yorsh.Adapters
     {
         readonly Activity _context;
         readonly List<StoreItem> _products;
-        private readonly Func<string, bool> _productIsEnabled;
 
-		public StoreListAdapter(Activity context, IEnumerable<Product> products,Func<string,int> saleForProduct, Func<string, bool> productIsEnabled)
+		public StoreListAdapter(Activity context, IEnumerable<ErshProduct> products)
         {
             _context = context;
             var productList = products.Select(prod => new StoreItem(
-                prod, saleForProduct(prod.ProductId))).ToList();
+                prod, prod.Sale)).ToList();
             _products = productList.OrderBy(item => item.CountForSort).ToList();
-            _productIsEnabled = productIsEnabled;
         }
         public override bool IsEnabled(int position)
         {
-            return _productIsEnabled(this[position].Product.ProductId);
+            return this[position].Product.IsEnabled;
         }
 
         public event EventHandler<StoreItemClickEventArgs> ItemClick;
@@ -65,7 +63,7 @@ namespace Yorsh.Adapters
             var drawable = _context.Resources.GetIdentifier(storeItem.ImageString, "drawable", _context.PackageName);
             button.SetImageResource(drawable);
 
-            button.Enabled = _productIsEnabled(storeItem.Product.ProductId);
+            button.Enabled = storeItem.Product.IsEnabled;
             button.ImageAlpha = button.Enabled ? 255 : 145;
             button.Click += (sender, args) => OnItemClick(new StoreItemClickEventArgs(this[position].Product));
             var saleImage = view.FindViewById<ImageView>(Resource.Id.saleImageView);
@@ -76,10 +74,7 @@ namespace Yorsh.Adapters
 
             var priceText = view.FindViewById<TextView>(Resource.Id.priceText);
             priceText.SetTypeface(_context.MyriadProFont(MyriadPro.SemiboldCondensed), TypefaceStyle.Normal);
-			int price; 
-			priceText.Text = int.TryParse (storeItem.Product.Price_Amount_Micros, out price) 
-				? price / 1000000 + " " + storeItem.Product.Price_Currency_Code
-				: storeItem.Product.Price;
+			priceText.Text = storeItem.Product.Price;
 
             return view;
         }

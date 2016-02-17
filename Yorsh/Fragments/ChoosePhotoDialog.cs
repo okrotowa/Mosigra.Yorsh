@@ -1,10 +1,8 @@
 ﻿using System;
 using Android.App;
-using Android.App.Usage;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Xamarin.Media;
 
 namespace Yorsh.Fragments
 {

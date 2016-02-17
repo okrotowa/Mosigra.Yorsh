@@ -211,7 +211,7 @@
   <dimen name="Bonus_ButtonHeight">76dp</dimen>
 
   <dimen name="TaskProgress_MarginTop">140dp</dimen>
-  <dimen name="TaskProgress_MarginBottom">25dp</dimen>
+  <dimen name="TaskProgress_MarginBottom">45dp</dimen>
   <dimen name="TaskProgress_TitleTextSize">39sp</dimen>
   <dimen name="TaskProgress_DescTextSize">26sp</dimen>
   <dimen name="TaskProgress_ContinueButtonWidth">280dp</dimen>

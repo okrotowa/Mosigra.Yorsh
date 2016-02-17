@@ -10,7 +10,7 @@ using Android.Graphics;
 
 namespace Yorsh.Activities
 {
-	[Activity(Theme = "@android:style/Theme.NoTitleBar", ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Theme = "@android:style/Theme.NoTitleBar", ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainMenuActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
@@ -22,9 +22,10 @@ namespace Yorsh.Activities
             SetButton(Resource.Id.StartGame, typeof(AddPlayersActivity), myriadProBoldCons);
             SetButton(Resource.Id.Rules, typeof(RulesActivity), myriadProBoldCons);
             SetButton(Resource.Id.PlusCards, typeof(StoreActivity), myriadProBoldCons);
+            this.SaveAsStartupActivity(StringConst.MainMenuActivity);
         }
 
-	    private void SetButton(int resorceId, Type activityOnClick, Typeface font)
+        private void SetButton(int resorceId, Type activityOnClick, Typeface font)
         {
             var startGameButton = FindViewById<Button>(resorceId);
             startGameButton.Touch += (sender, e) => this.OnTouchButtonDarker(startGameButton, e);
@@ -49,7 +50,7 @@ namespace Yorsh.Activities
                 GetAlertDialog().Show();
             };
         }
-        
+
         private AlertDialog.Builder GetAlertDialog()
         {
             var builder = new AlertDialog.Builder(this);
@@ -65,12 +66,6 @@ namespace Yorsh.Activities
             {
             });
             return builder;
-        }
-
-	    protected override void OnPause()
-        {
-            this.SaveAsStartupActivity(StringConst.MainMenuActivity);
-            base.OnPause();
         }
     }
 }

@@ -15,6 +15,7 @@
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <XamarinInsightsApiKey>898630b2268714a8ffd62e47c1618bb6b8585808</XamarinInsightsApiKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,7 +44,6 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <AssemblyName>Yorsh</AssemblyName>
     <JavaMaximumHeapSize>500m</JavaMaximumHeapSize>
-    <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -106,12 +106,17 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Insights">
+      <HintPath>..\packages\Xamarin.Insights.1.10.6\lib\MonoAndroid10\Xamarin.Insights.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\AddNewPlayerActivity.cs" />
     <Compile Include="Activities\BaseFragmentActivity.cs" />
     <Compile Include="Activities\BaseActivity.cs" />
-    <Compile Include="Activities\GameActivity.cs" />
+    <Compile Include="Activities\GameActivity.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Activities\IBaseActivity.cs" />
     <Compile Include="Activities\ImageActivity.cs" />
     <Compile Include="Activities\MainMenuActivity.cs" />
@@ -128,24 +133,29 @@
     <Compile Include="Helpers\BillingErrorExtensions.cs" />
     <Compile Include="Helpers\BitmapLoadedEventArgs.cs" />
     <Compile Include="Helpers\DatabaseHelper.cs" />
+    <Compile Include="Helpers\ImageActivityHelper.cs" />
     <Compile Include="Helpers\IntConst.cs" />
     <Compile Include="Helpers\ListExtensions.cs" />
     <Compile Include="Helpers\MakeTask.cs" />
     <Compile Include="Helpers\RefuseAndMoveTask.cs" />
     <Compile Include="Helpers\RefuseTask.cs" />
     <Compile Include="Helpers\ResourceLoader.cs" />
-    <Compile Include="Helpers\SQLiteExtensions.cs" />
     <Compile Include="Helpers\StringConst.cs" />
     <Compile Include="Helpers\TaskDialogBuilder.cs" />
+    <Compile Include="Model.EventAgruments\TaskPositionChangedEventArgs.cs" />
+    <Compile Include="Model\ErshProduct.cs" />
     <Compile Include="Model\PlayerEnumerator.cs" />
     <Compile Include="Model\PlayerList.cs" />
     <Compile Include="Model\PlayerModel.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\ErshPurchase.cs" />
     <Compile Include="Data\Rep.cs" />
+    <Compile Include="Model.EventAgruments\PlayerPositionChangedEventArgs.cs" />
+    <Compile Include="Model.EventAgruments\ScoreChangedEventArgs.cs" />
     <Compile Include="Model\StoreItem.cs" />
-    <Compile Include="Model\StoreItemClickEventArgs.cs" />
-    <Compile Include="Model\TaskDialogEnum.cs" />
+    <Compile Include="Model.EventAgruments\StoreItemClickEventArgs.cs" />
+    <Compile Include="Model.EventAgruments\TaskDialogEnum.cs" />
+    <Compile Include="Model\TaskEnumerator.cs" />
     <Compile Include="Model\TaskList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Activities\SplashScreenActivity.cs">
@@ -526,7 +536,9 @@
     <EmbeddedResource Include="Assets\cards\фото_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\фото_bg_NY.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\add_new_player.png" />
+  </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="sqlite-net">
       <Version>1.0.8.3</Version>
@@ -552,7 +564,107 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\background.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\back_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\bonus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\bonus_sale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\bonus_store_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\cancel_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\continue_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\continue_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\delete_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\first_player_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\game_background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\light_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\light_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\plus_tasks_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\points.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\ready_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\remove_adb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\rules_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\shadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\shop_bonus_10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\shop_bonus_30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\shop_bonus_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\shop_task_10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\shop_task_100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\shop_task_30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\shop_task_70.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\shop_task_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\start_game_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\task_sale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\task_store_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-tvdpi\x2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-tvdpi\icon.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

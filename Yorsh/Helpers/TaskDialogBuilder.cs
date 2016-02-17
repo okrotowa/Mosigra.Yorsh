@@ -15,9 +15,9 @@ namespace Yorsh.Helpers
                     return new BearTask(player.Name, player.Score);
                 case TaskDialog.Make:
                     return new MakeTask(taskScore,player.Name,player.Score);
-                case TaskDialog.Refuse:
+                case TaskDialog.RefuseFirstTime:
                     return new RefuseTask(taskScore);
-                case TaskDialog.RefuseAndMove:
+                case TaskDialog.RefuseSecondTime:
                     return new RefuseAndMoveTask(player.Name, player.Score);
                 default: throw new NotImplementedException();
             }

@@ -17,11 +17,17 @@ namespace Yorsh.Data
         private PlayerList _players;
         public Tracker GaTracker { get; set; }
         public GoogleAnalytics GaInstance { get; set; }
-
+        private object lockObject  = new object();
         private Rep()
         {
             _players = new PlayerList();
         }
+
+        private async void PlayersOnCollectionChanged(object sender, EventArgs eventArgs)
+        {
+            await SavePlayersAsync();
+        }
+
         public static Rep Instance
         {
             get
@@ -46,34 +52,35 @@ namespace Yorsh.Data
         {
             return Task<bool>.Factory.StartNew(() =>
             {
-                _players = new PlayerList();
-                if (!File.Exists(PlayersFile)) return false;
-                try
+                lock (lockObject)
                 {
-                    using (var playersFileStream = File.Open(PlayersFile, FileMode.Open))
+                    _players = new PlayerList();
+                    _players.CollectionChanged += PlayersOnCollectionChanged;
+                    if (!File.Exists(PlayersFile)) return false;
+                    try
                     {
-                        var bin = new BinaryFormatter();
-                        var players = bin.Deserialize(playersFileStream) as IList<PlayerModel>;
-                        if (players == null)
+                        using (var playersFileStream = File.Open(PlayersFile, FileMode.Open))
                         {
-                            File.Delete(PlayersFile);
-                            return false;
-                        }
-                        foreach (var player in players.Select(playerModel => new Player(playerModel)))
-                        {
-                            player.LoadBitmap(
-                                (int)
-                                    Application.Context.Resources.GetDimension(
-                                        Resource.Dimension.AddPlayerItem_imageSize));
-                            _players.Add(player);
+                            var bin = new BinaryFormatter();
+                            var players = bin.Deserialize(playersFileStream) as IList<PlayerModel>;
+                            if (players == null)
+                            {
+                                File.Delete(PlayersFile);
+                                return false;
+                            }
+                            foreach (var player in players.Select(playerModel => new Player(playerModel)))
+                            {
+                                player.LoadBitmap((int)Application.Context.Resources.GetDimension(Resource.Dimension.AddPlayerItem_imageSize));
+                                _players.Add(player, false);
+                            }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    GaService.TrackAppException(this.ToString(), "InitPlayersAsync", ex, false);
-                    File.Delete(PlayersFile);
-                    return false;
+                    catch (Exception ex)
+                    {
+                        GaService.TrackAppException(this.ToString(), "InitPlayersAsync", ex, false);
+                        File.Delete(PlayersFile);
+                        return false;
+                    }
                 }
                 return true;
             });
@@ -88,24 +95,30 @@ namespace Yorsh.Data
             }
         }
 
-        public void SavePlayers()
+        public Task SavePlayersAsync()
         {
-            try
+            return Task.Factory.StartNew(() =>
             {
-                using (var playersFileStream = File.Create(PlayersFile))
+                try
                 {
-                    var bin = new BinaryFormatter();
-                    var list = _players.Items.Any()
-                        ? _players.Items.Select(player => player.GetModel()).ToList()
-                        : new List<PlayerModel>();
-                    bin.Serialize(playersFileStream, list);
+                    lock (lockObject)
+                    {
+                        using (var playersFileStream = File.Create(PlayersFile))
+                        {
+                            var bin = new BinaryFormatter();
+                            var list = _players.Items.Any()
+                                ? _players.Items.Select(player => player.GetModel()).ToList()
+                                : new List<PlayerModel>();
+                            bin.Serialize(playersFileStream, list);
+                        }
+                    }
                 }
-            }
-            catch (Exception exception)
-            {
-                GaService.TrackAppException("Rep", "SavePlayers", exception, false);
-            }
-            
+                catch (Exception exception)
+                {
+                    GaService.TrackAppException("Rep", "SavePlayers", exception, false);
+                }
+            });
+
         }
 
         public string DataBaseFile

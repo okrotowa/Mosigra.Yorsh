@@ -15,42 +15,54 @@ namespace Yorsh.Helpers
         }
 
 
-       public static Task<Bitmap> DecodeBitmapAsync(string path, int desiredSize)
+        //public static Task<Bitmap> DecodeBitmapAsync(string path,  int desiredWidth, int desiredHeight)
+        // {
+        //     return Task.Factory.StartNew(() => DecodeBitmap(path, desiredSize));
+        // }
+
+        public static Bitmap DecodeStream(Stream stream,int width, int height, int desiredWidth, int desiredHeight)
         {
-            return Task.Factory.StartNew(() => DecodeBitmap(path, desiredSize));
+            var sampleSize = 1;
+            if (height > desiredHeight || width > desiredWidth)
+            {
+                var heightRatio = (int)Math.Round((float)height / (float)desiredHeight);
+                var widthRatio = (int)Math.Round((float)width / (float)desiredWidth);
+                sampleSize = Math.Min(heightRatio, widthRatio);
+            }
+            var options = new BitmapFactory.Options { InSampleSize = sampleSize };
+            return BitmapFactory.DecodeStream(stream, null, options);
+        }
+        public static Bitmap DecodeBitmap(string path, int desiredSize)
+        {
+            var options = new BitmapFactory.Options { InJustDecodeBounds = true };
+            BitmapFactory.DecodeFile(path, options);
+            options = new BitmapFactory.Options { InSampleSize = desiredSize };
+            return BitmapFactory.DecodeFile(path, options);
         }
 
-       public static Bitmap DecodeBitmap(string path, int desiredSize)
-       {
-               var options = new BitmapFactory.Options { InJustDecodeBounds = true };
-               BitmapFactory.DecodeFile(path, options);
-               options = new BitmapFactory.Options { InSampleSize = desiredSize };
-               return BitmapFactory.DecodeFile(path, options);
-       }
+        public static Bitmap DecodeBitmap(string path, int desiredWidth, int desiredHeight)
+        {
+            var options = new BitmapFactory.Options { InJustDecodeBounds = true };
+            BitmapFactory.DecodeFile(path, options);
 
-		public static Bitmap DecodeBitmap(string path, int desiredWidth, int desiredHeight)
-		{
-			var options = new BitmapFactory.Options { InJustDecodeBounds = true };
-			BitmapFactory.DecodeFile(path, options);
+            var height = options.OutHeight;
+            var width = options.OutWidth;
 
-			var height = options.OutHeight;
-			var width = options.OutWidth;
+            var sampleSize = 1;
+            if (height > desiredHeight || width > desiredWidth)
+            {
+                var heightRatio = (int)Math.Round((float)height / (float)desiredHeight);
+                var widthRatio = (int)Math.Round((float)width / (float)desiredWidth);
+                sampleSize = Math.Min(heightRatio, widthRatio);
+            }
+            options = new BitmapFactory.Options { InSampleSize = sampleSize };
+            return BitmapFactory.DecodeFile(path, options);
+        }
 
-			var sampleSize = 1;
-			if (height > desiredHeight || width > desiredWidth)
-			{
-				var heightRatio = (int)Math.Round((float)height / (float)desiredHeight);
-				var widthRatio = (int)Math.Round((float)width / (float)desiredWidth);
-				sampleSize = Math.Min(heightRatio, widthRatio);
-			}
-			options = new BitmapFactory.Options { InSampleSize = sampleSize };
-			return BitmapFactory.DecodeFile(path, options);
-		}
-
-       public static Bitmap GetRoundedCornerBitmap(this Bitmap bitmap, int? roundPixelSize = null)
-       {
+        public static Bitmap GetRoundedCornerBitmap(this Bitmap bitmap, int? roundPixelSize = null)
+        {
             var chooseSize = bitmap.Width > bitmap.Height ? bitmap.Height : bitmap.Width;
-            roundPixelSize = roundPixelSize ?? (int) Application.Context.Resources.GetDimension(Resource.Dimension.RoundedCorners);
+            roundPixelSize = roundPixelSize ?? (int)Application.Context.Resources.GetDimension(Resource.Dimension.RoundedCorners);
             var output = Bitmap.CreateBitmap(chooseSize, chooseSize, Bitmap.Config.Argb8888);
             var canvas = new Canvas(output);
             var paint = new Paint();

@@ -34,6 +34,8 @@ namespace Yorsh.Helpers
             }
 
             return assembly.GetManifestResourceStream(resourcePaths.Single());
+
+
         }
 
         /// <summary>

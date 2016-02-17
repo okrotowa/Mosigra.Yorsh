@@ -1,7 +1,6 @@
 using System;
 using Yorsh.Data;
 using Yorsh.Helpers;
-using Yorsh.Model;
 using Android.App;
 using Android.Widget;
 using Android.OS;
@@ -12,12 +11,12 @@ using Yorsh.Adapters;
 
 namespace Yorsh.Activities
 {
-    [Activity(Label = "@string/PlayersString", ParentActivity = typeof(MainMenuActivity),
-        ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/PlayersString", ParentActivity = typeof(MainMenuActivity),ScreenOrientation = ScreenOrientation.Portrait)]
     public class AddPlayersActivity : BaseActivity
     {
         private Button _startGameButton;
         private bool _isPlayersCountValidate;
+        private ListView _listView;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -30,12 +29,21 @@ namespace Yorsh.Activities
                 _startGameButton = FindViewById<Button>(Resource.Id.startPlayButton);
                 _startGameButton.Touch += (sender, e) => this.OnTouchButtonDarker(_startGameButton, e);
                 _startGameButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+                _listView = FindViewById<ListView>(Resource.Id.playersList);
+                Rep.Instance.Players.ItemRemoved += PlayersOnItemRemoved;
+				_startGameButton.Click += _startGameButton_Click;
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "OnCreate", exception, false);
+                GaService.TrackAppException(this.Class, "OnCreate", exception, false);
             }
 
+        }
+
+        private void PlayersOnItemRemoved(object sender, EventArgs eventArgs)
+        {
+            IsPlayersCountValidate = Rep.Instance.Players.Count > 1;
+            _listView.Adapter = new AddNewPlayerListAdapter(this);
         }
 
         protected override void OnResume()
@@ -43,23 +51,13 @@ namespace Yorsh.Activities
             try
             {
                 base.OnResume();
-                var listView = FindViewById<ListView>(Resource.Id.playersList);
-                listView.Adapter = new AddNewPlayerListAdapter(this);
-
-                _startGameButton.Click += _startGameButton_Click;
+                _listView.Adapter = new AddNewPlayerListAdapter(this);
                 IsPlayersCountValidate = Rep.Instance.Players.Count > 1;
-                Rep.Instance.Players.ItemRemoved += delegate
-                {
-                    {
-                        IsPlayersCountValidate = Rep.Instance.Players.Count > 1;
-                        listView.Adapter = new AddNewPlayerListAdapter(this);
-                    }
 
-                };
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "OnResume", exception, false);
+                GaService.TrackAppException(this.Class, "OnResume", exception, false);
             }
         }
 
@@ -87,15 +85,25 @@ namespace Yorsh.Activities
                 }
                 catch (Exception exception)
                 {
-                    GaService.TrackAppException(this.Class.SimpleName, "IsPlayersCountValidate", exception, false);
+                    GaService.TrackAppException(this.Class, "IsPlayersCountValidate", exception, false);
                 }
             }
         }
 
-        void _startGameButton_Click(object sender, EventArgs e)
-        {
-            this.StartActivityWithoutBackStack(new Intent(this, !IsPlayersCountValidate ? typeof(AddNewPlayerActivity) : typeof(GameActivity)));
-        }
+		async void  _startGameButton_Click(object sender, EventArgs e)
+		{
+			if (IsPlayersCountValidate) 
+			{
+				await Rep.Instance.ClearAsync();
+				this.SaveCurrentPlayer(0);
+				this.StartActivityWithoutBackStack (new Intent (this, typeof(GameActivity)));			
+			} 
+			else 
+			{
+				this.StartActivityWithoutBackStack (new Intent (this, typeof(AddNewPlayerActivity)));
+			}
+		}
+
 
         public void SetButtonEnabled(bool enabled)
         {
@@ -114,7 +122,7 @@ namespace Yorsh.Activities
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "SetButtonEnabled", exception, false);
+                GaService.TrackAppException(this.Class, "SetButtonEnabled", exception, false);
             }
         }
 
@@ -124,12 +132,11 @@ namespace Yorsh.Activities
             try
             {
                 _startGameButton.Background.ClearColorFilter();
-                Rep.Instance.SavePlayers();
                 base.OnPause();
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "OnPause", exception, false);
+                GaService.TrackAppException(this.Class, "OnPause", exception, false);
             }
         }
     }

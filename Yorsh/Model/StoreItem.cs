@@ -1,10 +1,8 @@
-﻿using Xamarin.InAppBilling;
-
-namespace Yorsh.Model
+﻿namespace Yorsh.Model
 {
     public sealed class StoreItem
     {
-		public StoreItem(Product product, int saleProcent = 0)
+		public StoreItem(ErshProduct product, int saleProcent = 0)
         {
             Product = product;
             var splitProductId = Product.ProductId.Split('_');
@@ -16,7 +14,7 @@ namespace Yorsh.Model
 			SaleImageString = BuyElement + "_sale_" + saleProcent;
         }
 
-        public Product Product { get; private set; }
+        public ErshProduct Product { get; private set; }
         public int CountForSort { get; private set; }
         public string BuyElement { get; private set; }
         public bool IsSale { get; private set; }

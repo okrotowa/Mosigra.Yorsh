@@ -13,5 +13,7 @@ namespace Yorsh.Helpers
         public const string Task = "task";
         public const string Bonus = "bonus";
         public const string All = "all";
+
+        public const string TrackEventCardsAreEnds = "EndCards";
     }
 }

@@ -1,55 +1,114 @@
-using System;
 using System.Linq;
-using Xamarin.InAppBilling;
 using Yorsh.Helpers;
 
 namespace Yorsh.Model
 {
-    public class ErshPurchase
+    public static class PurchaseCreator
     {
-        private int _count = 0;
-        private bool _isAll = false;
-        private string _productType;
-        private bool _isImplemented = true;
-
-        public ErshPurchase(string purchaseId)
+        public static ErshPurchase Create(string purchaseId)
         {
             var splitProductId = purchaseId.Split('_');
-            if (splitProductId.Count() == 2)
+            if (splitProductId.Count() != 2 && splitProductId.Count() != 3) return null;
+            if (splitProductId[1] != StringConst.Task && splitProductId[1] != StringConst.Bonus) return null;
+
+            int count;
+            var isTask = splitProductId[1] == StringConst.Task;
+            if (!int.TryParse(splitProductId[0], out count))
             {
-                if (!int.TryParse(splitProductId[0], out _count))
-                {
-                    _isAll = splitProductId[0] == StringConst.All;
-                    _isImplemented = _isAll;
-                }
-                _productType = splitProductId[1];
-                _isImplemented &= _productType != StringConst.Task || _productType != StringConst.Bonus;
+                if (splitProductId[0] != StringConst.All) return null;
+                if (isTask) return new AllTaskPurchase(purchaseId);
+                return new AllBonusPurchase(purchaseId);
             }
-            else
-            {
-                _isImplemented = false;
-            }
+            if (isTask) return new TaskPurchase(purchaseId, count);
+            return new BonusPurchase(purchaseId, count);
         }
-        
-        public int Count
+    }
+    public class AllTaskPurchase : ErshPurchase
+    {
+        public AllTaskPurchase(string purchaseId): base(purchaseId)
         {
-            get { return _count; }
+            OrdiginalId = purchaseId;
         }
 
-        public bool IsAll
+        public override bool IsAll
         {
-            get { return _isAll; }
+            get { return true; }
         }
 
-        public string ProductType
+        public override string ProductType
         {
-            get { return _productType; }
+            get { return StringConst.Task; }
+        }
+    }
+
+    public class TaskPurchase : ErshPurchase
+    {
+        public TaskPurchase(string purchaseId, int count): base(purchaseId)
+        {
+            Count = count;
+            OrdiginalId = count + '_' + ProductType;
         }
 
-        public bool IsImplemented
+        public override bool IsAll
         {
-            get { return _isImplemented; }
+            get { return false; }
         }
+
+        public override sealed string ProductType
+        {
+            get { return StringConst.Task; }
+        }
+    }
+    public class BonusPurchase : ErshPurchase
+    {
+        public BonusPurchase(string purchaseId, int count): base(purchaseId)
+        {
+            Count = count;
+            OrdiginalId = count + '_' + ProductType;
+        }
+
+        public override bool IsAll
+        {
+            get { return false; }
+        }
+
+        public override sealed string ProductType
+        {
+            get { return StringConst.Bonus; }
+        }
+    }
+    public class AllBonusPurchase : ErshPurchase
+    {
+        public AllBonusPurchase(string purchaseId)
+            : base(purchaseId)
+        {
+        }
+
+        public override bool IsAll
+        {
+            get { return true; }
+        }
+
+        public override string ProductType
+        {
+            get { return StringConst.Bonus; }
+        }
+    }
+
+    public abstract class ErshPurchase
+    {
+        protected ErshPurchase(string purchaseId)
+        {
+            PurchaseId = purchaseId;
+        }
+        public string PurchaseId { get; private set; }
+
+        public string OrdiginalId { get; protected set; }
+        public int Count { get; protected set; }
+
+        public abstract bool IsAll { get; }
+
+        public abstract string ProductType { get; }
 
     }
 }

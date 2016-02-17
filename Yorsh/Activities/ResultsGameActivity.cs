@@ -38,6 +38,8 @@ namespace Yorsh.Activities
                 SetButtonsAndActionBarIsEndGame();
             else
                 SetButtonsAndActionBarIsNotEndGame();
+
+            if (_isEndGame) this.SaveAsStartupActivity(StringConst.ResultGameActivity);
         }
 
         void SetFirstItem(Player player, bool isEndGame)
@@ -105,19 +107,9 @@ namespace Yorsh.Activities
             base.Recreate();
         }
 
-        protected override void OnPause()
-        {
-            if (_isEndGame)
-            {
-                this.SaveAsStartupActivity(StringConst.ResultGameActivity);
-            }
-            base.OnPause();
-        }
 
         private async Task StartNewGameAsync()
         {
-            await Rep.Instance.ClearAsync();
-            this.SaveCurrentPlayer(0);
             var intent = new Intent(this, typeof (MainMenuActivity));
             this.StartActivityWithoutBackStack(intent);
         }

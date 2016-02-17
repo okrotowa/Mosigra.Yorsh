@@ -1,15 +1,18 @@
 using System;
-using System.Threading.Tasks;
 using Xamarin.Contacts;
+using Yorsh.Data;
 using Yorsh.Helpers;
 using Android.Graphics;
 using Android.App;
+using Yorsh.Model.EventAgruments;
+using Exception = System.Exception;
 
 namespace Yorsh.Model
 {
     public class Player
     {
         private readonly PlayerModel _playerModel;
+        public event EventHandler<ScoreChangedEventArgs> ScoreChanged;
         public Player(PlayerModel player)
         {
             _playerModel = player;
@@ -40,7 +43,11 @@ namespace Yorsh.Model
         public int Score
         {
             get { return _playerModel.Score; }
-            set { _playerModel.Score = value; }
+            set
+            {
+                _playerModel.Score = value;
+                if (ScoreChanged!=null) ScoreChanged.Invoke(this,new ScoreChangedEventArgs(value));
+            }
         }
 
         public bool FromContacts
@@ -85,7 +92,7 @@ namespace Yorsh.Model
             }
             catch (Exception ex)
             {
-                GaService.TrackAppException("Player","LoadBitmap", ex, false);
+                GaService.TrackAppException("Player", "LoadBitmap", ex, false);
                 SetDefaultImage();
                 if (!string.IsNullOrEmpty(PhotoPath)) PhotoPath = null;
             }
@@ -97,4 +104,5 @@ namespace Yorsh.Model
             return _playerModel;
         }
     }
+
 }

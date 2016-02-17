@@ -34,7 +34,7 @@
         android:id="@+id/youHaveBonus" />
     <ImageButton
         android:id="@+id/continueButton"
-        android:layout_marginBottom="@dimen/TaskProgress_MarginBottom"
+        android:layout_marginBottom="@dimen/Bonus_MarginBottom"
         android:layout_width="@dimen/Bonus_ButtonWidth"
         android:layout_height="@dimen/Bonus_ButtonHeight"
         android:background="@drawable/bonus_button_selector"

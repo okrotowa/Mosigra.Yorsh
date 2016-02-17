@@ -140,17 +140,16 @@
                 </LinearLayout>-->
             </LinearLayout>
         </ScrollView>
-    <!--        <ImageView
-            android:layout_width="match_parent"
-            android:layout_alignParentTop="true"
+    <!--        <ImageView            
             android:src="@drawable/light_top"
             android:background="@drawable/shop_background_toplight"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:layout_height="wrap_content" />
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="matrix"
+            android:adjustViewBounds="true" />
         <ImageView
             android:id="@+id/light_bottom"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_alignParentBottom="true"
             android:src="@drawable/light_bottom"
             android:background="@drawable/shop_background_bottomlight"

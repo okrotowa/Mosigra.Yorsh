@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System;
+using Java.Lang;
 using Yorsh.Adapters;
 using Yorsh.Data;
 using Yorsh.Helpers;
@@ -13,6 +14,8 @@ using Android.Content;
 using Android.Content.PM;
 using System.Linq;
 using Android.Views;
+using Yorsh.Model.EventAgruments;
+using Exception = System.Exception;
 
 namespace Yorsh.Activities
 {
@@ -20,13 +23,13 @@ namespace Yorsh.Activities
     public class StoreActivity : BaseActivity
     {
         private InAppBillingHandler _billingHandler;
-        private IList<Product> _taskProducts;
-        private IList<Product> _bonusProducts;
+        private IEnumerable<ErshProduct> _allErshProducts;
         private InAppBillingServiceConnection _serviceConnection;
-        private IList<Purchase> _purchases;
+        private IList<ErshPurchase> _purchases;
         private ListView _taskListView;
         private ListView _bonusListView;
         private bool _navigatedFromGameActivity;
+        private IList<Product> _allProducts;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -58,61 +61,7 @@ namespace Yorsh.Activities
             ConnectToService();
         }
 
-        void InstanceOnDatabaseChanged(object sender, EventArgs eventArgs)
-        {
-            SetupInventory();
-        }
-
-        private string GetNumberString(int num)
-        {
-            var s = new[] {
-                     @"bRI7RgmYxy8/Y9Uy4I3njTVvbpocAaxrckdwDT5Dq7L/aWzHN/WIcJpf",
-                     @"xtcU5stKVVlGG6im5KHJo6ZRIp2foVhJqo8x3EVibcevuS/4pPOc",
-                     @"NDRv+5jb4NOXPvJsaZtgk4sxjJ9UnJWaJe1wdiAAfpnl5GYoTLkV",   
-                     @"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwa50OL",
-                     @"u/CZWS2NRvBS+Lv/dESNl8XOKZ5qkCijHKIqQSyRXo//9KvEY",
-                     @"jEBrKIMHi3ANIHp53hgHQIDAQAB",
-                     @"RNqP9KW4wEeS70FUhQkWgV46HtdGX5bJMpdGKxPIq8h4MFhs87O",
-                     @"cVhs7LDVLl/Ip3ozOC6vKJPjJ/hn8ZdhBYRjfHnPzPgV5Bw9LhnBR9c",
-			};
-
-            return s[num];
-        }
-
-        protected override void OnDestroy()
-        {
-            if (_serviceConnection != null && _serviceConnection.Connected)
-            {
-                _serviceConnection.OnConnected -= HandleOnConnected;
-                _serviceConnection.Disconnect();
-            }
-
-            if (_billingHandler != null)
-            {
-                _billingHandler.OnProductPurchased -= BillingHandlerOnProductPurchased;
-                _billingHandler.BuyProductError -= BillingHandler_BuyProductError;
-                Rep.DatabaseHelper.DatabaseChanged -= InstanceOnDatabaseChanged;
-            }
-            base.OnDestroy();
-        }
-
-        private void RefreshPurchasedItems()
-        {
-            try
-            {
-                var purchases = _billingHandler.GetPurchases(ItemType.Product);
-                _purchases = purchases == null
-                    ? new List<Purchase>()
-                    : purchases.Where(purchase => purchase.PurchaseState == 0).ToList();
-            }
-            catch (Exception exception)
-            {
-                GaService.TrackAppException(this.Class.SimpleName, "RefreshPurchasedItem", exception, false);
-            }
-
-        }
-
-        private void ConnectToService()
+        void ConnectToService()
         {
             try
             {
@@ -129,16 +78,33 @@ namespace Yorsh.Activities
                 },
                  new[] { 0, 1, 2, 3, 4, 5, 6, 7 }
                  );
-                                _serviceConnection = new InAppBillingServiceConnection(this, key);
-                                _serviceConnection.OnConnected += HandleOnConnected;
-                                _serviceConnection.Connect();
+
+                _serviceConnection = new InAppBillingServiceConnection(this, key);
+                _serviceConnection.OnConnected += HandleOnConnected;
+                _serviceConnection.Connect();
             }
             catch (Exception ex)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "ConnectToService", ex, false);
+                GaService.TrackAppException(this.Class, "ConnectToService", ex, false);
             }
 
         }
+        private string GetNumberString(int num)
+        {
+            var s = new[] {
+                     @"bRI7RgmYxy8/Y9Uy4I3njTVvbpocAaxrckdwDT5Dq7L/aWzHN/WIcJpf",
+                     @"xtcU5stKVVlGG6im5KHJo6ZRIp2foVhJqo8x3EVibcevuS/4pPOc",
+                     @"NDRv+5jb4NOXPvJsaZtgk4sxjJ9UnJWaJe1wdiAAfpnl5GYoTLkV",   
+                     @"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwa50OL",
+                     @"u/CZWS2NRvBS+Lv/dESNl8XOKZ5qkCijHKIqQSyRXo//9KvEY",
+                     @"jEBrKIMHi3ANIHp53hgHQIDAQAB",
+                     @"RNqP9KW4wEeS70FUhQkWgV46HtdGX5bJMpdGKxPIq8h4MFhs87O",
+                     @"cVhs7LDVLl/Ip3ozOC6vKJPjJ/hn8ZdhBYRjfHnPzPgV5Bw9LhnBR9c",
+			};
+
+            return s[num];
+        }
+
 
         private async void HandleOnConnected()
         {
@@ -146,13 +112,15 @@ namespace Yorsh.Activities
             {
                 _billingHandler = _serviceConnection.BillingHandler;
                 if (_billingHandler == null)
-                    return;
+                {
+                    ErrorOccur("Нет подключения");
+                    return; 
+                }
                 _billingHandler.OnProductPurchased += BillingHandlerOnProductPurchased;
                 _billingHandler.BuyProductError += BillingHandler_BuyProductError;
                 Rep.DatabaseHelper.DatabaseChanged += InstanceOnDatabaseChanged;
-
                 await GetInventory();
-                if (_taskProducts == null || _bonusProducts == null)
+                if (_allErshProducts == null|| !_allErshProducts.Any()|| _allProducts == null || !_allProducts.Any())
                 {
                     ErrorOccur("Нет подключения");
                     return;
@@ -161,11 +129,71 @@ namespace Yorsh.Activities
             }
             catch (Exception ex)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "HandleOnConnected", ex, true);
+                GaService.TrackAppException(this.Class, "HandleOnConnected", ex, true);
                 ErrorOccur(ex.Message);
             }
         }
 
+        private IEnumerable<string> GetIds(IEnumerable<int> counts, string type)
+        {
+            foreach (var oneCount in counts.Select(count => string.Format(@"{0}_{1}", count, type)))
+            {
+                yield return oneCount;
+                yield return oneCount + '_' + 3;
+                yield return oneCount + '_' + 4;
+            }
+
+            yield return "all_" + type;
+        }
+        private IEnumerable<string> GetErshIds(IEnumerable<int> counts, string type)
+        {
+            var list = counts.Select(count => string.Format(@"{0}_{1}", count, type)).ToList();
+            list.Add("all_" + type);
+            return list;
+        }
+
+        private async Task GetInventory()
+        {
+            try
+            {
+                var ershTaskIds = GetErshIds(new[] { 10, 30, 70, 100 }, StringConst.Task).ToList();
+                var ershBonusIds = GetErshIds(new[] { 10, 30 }, StringConst.Bonus).ToList();
+                var allErshProducts = await _billingHandler.QueryInventoryAsync(ershTaskIds.Union(ershBonusIds).ToList(), ItemType.Product);
+                _allErshProducts = allErshProducts == null ? null : allErshProducts.Select(product => new ErshProduct(product)).ToList();
+
+                var taskIds = GetIds(new[] { 10, 30, 70, 100 }, StringConst.Task).ToList();
+                var bonusIds = GetIds(new[] { 10, 30 }, StringConst.Bonus).ToList();
+                var allIds = taskIds.Union(bonusIds).ToList();
+                var allProducts = await _billingHandler.QueryInventoryAsync(allIds, ItemType.Product);
+                _allProducts =allProducts==null?null:allProducts.ToList();
+            }
+            catch (Exception ex)
+            {
+                GaService.TrackAppException(this.Class, "GetInventory", ex, true);
+            }
+
+        }
+        private void RefreshPurchasedItems()
+        {
+            try
+            {
+                var purchases = _billingHandler.GetPurchases(ItemType.Product);
+                _purchases = purchases == null
+                    ? new List<ErshPurchase>()
+                    : purchases.Where(purchase => purchase.PurchaseState == 0).Select(purchase => PurchaseCreator.Create(purchase.ProductId)).ToList();
+
+            }
+            catch (Exception exception)
+            {
+                GaService.TrackAppException(this.Class, "RefreshPurchasedItem", exception, false);
+            }
+
+        }
+        void InstanceOnDatabaseChanged(object sender, EventArgs eventArgs)
+        {
+            SetupInventory();
+        }
+        
         void BillingHandler_BuyProductError(int responseCode, string sku)
         {
             string message = string.Empty;
@@ -176,29 +204,31 @@ namespace Yorsh.Activities
                     message = "На данный момент сервис недоступен";
                     break;
                 case BillingResult.ItemAlreadyOwned:
-                    int result;
-                    var split = sku.Split('_');
-                    if (split.Count() != 2 || !int.TryParse(split[0], out result)) break;
-                    var product = _taskProducts.FirstOrDefault(p => p.ProductId == sku) ?? _bonusProducts.FirstOrDefault(p => p.ProductId == sku);
-                    var purchase = _purchases.FirstOrDefault(p => p.ProductId == sku);
-                    if (purchase != null && product != null)
-                    {
-                        message = "Не удалось купить " + product.Description + "." + System.Environment.NewLine + "Попробуйте позже";
-                        _billingHandler.ConsumePurchase(purchase);
-                    }
+                    //TODO::Send event or error
+                    //int result;
+                    //var split = sku.Split('_');
+                    //if (split.Count() != 2 || !int.TryParse(split[0], out result)) break;
+                    //var product = _allErshProducts.FirstOrDefault(p => p.ProductId == sku) ?? _bonusProducts.FirstOrDefault(p => p.ProductId == sku);
+                    //var purchase = _purchases.FirstOrDefault(p => p.ProductId == sku);
+                    //if (purchase != null && product != null)
+                    //{
+                    //    message = "Не удалось купить " + product.Description + "." + System.Environment.NewLine + "Попробуйте позже";
+                    //    _billingHandler.ConsumePurchase(purchase);
+                    //}
                     break;
             }
             if (string.IsNullOrEmpty(message)) message = "Произошло что-то непредвиденное, повторите свою попытку позже";
             Toast.MakeText(this, message, ToastLength.Short).Show();
         }
 
-        private void BillingHandlerOnProductPurchased(int response, Purchase purchase, string purchaseData, string purchaseSignature)
+        private async void BillingHandlerOnProductPurchased(int response, Purchase purchase, string purchaseData, string purchaseSignature)
         {
-            var ershPurchase = new ErshPurchase(purchase.ProductId);
-            Rep.DatabaseHelper.AddProductAsync(ershPurchase).ContinueWith(t =>
-            {
-                if (!ershPurchase.IsAll) _billingHandler.ConsumePurchase(purchase);
-            });
+            var ershPurchase = PurchaseCreator.Create(purchase.ProductId);
+            if (!ershPurchase.IsAll && GetPurchasesContainesKey(ershPurchase.OrdiginalId).Count() + 1 == GetProductsContainesKey(ershPurchase.OrdiginalId).Count())
+                    GaService.TrackAppEvent(StringConst.TrackEventCardsAreEnds, string.Format("{0}", ershPurchase.OrdiginalId));
+            
+            await Rep.DatabaseHelper.AddProductAsync(ershPurchase);
+
         }
 
         private void SetDescriptionText()
@@ -208,7 +238,7 @@ namespace Yorsh.Activities
                 var taskDescription = FindViewById<TextView>(Resource.Id.taskDescription);
                 var taskCount = Rep.DatabaseHelper.Tasks.Count;
                 var allTaskCount = IntConst.AllTaskCount - Rep.DatabaseHelper.Tasks.Count;
-                taskDescription.Text = _purchases.Any(x => string.CompareOrdinal(x.ProductId, "all_task") == 0)
+                taskDescription.Text = _purchases.Any(x => x.IsAll && x.ProductType == StringConst.Task)
                     ? string.Format("Вам доступны все {0} заданий и безлимитная подписка на новые",
                         IntConst.AllTaskCount)
                     : string.Format("У вас {0} заданий, {1}", taskCount,
@@ -217,7 +247,7 @@ namespace Yorsh.Activities
                 var bonusCount = Rep.DatabaseHelper.Bonuses.Count;
                 var allBonusCount = IntConst.AllBonusCount - Rep.DatabaseHelper.Bonuses.Count;
                 var bonusDescription = FindViewById<TextView>(Resource.Id.bonusDescription);
-                bonusDescription.Text = _purchases.Any(x => string.CompareOrdinal(x.ProductId, "all_bonus") == 0)
+                bonusDescription.Text = _purchases.Any(x => x.IsAll && x.ProductType == StringConst.Bonus)
                     ? string.Format("Вам доступны все {0} бонусов и безлимитная подписка на новые",
                         IntConst.AllBonusCount)
                     : string.Format("У вас {0} бонусов, {1}", bonusCount,
@@ -225,7 +255,25 @@ namespace Yorsh.Activities
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "SetDescriptionText", exception, false);
+                GaService.TrackAppException(this.Class, "SetDescriptionText", exception, false);
+            }
+
+        }
+
+        private void SetUpProducts()
+        {
+            try
+            {
+                foreach (var product in _allErshProducts)
+                {
+                    string enabledProductId;
+                    product.IsEnabled = ProductIsEnabled(product, out enabledProductId);
+                    product.EnableProductId = enabledProductId;
+                }
+            }
+            catch (Exception exception)
+            {
+                GaService.TrackAppException(this.Class, "SetUpProducts", exception, false);
             }
 
         }
@@ -236,111 +284,80 @@ namespace Yorsh.Activities
             {
                 RefreshPurchasedItems();
                 SetDescriptionText();
+                SetUpProducts();
 
-                FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Visible;
-                FindViewById<TextView>(Resource.Id.googleStoreNotActive).Visibility = ViewStates.Gone;
                 _taskListView = FindViewById<ListView>(Resource.Id.taskListView);
-                var adapter = new StoreListAdapter(this, _taskProducts, GetSaleForTask, TaskIsEnabled);
+                var adapter = new StoreListAdapter(this, _allErshProducts.Where(product=>product.Type == StringConst.Task));
                 adapter.ItemClick += AdapterOnItemClick;
                 _taskListView.Adapter = new MultiItemRowListAdapter(this, adapter, 3, 1);
                 _taskListView.JustifyListViewHeightBasedOnChildren();
-                _bonusListView = FindViewById<ListView>(Resource.Id.bonusListView);
 
-                var bonusAdapter = new StoreListAdapter(this, _bonusProducts, GetSaleForBonus, BonusIsEnabled);
+                _bonusListView = FindViewById<ListView>(Resource.Id.bonusListView);
+                var bonusAdapter = new StoreListAdapter(this, _allErshProducts.Where(product => product.Type == StringConst.Bonus));
                 bonusAdapter.ItemClick += AdapterOnItemClick;
                 _bonusListView.Adapter = new MultiItemRowListAdapter(this, bonusAdapter, 3, 1);
                 _bonusListView.JustifyListViewHeightBasedOnChildren();
+
+
+                FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Visible;
+                FindViewById<TextView>(Resource.Id.googleStoreNotActive).Visibility = ViewStates.Gone;
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "SetupInventory", exception, false);
+                GaService.TrackAppException(this.Class, "SetupInventory", exception, false);
             }
 
         }
-
-        private int GetSaleForBonus(string id)
-        {
-            var splitArgs = id.Split('_');
-            int count;
-            if (splitArgs.Count() != 2 || !int.TryParse(splitArgs[0], out count)) return 0;
-            switch (count)
-            {
-                case 30:
-                    return 25;
-                default:
-                    return 0;
-            }
-        }
-
-        private int GetSaleForTask(string id)
-        {
-            var splitArgs = id.Split('_');
-            int count;
-            if (splitArgs.Count() != 2 || !int.TryParse(splitArgs[0], out count)) return 0;
-            switch (count)
-            {
-                case 30:
-                    return 25;
-                case 70:
-                    return 50;
-                case 100:
-                    return 70;
-                default:
-                    return 0;
-            }
-        }
-
         private void AdapterOnItemClick(object sender, StoreItemClickEventArgs e)
         {
-            _billingHandler.BuyProduct(e.Product);
+            var buyProduct = _allProducts.FirstOrDefault(product => string.CompareOrdinal(product.ProductId, e.Product.EnableProductId) == 0);
+            if (buyProduct!=null) _billingHandler.BuyProduct(buyProduct);
         }
 
-        private bool TaskIsEnabled(string productId)
+        private bool ContainAllPurchase(string type)
         {
-            var purchase = _purchases.FirstOrDefault(x => string.CompareOrdinal(x.ProductId, "all_task") == 0);
-            if (purchase != null) return false;
+            return _purchases.Any(pur => pur.IsAll && pur.ProductType == type);
+        }
+
+        private IDictionary<string, ErshPurchase> GetPurchasesContainesKey(string productId)
+        {
+            return _purchases.Where(purchase => purchase.PurchaseId.Contains(productId)).ToDictionary(ershPurchase => ershPurchase.PurchaseId);
+        }
+        private IEnumerable<Product> GetProductsContainesKey(string productId)
+        {
+            return _allProducts.Where(prodT => prodT.ProductId.Contains(productId)).ToList();
+        }
+
+        private bool CanAddToDataBase(string productId)
+        {
             int result;
-            var prod = productId.Split('_');
-            var taskCount = Rep.DatabaseHelper.Tasks.Count;
-            var enabled = !int.TryParse(prod[0], out result) || IntConst.AllTaskCount - taskCount >= result;
-            return enabled;
+            var isCount = int.TryParse(productId.Split('_')[0], out result);
+            var count = productId.Split('_')[1] == StringConst.Bonus ? Rep.DatabaseHelper.Bonuses.Count : Rep.DatabaseHelper.Tasks.Count;
+            var allCount = productId.Split('_')[1] == StringConst.Bonus ? IntConst.AllBonusCount : IntConst.AllTaskCount;
+
+            return !isCount || allCount - count >= result;
         }
 
-        private bool BonusIsEnabled(string productId)
+        private bool ProductIsEnabled(ErshProduct product, out string enableProductId)
         {
-            var purchase = _purchases.FirstOrDefault(x => string.CompareOrdinal(x.ProductId, "all_bonus") == 0);
-            if (purchase != null) return false;
-            int result;
-            var prod = productId.Split('_');
-            var bonusCount = Rep.DatabaseHelper.Bonuses.Count;
-            return !int.TryParse(prod[0], out result) || IntConst.AllBonusCount - bonusCount >= result;
-        }
+            enableProductId = string.Empty;
+            if (ContainAllPurchase(product.Type) || !CanAddToDataBase(product.ProductId)) return false;
 
-        private async Task GetInventory()
-        {
-            try
+            var purchases = GetPurchasesContainesKey(product.ProductId);
+            var allProducts = GetProductsContainesKey(product.ProductId);
+            foreach (var allProd in allProducts)
             {
-                _taskProducts = await _billingHandler.QueryInventoryAsync(new List<string>
-                {
-                    "10_task",
-                    "30_task",
-                    "70_task",
-                    "100_task",
-                    "all_task",
-                }, ItemType.Product);
-                _bonusProducts = await _billingHandler.QueryInventoryAsync(new List<string>()
-                {
-                    "10_bonus",
-                    "30_bonus",
-                    "all_bonus"
-                }, ItemType.Product);
-            }
-            catch (Exception ex)
-            {
-                GaService.TrackAppException(this.Class.SimpleName, "GetInventory", ex, true);
+                ErshPurchase purchase;
+                if (purchases.TryGetValue(allProd.ProductId, out purchase)) continue;
+                enableProductId = allProd.ProductId;
+                return true;
             }
 
+            return false;
         }
+
+
+
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             if (resultCode == Result.Canceled) return;
@@ -354,7 +371,22 @@ namespace Yorsh.Activities
             googleStoreNotActive.Visibility = ViewStates.Visible;
             googleStoreNotActive.Text = message;
         }
+        protected override void OnDestroy()
+        {
+            if (_serviceConnection != null && _serviceConnection.Connected)
+            {
+                _serviceConnection.OnConnected -= HandleOnConnected;
+                _serviceConnection.Disconnect();
+            }
 
+            if (_billingHandler != null)
+            {
+                _billingHandler.OnProductPurchased -= BillingHandlerOnProductPurchased;
+                _billingHandler.BuyProductError -= BillingHandler_BuyProductError;
+                Rep.DatabaseHelper.DatabaseChanged -= InstanceOnDatabaseChanged;
+            }
+            base.OnDestroy();
+        }
         public override void OnPreBackPressed()
         {
             AllowBackPressed = !_navigatedFromGameActivity;

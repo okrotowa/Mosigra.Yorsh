@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Database.Sqlite;
+using Android.Util;
 using SQLite;
 using Yorsh.Data;
 using Yorsh.Model;
+using Yorsh.Model.EventAgruments;
 
 namespace Yorsh.Helpers
 {
@@ -21,11 +22,24 @@ namespace Yorsh.Helpers
         private IList<BonusTable> _bonuses;
         private IList<ErshPurchase> _taskPurchases = new List<ErshPurchase>();
         private IList<ErshPurchase> _bonusPurchases = new List<ErshPurchase>();
+        private ImageActivityHelper _imageActivityHelper;
 
-        internal DatabaseHelper(Context context, int version)
-            : base(context, Rep.Instance.DataBaseFile, null, version)
+        internal DatabaseHelper(Context context, int version) : base(context, Rep.Instance.DataBaseFile, null, version)
         {
-            _context = context;
+            _context = context;           
+        }
+
+        public ImageActivityHelper ImageActivityHelper
+        {
+            get { return _imageActivityHelper; }
+            private set
+            {
+                if (_imageActivityHelper != null && _imageActivityHelper.TaskId.HasValue)
+                {
+                    value.TaskId = _imageActivityHelper.TaskId;
+                }
+                _imageActivityHelper = value;
+            }
         }
 
         public event EventHandler DataBaseCreatedOrOpened;
@@ -47,8 +61,8 @@ namespace Yorsh.Helpers
         {
             try
             {
-                _taskPurchases = ershPurchases.Where(purchase => purchase.IsImplemented && purchase.ProductType == StringConst.Task).ToList();
-                _bonusPurchases = ershPurchases.Where(purchase => purchase.IsImplemented && purchase.ProductType == StringConst.Bonus).ToList();
+                _taskPurchases = ershPurchases.Where(purchase => purchase.ProductType == StringConst.Task).ToList();
+                _bonusPurchases = ershPurchases.Where(purchase => purchase.ProductType == StringConst.Bonus).ToList();
                 if (!isConnected) return;
 
                 var currentPurchaseTaskCount = Tasks.Count - IntConst.DefaultTaskCount;
@@ -61,7 +75,7 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "CheckAndRefreshPurshases", exception, false);
+                GaService.TrackAppException(this.Class, "CheckAndRefreshPurshases", exception, false);
             }
 
         }
@@ -79,7 +93,7 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "CorrectingPurchaseAsync", exception, false);
+                GaService.TrackAppException(this.Class, "CorrectingPurchaseAsync", exception, false);
             }
 
         }
@@ -99,7 +113,7 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "GetPurchaseCount", exception, false);
+                GaService.TrackAppException(this.Class, "GetPurchaseCount", exception, false);
                 return count;
             }
 
@@ -111,6 +125,16 @@ namespace Yorsh.Helpers
             private set
             {
                 _tasks = value;
+                var displayMetrics = _context.Resources.DisplayMetrics;
+                var width = displayMetrics.WidthPixels;
+                var height = displayMetrics.HeightPixels;
+                if (width > height)
+                {
+                    var temp = width;
+                    width = height;
+                    height = temp;
+                }
+                ImageActivityHelper = new ImageActivityHelper(Tasks.GetTask, Tasks.GetCategory, width, height);
                 OnDatabaseChanged();
             }
         }
@@ -142,7 +166,7 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "AddProductAsync", exception, true);
+                GaService.TrackAppException(this.Class, "AddProductAsync", exception, true);
             }
         }
 
@@ -160,27 +184,27 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, string.Format("AddProductAsync<{0}>", new T()), exception, true);
+                GaService.TrackAppException(this.Class, string.Format("AddProductAsync<{0}>", new T()), exception, true);
             }
         }
-        
+
         private async Task RemoveTableAsync<T>(int count) where T : class, ITable, new()
         {
             try
             {
-                var isTask = new T() is TaskTable;
                 var list = await DataBaseConnection.Table<T>().Where(p => p.IsEnabled).Take(count).ToListAsync();
                 foreach (var table in list)
                 {
                     table.IsEnabled = false;
-                    if (isTask) (table as TaskTable).Position = 0;
+                    var taskTable = table as TaskTable;
+                    if (taskTable != null) taskTable.Position = 0;
                 }
                 await DataBaseConnection.UpdateAllAsync(list);
                 await RefreshTableAsync<T>();
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "RemoveBonusAsync", exception, false);
+                GaService.TrackAppException(this.Class, "RemoveBonusAsync", exception, false);
             }
 
         }
@@ -211,7 +235,7 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, string.Format("GetTable<{0}>", new T().TableName), exception, false);
+                GaService.TrackAppException(this.Class, string.Format("GetTable<{0}>", new T().TableName), exception, false);
                 return list;
             }
         }
@@ -233,10 +257,10 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, string.Format("GetTable<{0}>",new T().TableName),exception, false);
+                GaService.TrackAppException(this.Class, string.Format("GetTable<{0}>", new T().TableName), exception, false);
                 throw;
             }
-            
+
         }
         private async Task CreateIfNotExistTable<T>() where T : ITable, new()
         {
@@ -252,7 +276,7 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, string.Format("CreateIfNotExistTable<{0}>", new T()), exception, false);
+                GaService.TrackAppException(this.Class, string.Format("CreateIfNotExistTable<{0}>", new T()), exception, false);
             }
 
         }
@@ -266,6 +290,7 @@ namespace Yorsh.Helpers
                 await CreateIfNotExistTable<CategoryTable>();
                 await RefreshAllAsync();
                 OnDataBaseCreatedOrOpened();
+                
             }
             catch (Exception exception)
             {
@@ -293,7 +318,7 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "RefreshAllAsync", exception, false);
+                GaService.TrackAppException(this.Class, "RefreshAllAsync", exception, false);
             }
 
         }
@@ -309,16 +334,37 @@ namespace Yorsh.Helpers
                         Bonuses = await DataBaseConnection.Table<BonusTable>().Where(product => product.IsEnabled).ToListAsync();
                         break;
                     case StringConst.TaskTable:
-                        TaskRefreshAsync(); break;
+                        await TaskRefreshAsync(); break;
                     default: throw new NotImplementedException();
 
                 }
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, string.Format("RefreshTableAsync<{0}>", new T().TableName), exception, false);
+                GaService.TrackAppException(this.Class, string.Format("RefreshTableAsync<{0}>", new T().TableName), exception, false);
             }
         }
+		private async Task TaskScoreRefreshAsync()
+		{
+			try
+			{
+				await DataBaseConnection.CreateTableAsync<TaskTable>();
+				var currentTasks = await DataBaseConnection.Table<TaskTable>().ToListAsync();
+				if (currentTasks.Count == 0) return;
+				var tasks = GetTable<TaskTable>();
+				foreach(var task in tasks)
+				{
+					var currentTask = currentTasks.FirstOrDefault(x=>x.Id == task.Id);
+					if (currentTask == null) continue;
+					currentTask.Score = task.Score;
+				}
+				await DataBaseConnection.UpdateAllAsync(currentTasks);
+			}
+			catch (Exception exception)
+			{
+				GaService.TrackAppException(this.Class,"TaskScoreRefreshAsync", exception, false);
+			}
+		}
 
         private async Task TaskRefreshAsync()
         {
@@ -329,21 +375,65 @@ namespace Yorsh.Helpers
                 int currentPosition;
                 var sortedTaskList = taskList.CustomSort(out currentPosition);
                 Tasks = new TaskList(sortedTaskList, categoryList, currentPosition);
+                Tasks.Enumerator.TaskPositionChanged += EnumeratorOnTaskPositionChanged;
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "TaskRefreshAsync", exception, false);
+                GaService.TrackAppException(this.Class, "TaskRefreshAsync", exception, false);
             }
         }
 
-        public async Task SaveTaskContextAsync()
+        private async void EnumeratorOnTaskPositionChanged(object sender, TaskPositionChangedEventArgs e)
         {
-            await DataBaseConnection.UpdateAllAsync(Tasks.Tasks);
+            await SaveTaskContextAsync(e.TaskTable);
+        }
+
+        public async Task SaveTaskContextAsync(TaskTable taskTable)
+        {
+            try
+            {
+                await DataBaseConnection.UpdateAsync(taskTable);
+            }
+            catch (Exception exception)
+            {
+                var activityName = string.Format("SaveTaskContextAsync: tableId={0}, talbePosition={1}",
+                    taskTable == null ? (object)null : taskTable.Id,
+                    taskTable == null ? (object)null : taskTable.Position);
+                GaService.TrackAppException(this.Class, activityName, exception, false);
+            }
+        }
+        
+		public async Task SaveTaskContextAsync()
+        {
+            try
+            {
+				var tasks = this.GetTable<TaskTable>().ToDictionary(task=>task.Id);
+				foreach(var currentTask in Tasks.Tasks)
+				{
+					TaskTable task;
+					if (!tasks.TryGetValue(currentTask.Id,out task)) continue;
+					currentTask.Score = task.Score;
+				}
+                await DataBaseConnection.UpdateAllAsync(Tasks.Tasks);
+            }
+            catch (Exception exception)
+            {
+                GaService.TrackAppException(this.Class, "SaveTaskContextAsync", exception, false);
+            }
         }
         public async Task ClearAsync()
         {
-            Tasks.Clear();
-            await SaveTaskContextAsync();
+            try
+            {
+                Tasks.Clear();
+                await SaveTaskContextAsync();
+                await TaskRefreshAsync();
+            }
+            catch (Exception exception)
+            {
+                GaService.TrackAppException(this.Class, "ClearAsync", exception, false);
+            }
+
         }
 
         public override void OnCreate(SQLiteDatabase db)
@@ -355,14 +445,14 @@ namespace Yorsh.Helpers
         {
             try
             {
-                await DataBaseConnection.DropTableAsync<TaskTable>();
-                await DataBaseConnection.DropTableAsync<BonusTable>();
-                await DataBaseConnection.DropTableAsync<CategoryTable>();
-                await CreateOrOpenDataBaseAsync();
+				await DataBaseConnection.DropTableAsync<TaskTable>();
+	            await DataBaseConnection.DropTableAsync<BonusTable>();
+	            await DataBaseConnection.DropTableAsync<CategoryTable>();
+				await CreateOrOpenDataBaseAsync();
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class.SimpleName, "OnUpgrade", exception, false);
+                GaService.TrackAppException(this.Class, "OnUpgrade", exception, false);
             }
 
         }

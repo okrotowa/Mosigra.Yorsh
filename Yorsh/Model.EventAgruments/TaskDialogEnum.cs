@@ -2,6 +2,6 @@ public enum TaskDialog
 {
     Bear,
     Make,
-    Refuse,
-    RefuseAndMove
+    RefuseFirstTime,
+    RefuseSecondTime
 }

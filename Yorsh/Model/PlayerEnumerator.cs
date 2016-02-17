@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Yorsh.Model.EventAgruments;
 
 
 namespace Yorsh.Model
@@ -8,7 +10,7 @@ namespace Yorsh.Model
     {
         private readonly PlayerList _playersList;
         private int _current;
-
+        public event EventHandler<PlayerPositionChangedEventArgs> CurrentPositionChanged;
         public PlayerEnumerator(PlayerList playersList)
         {
             _playersList = playersList;
@@ -17,30 +19,38 @@ namespace Yorsh.Model
 
         public bool MoveNext()
         {
-            if (_current >= _playersList.Count - 1) _current = 0;
-            else
-                _current++;
+            CurrentPosition = CurrentPosition >= _playersList.Count - 1 ? 0 : CurrentPosition + 1;
             return true;
         }
 
         public void Reset()
         {
-            _current = 0;
+            CurrentPosition = 0;
         }
 
         public void SetCurrent(int position)
         {
-            _current = position;
+            var count = _playersList.Count;
+            CurrentPosition = position > count ? count : position;
         }
 
         public Player Current
         {
-            get { return _playersList[_current]; }
+            get
+            {
+                return _playersList[CurrentPosition];
+            }
         }
 
         public int CurrentPosition
         {
             get { return _current; }
+            private set
+            {
+                _current = value;
+                if (CurrentPositionChanged!=null) 
+                    CurrentPositionChanged.Invoke(this, new PlayerPositionChangedEventArgs(_current));
+            }
         }
 
         object IEnumerator.Current
@@ -52,4 +62,6 @@ namespace Yorsh.Model
         {
         }
     }
+
+
 }

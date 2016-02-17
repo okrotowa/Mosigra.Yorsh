@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Yorsh.Helpers;
 using Yorsh.Data;
+using Yorsh.Model.EventAgruments;
 
 namespace Yorsh.Model
 {
@@ -12,19 +12,20 @@ namespace Yorsh.Model
         private readonly Dictionary<int, CategoryTable> _category;
         private readonly Dictionary<int, TaskTable> _taskDictionary;
         private readonly TaskEnumerator _enumerator;
-
         public TaskList(IEnumerable<TaskTable> tasks, IEnumerable<CategoryTable> categories, int currentPosition = 0)
         {
             _tasks = tasks.ToList();
             _taskDictionary = _tasks.ToDictionary(task => task.Id);
             _category = categories.ToDictionary(cat => cat.Id);
-            _enumerator = new TaskEnumerator(this) {CurrentPosition = currentPosition};
+            _enumerator = new TaskEnumerator(this) { CurrentPosition = currentPosition };
         }
 
         public IEnumerable<TaskTable> Tasks
-        { get { return _tasks; } }
+        {
+            get { return _tasks; }
+        }
 
-    public IEnumerator<TaskTable> GetEnumerator()
+        public IEnumerator<TaskTable> GetEnumerator()
         {
             return _enumerator;
         }
@@ -52,16 +53,6 @@ namespace Yorsh.Model
             _enumerator.Reset();
         }
 
-        public bool IsBear(int categoryId)
-        {
-            return categoryId == 13;
-        }
-
-        public bool IsBear(TaskTable task)
-        {
-            return IsBear(task.CategoryId);
-        }
-
         public int Count
         {
             get { return _tasks.Count; }
@@ -72,7 +63,7 @@ namespace Yorsh.Model
             _tasks.Add(task);
         }
 
-        public TaskTable GetTask(int taskId)
+        public  TaskTable GetTask(int taskId)
         {
             return _taskDictionary[taskId];
         }
@@ -83,65 +74,5 @@ namespace Yorsh.Model
             set { _tasks[index] = value; }
         }
 
-        #region TaskEnumerator
-
-        public void SetCurrent(int position)
-        {
-            _enumerator.CurrentPosition = position;
-        }
-
-        public TaskTable Current
-        {
-            get { return _enumerator.Current; }
-        }
-
-        #endregion
-    }
-
-    public class TaskEnumerator : IEnumerator<TaskTable>
-    {
-        private readonly TaskList _taskList;
-        private IList<int> _ids;
-        private int _current;
-
-        public TaskEnumerator(TaskList taskList)
-        {
-            _taskList = taskList;
-            _ids = new List<int>();
-            _current = 0;
-        }
-
-        public bool MoveNext()
-        {
-            if (_current >= _taskList.Count - 1) return false;
-            _current++;
-            _taskList.Current.Position = _current;
-            return true;
-        }
-
-        public void Reset()
-        {
-            _current = 0;
-        }
-
-        public int CurrentPosition
-        {
-            get { return _current; }
-            set { _current = value; }
-        }
-
-        public TaskTable Current
-        {
-            get { return _taskList[_current]; }
-        }
-
-        object IEnumerator.Current
-        {
-            get { return Current; }
-        }
-
-        public void Dispose()
-        {
-        }
     }
 }
