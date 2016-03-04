@@ -16,22 +16,25 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <XamarinInsightsApiKey>898630b2268714a8ffd62e47c1618bb6b8585808</XamarinInsightsApiKey>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>0</WarningLevel>
-    <AndroidLinkMode>None</AndroidLinkMode>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <AssemblyName>Yorsh</AssemblyName>
-    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <Debugger>Xamarin</Debugger>
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
-    <JavaMaximumHeapSize>500m</JavaMaximumHeapSize>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -39,11 +42,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
-    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <AssemblyName>Yorsh</AssemblyName>
-    <JavaMaximumHeapSize>500m</JavaMaximumHeapSize>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
+    <DebugType>full</DebugType>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -69,45 +74,42 @@
     <AssemblyName>Android.Yorsh</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LicenseVerificationLibrary">
+      <HintPath>..\packages\DotNetDevAddict.Android.LicenseVerificationLibrary.1.1.1\lib\MonoAndroid2.3\LicenseVerificationLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="SQLite">
-      <HintPath>..\Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
+      <HintPath>Components\sqlite-net-1.0.8.3\lib\android\SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xamarin.GooglePlayServices.Ads">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Ads.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Ads.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Analytics">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Analytics.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.AppIndexing">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.AppIndexing.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.AppIndexing.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Basement">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Basement.27.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Basement.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Mobile">
-      <HintPath>..\Components\xamarin.mobile-0.7.7\lib\android\Xamarin.Mobile.dll</HintPath>
+      <HintPath>Components\xamarin.mobile-0.7.7\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="Facebook">
-      <HintPath>..\Components\facebook-sdk-6.2.2\lib\android\Facebook.dll</HintPath>
+      <HintPath>Components\facebook-sdk-6.2.2\lib\android\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.InAppBilling">
-      <HintPath>..\Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
+      <HintPath>Components\xamarin.inappbilling-2.2\lib\android\Xamarin.InAppBilling.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\packages\Xamarin.Android.Support.v4.23.1.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Insights">
-      <HintPath>..\packages\Xamarin.Insights.1.10.6\lib\MonoAndroid10\Xamarin.Insights.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Insights.1.11.4\lib\MonoAndroid10\Xamarin.Insights.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Basement">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Basement.29.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Basement.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.GooglePlayServices.Analytics">
+      <HintPath>..\packages\Xamarin.GooglePlayServices.Analytics.29.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +119,7 @@
     <Compile Include="Activities\GameActivity.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Activities\HelpActivity.cs" />
     <Compile Include="Activities\IBaseActivity.cs" />
     <Compile Include="Activities\ImageActivity.cs" />
     <Compile Include="Activities\MainMenuActivity.cs" />
@@ -124,24 +127,23 @@
     <Compile Include="Activities\RulesActivity.cs" />
     <Compile Include="Activities\AddPlayersActivity.cs" />
     <Compile Include="Activities\StoreActivity.cs" />
+    <Compile Include="Listeners\RemoveButtonClickListener.cs" />
+    <Compile Include="Adapters\ResultPlayerAdapter.cs" />
     <Compile Include="Adapters\StoreListAdapter.cs" />
     <Compile Include="Data\ITable.cs" />
     <Compile Include="Data\Parser.cs" />
     <Compile Include="Fragments\ChoosePhotoDialog.cs" />
     <Compile Include="Helpers\ActivityExtensions.cs" />
-    <Compile Include="Helpers\BearTask.cs" />
     <Compile Include="Helpers\BillingErrorExtensions.cs" />
     <Compile Include="Helpers\BitmapLoadedEventArgs.cs" />
     <Compile Include="Helpers\DatabaseHelper.cs" />
+    <Compile Include="Helpers\FontManager.cs" />
     <Compile Include="Helpers\ImageActivityHelper.cs" />
     <Compile Include="Helpers\IntConst.cs" />
     <Compile Include="Helpers\ListExtensions.cs" />
-    <Compile Include="Helpers\MakeTask.cs" />
-    <Compile Include="Helpers\RefuseAndMoveTask.cs" />
-    <Compile Include="Helpers\RefuseTask.cs" />
     <Compile Include="Helpers\ResourceLoader.cs" />
     <Compile Include="Helpers\StringConst.cs" />
-    <Compile Include="Helpers\TaskDialogBuilder.cs" />
+    <Compile Include="Listeners\StoreButtonClickListener.cs" />
     <Compile Include="Model.EventAgruments\TaskPositionChangedEventArgs.cs" />
     <Compile Include="Model\ErshProduct.cs" />
     <Compile Include="Model\PlayerEnumerator.cs" />
@@ -176,6 +178,11 @@
     <Compile Include="Data\BonusTable.cs" />
     <Compile Include="Data\CategoryTable.cs" />
     <Compile Include="Data\TaskTable.cs" />
+    <Compile Include="Helpers\TaskBuilder\BearTask.cs" />
+    <Compile Include="Helpers\TaskBuilder\MakeTask.cs" />
+    <Compile Include="Helpers\TaskBuilder\RefuseAndMoveTask.cs" />
+    <Compile Include="Helpers\TaskBuilder\RefuseTask.cs" />
+    <Compile Include="Helpers\TaskBuilder\TaskDialogBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Bonus.csv" />
@@ -513,8 +520,6 @@
     </AndroidResource>
     <EmbeddedResource Include="Assets\cards\координация_bg_NY.jpg" />
     <EmbeddedResource Include="Assets\cards\выпить_bg_DF.jpg" />
-    <EmbeddedResource Include="Assets\cards\выпить_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\координация_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\медведь_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\медведь_bg_NY.jpg" />
     <EmbeddedResource Include="Assets\cards\неприятное_bg_DF.jpg" />
@@ -525,16 +530,18 @@
     <EmbeddedResource Include="Assets\cards\приколы_bg_NY.jpg" />
     <EmbeddedResource Include="Assets\cards\рисунок_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\рисунок_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\скороговорка_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\скороговорка_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\скороговорка_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\смс_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\смс_bg_NY.jpg" />
     <EmbeddedResource Include="Assets\cards\тост_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\тост_bg_NY.jpg" />
     <EmbeddedResource Include="Assets\cards\физическое_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\физическое_bg_NY.jpg" />
-    <EmbeddedResource Include="Assets\cards\фото_bg_DF.jpg" />
     <EmbeddedResource Include="Assets\cards\фото_bg_NY.jpg" />
+    <EmbeddedResource Include="Assets\cards\фото_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\координация_bg_DF.jpg" />
+    <EmbeddedResource Include="Assets\cards\выпить_bg_NY.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-tvdpi\add_new_player.png" />
@@ -664,7 +671,7 @@
     <AndroidResource Include="Resources\mipmap-tvdpi\icon.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <Import Project="..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets')" />
+  <Import Project="..\packages\Xamarin.Insights.1.11.4\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.11.4\build\MonoAndroid10\Xamarin.Insights.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -672,4 +679,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup />
 </Project>

@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.OS;
 using Android.Widget;
 using Android.Content;
@@ -25,14 +26,27 @@ namespace Yorsh.Activities
 			SetTextButtonEnabled (false);
 			_readyButton.SetText (Resource.String.ConfirmString);
 			_readyButton.SetTextColor (Resources.GetColorStateList(Resource.Drawable.ready_label_enable));
-			_readyButton.Click+= delegate 
-            {
-				SetResult(Result.Ok, new Intent().PutExtra("player_id",_adapter.SelectedPosition));
-				this.Finish();
-			};
+			
+            RegisterSubscribes();
 		}
 
-		//After ReadyButton Initialization
+	    private void ReadyButtonOnClick(object sender, EventArgs eventArgs)
+	    {
+            SetResult(Result.Ok, new Intent().PutExtra("player_id", _adapter.SelectedPosition));
+            this.Finish();
+	    }
+
+	    protected override void RegisterSubscribes()
+	    {
+            _readyButton.Click += ReadyButtonOnClick; 
+	    }
+
+	    protected override void UnregisterSubscribes()
+	    {
+            _readyButton.Click -= ReadyButtonOnClick; 
+	    }
+
+	    //After ReadyButton Initialization
 		public void SetTextButtonEnabled(bool enabled)
 		{
 			_readyButton.Enabled = enabled;

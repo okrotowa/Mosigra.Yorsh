@@ -21,19 +21,21 @@ namespace Yorsh.Adapters
 
         public MultiItemRowListAdapter(Context context, IListAdapter adapter, int itemsPerRow, int cellSpacing, bool canClickAtRow = false)
         {
-            if (itemsPerRow <= 0) {
+            if (itemsPerRow <= 0)
+            {
                 throw new IllegalArgumentException("Number of items per row must be positive");
-                }
+                
+            }
                 _contextReference = new WeakReference<Context>(context);
                 _adapter = adapter;
                 _itemsPerRow = itemsPerRow;
                 _cellSpacing = cellSpacing;
             _canClickAtRow = canClickAtRow;
 
-            _itemLayoutParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MatchParent);
+            _itemLayoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MatchParent);
                 _itemLayoutParams.SetMargins(cellSpacing, cellSpacing, 0, 0);
                 _itemLayoutParams.Weight = 1;
-                _rowLayoutParams = new AbsListView.LayoutParams(AbsListView.LayoutParams.MatchParent, AbsListView.LayoutParams.WrapContent);
+                _rowLayoutParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
         }
 
 

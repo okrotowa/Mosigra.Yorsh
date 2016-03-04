@@ -2,6 +2,6 @@
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
-    <SelectedDevice>Samsung SM-T230</SelectedDevice>
+    <SelectedDevice>Nexus 5 %28Lollipop%29</SelectedDevice>
   </PropertyGroup>
 </Project>

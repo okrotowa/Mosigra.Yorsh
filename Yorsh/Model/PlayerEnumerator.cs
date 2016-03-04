@@ -8,7 +8,7 @@ namespace Yorsh.Model
 {
     public class PlayerEnumerator : IEnumerator<Player>
     {
-        private readonly PlayerList _playersList;
+        private PlayerList _playersList;
         private int _current;
         public event EventHandler<PlayerPositionChangedEventArgs> CurrentPositionChanged;
         public PlayerEnumerator(PlayerList playersList)
@@ -60,6 +60,7 @@ namespace Yorsh.Model
 
         public void Dispose()
         {
+           
         }
     }
 

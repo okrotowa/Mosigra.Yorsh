@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Database.Sqlite;
-using Android.Util;
 using SQLite;
 using Yorsh.Data;
 using Yorsh.Model;
@@ -34,9 +33,12 @@ namespace Yorsh.Helpers
             get { return _imageActivityHelper; }
             private set
             {
-                if (_imageActivityHelper != null && _imageActivityHelper.TaskId.HasValue)
+                if (_imageActivityHelper != null)
                 {
-                    value.TaskId = _imageActivityHelper.TaskId;
+                    if (_imageActivityHelper.TaskId.HasValue) 
+                        value.TaskId = _imageActivityHelper.TaskId;
+                    if (_imageActivityHelper.CategoryImage!=null) 
+                        _imageActivityHelper.CategoryImage.Dispose();
                 }
                 _imageActivityHelper = value;
             }
@@ -124,17 +126,10 @@ namespace Yorsh.Helpers
             get { return _tasks; }
             private set
             {
+                 if (_tasks != null && _tasks.Enumerator != null) _tasks.Enumerator.TaskPositionChanged -= EnumeratorOnTaskPositionChanged;
                 _tasks = value;
-                var displayMetrics = _context.Resources.DisplayMetrics;
-                var width = displayMetrics.WidthPixels;
-                var height = displayMetrics.HeightPixels;
-                if (width > height)
-                {
-                    var temp = width;
-                    width = height;
-                    height = temp;
-                }
-                ImageActivityHelper = new ImageActivityHelper(Tasks.GetTask, Tasks.GetCategory, width, height);
+                _tasks.Enumerator.TaskPositionChanged += EnumeratorOnTaskPositionChanged;
+				ImageActivityHelper = new ImageActivityHelper(Tasks.GetTask, Tasks.GetCategory, _context.Resources.DisplayMetrics);
                 OnDatabaseChanged();
             }
         }
@@ -375,7 +370,6 @@ namespace Yorsh.Helpers
                 int currentPosition;
                 var sortedTaskList = taskList.CustomSort(out currentPosition);
                 Tasks = new TaskList(sortedTaskList, categoryList, currentPosition);
-                Tasks.Enumerator.TaskPositionChanged += EnumeratorOnTaskPositionChanged;
             }
             catch (Exception exception)
             {
@@ -407,13 +401,6 @@ namespace Yorsh.Helpers
         {
             try
             {
-				var tasks = this.GetTable<TaskTable>().ToDictionary(task=>task.Id);
-				foreach(var currentTask in Tasks.Tasks)
-				{
-					TaskTable task;
-					if (!tasks.TryGetValue(currentTask.Id,out task)) continue;
-					currentTask.Score = task.Score;
-				}
                 await DataBaseConnection.UpdateAllAsync(Tasks.Tasks);
             }
             catch (Exception exception)
@@ -421,7 +408,7 @@ namespace Yorsh.Helpers
                 GaService.TrackAppException(this.Class, "SaveTaskContextAsync", exception, false);
             }
         }
-        public async Task ClearAsync()
+        public async Task ResetAsync()
         {
             try
             {
@@ -431,7 +418,7 @@ namespace Yorsh.Helpers
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class, "ClearAsync", exception, false);
+                GaService.TrackAppException(this.Class, "ResetAsync", exception, false);
             }
 
         }

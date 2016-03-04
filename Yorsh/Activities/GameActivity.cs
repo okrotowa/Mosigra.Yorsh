@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -64,15 +65,15 @@ namespace Yorsh.Activities
                 _taskEnumerator = Rep.DatabaseHelper.Tasks.Enumerator;
                 _playerEnumerator = Rep.Instance.Players.Enumerator;
 
-                _playerName.SetTypeface(this.MyriadProFont(MyriadPro.Bold), TypefaceStyle.Normal);
-                _playerPosition.SetTypeface(this.MyriadProFont(MyriadPro.Regular), TypefaceStyle.Normal);
-                _makeThisButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-                _refuseButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-                _playerScore.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
-                _points.SetTypeface(this.MyriadProFont(MyriadPro.Bold), TypefaceStyle.Normal);
-                _x2.SetTypeface(this.MyriadProFont(MyriadPro.Bold), TypefaceStyle.Normal);
+                _playerName.SetTypeface(Rep.FontManager.Get(Font.Bold), TypefaceStyle.Normal);
+                _playerPosition.SetTypeface(Rep.FontManager.Get(Font.Regular), TypefaceStyle.Normal);
+                _makeThisButton.SetTypeface(Rep.FontManager.Get(Font.BoldCondensed), TypefaceStyle.Normal);
+                _refuseButton.SetTypeface(Rep.FontManager.Get(Font.BoldCondensed), TypefaceStyle.Normal);
+                _playerScore.SetTypeface(Rep.FontManager.Get(Font.BoldCondensed), TypefaceStyle.Normal);
+                _points.SetTypeface(Rep.FontManager.Get(Font.Bold), TypefaceStyle.Normal);
+                _x2.SetTypeface(Rep.FontManager.Get(Font.Bold), TypefaceStyle.Normal);
                 _cardImage.SetImageResource(Resource.Drawable.card_backside); ;
-                _scoreTextView.SetTypeface(this.MyriadProFont(MyriadPro.Condensed), TypefaceStyle.Normal);
+                _scoreTextView.SetTypeface(Rep.FontManager.Get(Font.Condensed), TypefaceStyle.Normal);
 
                 _taskProgressView = FindViewById<RelativeLayout>(Resource.Id.taskProgressView);
             }
@@ -85,34 +86,49 @@ namespace Yorsh.Activities
         {
 
             _statusTitleText = FindViewById<TextView>(Resource.Id.statusTitleText);
-            _statusTitleText.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed), TypefaceStyle.Normal);
+            _statusTitleText.SetTypeface(Rep.FontManager.Get(Font.SemiboldCondensed), TypefaceStyle.Normal);
 
             _statusDescriptionText = FindViewById<TextView>(Resource.Id.statusDescriptionText);
-            _statusDescriptionText.SetTypeface(this.MyriadProFont(MyriadPro.Condensed), TypefaceStyle.Normal);
+            _statusDescriptionText.SetTypeface(Rep.FontManager.Get(Font.Condensed), TypefaceStyle.Normal);
 
-            var boldConsededFont = this.MyriadProFont(MyriadPro.BoldCondensed);
+            var boldConsededFont = Rep.FontManager.Get(Font.BoldCondensed);
             _changeCountScoreText = FindViewById<TextView>(Resource.Id.changeCountScoreText);
             _changeCountScoreText.SetTypeface(boldConsededFont, TypefaceStyle.Normal);
 
             _endDescriptionText = FindViewById<TextView>(Resource.Id.endDescriptionText);
-            _endDescriptionText.SetTypeface(this.MyriadProFont(MyriadPro.LightCondensed), TypefaceStyle.Normal);
+            _endDescriptionText.SetTypeface(Rep.FontManager.Get(Font.LightCondensed), TypefaceStyle.Normal);
 
             _currentScoreText = FindViewById<TextView>(Resource.Id.currentScoreText);
             _currentScoreText.SetTypeface(boldConsededFont, TypefaceStyle.Normal);
         }
-        private void InitializeSubscribes()
+
+        protected override void RegisterSubscribes()
         {
+            AddButtonTouchListener(_makeThisButton);
+            AddButtonTouchListener(_refuseButton);
+
             Rep.Instance.Players.ScoreChanged += PlayersOnScoreChanged;
             _playerEnumerator.CurrentPositionChanged += EnumeratorOnCurrentPositionChanged;
 
             _coninueButton.Click += ConinueButtonOnClick;
             _cardImage.Click += CardImageOnClick;
-            _makeThisButton.Touch += (sender, args) => this.OnTouchButtonDarker(_makeThisButton, args);
             _makeThisButton.Click += MakeThisButtonOnClick;
-
-            _refuseButton.Touch += (sender, args) => this.OnTouchButtonDarker(_refuseButton, args);
+            
             _refuseButton.Click += RefuseButtonOnClick;
             _actionButton.Click += ActionButtonOnClick;
+        }
+
+        protected override void UnregisterSubscribes()
+        {
+            Rep.Instance.Players.ScoreChanged -= PlayersOnScoreChanged;
+            _playerEnumerator.CurrentPositionChanged -= EnumeratorOnCurrentPositionChanged;
+
+            _coninueButton.Click -= ConinueButtonOnClick;
+            _cardImage.Click -= CardImageOnClick;
+            _makeThisButton.Click -= MakeThisButtonOnClick;
+
+            _refuseButton.Click -= RefuseButtonOnClick;
+            _actionButton.Click -= ActionButtonOnClick;
         }
         #endregion
         #region ShopDialog
@@ -178,7 +194,7 @@ namespace Yorsh.Activities
 
                 Initialize();
                 InitializeTaskProgressBox();
-                InitializeSubscribes();
+                RegisterSubscribes();
                 RefreshPoints();
                 RefreshPlayer();
                 SetButtonsEnabled(false);
@@ -188,6 +204,8 @@ namespace Yorsh.Activities
                 GaService.TrackAppException(this.Class, "OnCreate", exception, true);
             }
         }
+
+
 
         protected override void OnResume()
         {
@@ -417,8 +435,6 @@ namespace Yorsh.Activities
         }
         protected override void OnDestroy()
         {
-            Rep.Instance.Players.ScoreChanged -= PlayersOnScoreChanged;
-            _playerEnumerator.CurrentPositionChanged -= EnumeratorOnCurrentPositionChanged;
             base.OnDestroy();
         }
     }

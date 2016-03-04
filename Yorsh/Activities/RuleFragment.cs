@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Yorsh.Data;
 using Yorsh.Helpers;
 
 namespace Yorsh.Activities
@@ -23,10 +24,10 @@ namespace Yorsh.Activities
 			imageBackgroundRules.SetImageResource(imageId);
 			var textHeader = view.FindViewById<TextView> (Resource.Id.textHeader);
 			textHeader.Text = arr [0];
-			textHeader.SetTypeface (this.Activity.MyriadProFont (MyriadPro.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
+            textHeader.SetTypeface(Rep.FontManager.Get(Font.BoldCondensed), Android.Graphics.TypefaceStyle.Normal);
 			var textContainer = view.FindViewById<TextView> (Resource.Id.textContainer);
 			textContainer.Text = arr [1];
-			textContainer.SetTypeface (this.Activity.MyriadProFont (MyriadPro.Condensed), Android.Graphics.TypefaceStyle.Normal);
+            textContainer.SetTypeface(Rep.FontManager.Get(Font.Condensed), Android.Graphics.TypefaceStyle.Normal);
 			return view;
 		}
 		private string GetRuleIdentifier(Rules rule)

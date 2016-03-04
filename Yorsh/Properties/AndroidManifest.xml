@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="mosigra.ersh" android:versionName="1.3" android:installLocation="auto" android:versionCode="20">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="mosigra.ersh" android:versionName="1.3" android:installLocation="auto" android:versionCode="22">
 	<compatible-screens>
 		<!-- all normal size screens -->
 		<screen android:screenSize="normal" android:screenDensity="mdpi" />

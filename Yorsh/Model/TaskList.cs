@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Yorsh.Data;
-using Yorsh.Model.EventAgruments;
 
 namespace Yorsh.Model
 {
-    public class TaskList : IEnumerable<TaskTable>
+    public class TaskList 
     {
         private readonly IList<TaskTable> _tasks;
         private readonly Dictionary<int, CategoryTable> _category;
@@ -25,15 +24,15 @@ namespace Yorsh.Model
             get { return _tasks; }
         }
 
-        public IEnumerator<TaskTable> GetEnumerator()
-        {
-            return _enumerator;
-        }
+        //public IEnumerator<TaskTable> GetEnumerator()
+        //{
+        //    return _enumerator;
+        //}
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _enumerator;
-        }
+        //IEnumerator IEnumerable.GetEnumerator()
+        //{
+        //    return _enumerator;
+        //}
 
         public TaskEnumerator Enumerator
         {

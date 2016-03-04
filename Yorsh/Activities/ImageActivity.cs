@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Reflection;
 using Android.App;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -16,30 +16,23 @@ namespace Yorsh.Activities
     {
         private View _contentFrameLayout;
         private readonly ImageActivityHelper _imageActivityHelper = Rep.DatabaseHelper.ImageActivityHelper;
+        private ImageView _image;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             try
             {
                 base.OnCreate(savedInstanceState);
                 SetContentView(Resource.Layout.ImageCard);
-                //_taskId = Intent.Extras.GetInt("taskId");
-                //task = Rep.DatabaseHelper.Tasks.GetTask(_taskId);
-                //var category = Rep.DatabaseHelper.Tasks.GetCategory(task.CategoryId);
-                var image = FindViewById<ImageView>(Resource.Id.imageCardView);
-                image.SetImageBitmap(_imageActivityHelper.CategoryImage);
+                _image = FindViewById<ImageView>(Resource.Id.imageCardView);
+                _image.SetImageBitmap(_imageActivityHelper.CategoryImage);
 
                 var text = FindViewById<TextView>(Resource.Id.textCard);
-                text.SetTypeface(this.BankirRetroFont(), TypefaceStyle.Normal);
+                text.SetTypeface(Rep.FontManager.Get(Font.BankirRetro), TypefaceStyle.Normal);
                 text.Text = _imageActivityHelper.Task.TaskName;
 
                 _contentFrameLayout = FindViewById(Resource.Id.contentFrameLayout);
 
-                //using (var resourceStream = ResourceLoader.GetEmbeddedResourceStream(Assembly.GetAssembly(typeof(ResourceLoader)), category.ImageName))
-                //{
-                //    image.SetImageBitmap(BitmapFactory.DecodeStream(resourceStream));
-                //}
-
-                //text.Text = task.TaskName;
                 _contentFrameLayout.Click += ContentFrameLayoutOnClick;
 
             }
@@ -62,6 +55,7 @@ namespace Yorsh.Activities
                 var isBear = _imageActivityHelper.Task.IsBear;
                 SetResult(isBear ? Result.Ok : Result.Canceled);
                 _contentFrameLayout.Click -= ContentFrameLayoutOnClick;
+				if (_image!=null && _image.Drawable!=null) _image.Drawable.Dispose();
                 base.OnBackPressed();
             }
             catch (Exception exception)
@@ -71,7 +65,6 @@ namespace Yorsh.Activities
             }
             
         }
-
         public override void OnBackPressed()
         {
            SetResult();

@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Yorsh.Data;
 using Yorsh.Helpers;
 using Android.Graphics.Drawables;
 using Android.Graphics;
@@ -22,7 +23,7 @@ namespace Yorsh.Activities
             var title = viewGroup.FindViewById<TextView>(Resource.Id.titleText);
             title.Text = Title;
             AllowBackPressed = true;
-            title.SetTypeface(this.MyriadProFont(MyriadPro.Bold), TypefaceStyle.Normal);
+            title.SetTypeface(Rep.FontManager.Get(Font.Bold), TypefaceStyle.Normal);
             ActionBar.SetIcon(new ColorDrawable(Resources.GetColor(Android.Resource.Color.Transparent)));
             ActionBar.SetDisplayShowTitleEnabled(false);
             ActionBar.SetDisplayShowCustomEnabled(true);
@@ -44,7 +45,7 @@ namespace Yorsh.Activities
             var layout = ActionBar.CustomView.FindViewById<RelativeLayout>(Resource.Id.customActionButton);
             _actionButton = LayoutInflater.Inflate(resourceId, null);
             var textView = _actionButton as TextView;
-            if (textView != null) textView.SetTypeface(this.MyriadProFont(MyriadPro.Condensed), TypefaceStyle.Normal);
+            if (textView != null) textView.SetTypeface(Rep.FontManager.Get(Font.Condensed), TypefaceStyle.Normal);
             var param = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WrapContent,
                 ViewGroup.LayoutParams.MatchParent);

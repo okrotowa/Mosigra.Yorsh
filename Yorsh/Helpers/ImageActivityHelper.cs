@@ -1,9 +1,8 @@
 using System;
 using System.Reflection;
-using Android.Content;
 using Android.Graphics;
+using Android.Util;
 using Yorsh.Data;
-using Math = Java.Lang.Math;
 
 namespace Yorsh.Helpers
 {
@@ -18,12 +17,14 @@ namespace Yorsh.Helpers
         private int? _taskId = null;
         private CategoryTable _category;
 
-        public ImageActivityHelper(Func<int, TaskTable> getTaskById, Func<int, CategoryTable> getCategoryById, int deviceWidth, int deviceHeight)
+        public ImageActivityHelper(Func<int, TaskTable> getTask, Func<int, CategoryTable> getCategory, DisplayMetrics displayMetrics)
         {
-            _getTaskById = getTaskById;
-            _getCategoryById = getCategoryById;
-            _deviceWidth = deviceWidth;
-            _deviceHeight = deviceHeight;
+            _getTaskById = getTask;
+            _getCategoryById = getCategory;
+			var width = displayMetrics.WidthPixels;
+			var height = displayMetrics.HeightPixels;
+            _deviceWidth = width <= height ? width : height;
+            _deviceHeight = width <= height ? height : width;
         }
 
         public int? TaskId
@@ -50,10 +51,14 @@ namespace Yorsh.Helpers
                 {
                     if (_category != null && _category.Id == value.Id) return;
                     _category = value;
+                    if (CategoryImage!=null) CategoryImage.Dispose();
                     using (var resourceStream = ResourceLoader.GetEmbeddedResourceStream(Assembly.GetAssembly(typeof(ResourceLoader)), _category.ImageName))
-                    {
+                    {				
                         CategoryImage = BitmapExtensions.DecodeStream(resourceStream, ImageWidth, ImageHeight, _deviceWidth, _deviceHeight);
-                    }
+
+						resourceStream.Close();
+						resourceStream.Dispose();
+					}
                 }
                 catch (Exception exception)
                 {
@@ -64,7 +69,9 @@ namespace Yorsh.Helpers
         }
 
         public Bitmap CategoryImage
-        { get; set; }
+        {
+            get; set;
+        }
 
     }
 }

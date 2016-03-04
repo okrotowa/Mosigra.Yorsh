@@ -1,4 +1,5 @@
 using System;
+using Android.Views;
 using Xamarin.Contacts;
 using Yorsh.Data;
 using Yorsh.Helpers;
@@ -9,7 +10,7 @@ using Exception = System.Exception;
 
 namespace Yorsh.Model
 {
-    public class Player
+    public class Player 
     {
         private readonly PlayerModel _playerModel;
         public event EventHandler<ScoreChangedEventArgs> ScoreChanged;
@@ -73,6 +74,8 @@ namespace Yorsh.Model
         {
             try
             {
+				if (Image!=null) Image.Dispose();
+
                 if (string.IsNullOrEmpty(PhotoPath))
                 {
                     SetDefaultImage();
@@ -103,6 +106,7 @@ namespace Yorsh.Model
         {
             return _playerModel;
         }
+
     }
 
 }

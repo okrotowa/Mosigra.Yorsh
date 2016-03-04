@@ -11,7 +11,7 @@ using Yorsh.Adapters;
 
 namespace Yorsh.Activities
 {
-    [Activity(Label = "@string/PlayersString", ParentActivity = typeof(MainMenuActivity),ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/PlayersString", ParentActivity = typeof(MainMenuActivity), ScreenOrientation = ScreenOrientation.Portrait)]
     public class AddPlayersActivity : BaseActivity
     {
         private Button _startGameButton;
@@ -24,14 +24,12 @@ namespace Yorsh.Activities
             {
                 base.OnCreate(bundle);
                 SetContentView(Resource.Layout.AddPlayers);
-                CreateActionButton(Resource.Drawable.add_player_button).Click += (sender, e) =>
-                    this.StartActivityWithoutBackStack(new Intent(this, typeof(AddNewPlayerActivity)));
+                CreateActionButton(Resource.Drawable.add_player_button);
                 _startGameButton = FindViewById<Button>(Resource.Id.startPlayButton);
-                _startGameButton.Touch += (sender, e) => this.OnTouchButtonDarker(_startGameButton, e);
-                _startGameButton.SetTypeface(this.MyriadProFont(MyriadPro.BoldCondensed), TypefaceStyle.Normal);
+                AddButtonTouchListener(_startGameButton);
+                _startGameButton.SetTypeface(Rep.FontManager.Get(Font.BoldCondensed), TypefaceStyle.Normal);
                 _listView = FindViewById<ListView>(Resource.Id.playersList);
-                Rep.Instance.Players.ItemRemoved += PlayersOnItemRemoved;
-				_startGameButton.Click += _startGameButton_Click;
+                RegisterSubscribes();
             }
             catch (Exception exception)
             {
@@ -39,6 +37,24 @@ namespace Yorsh.Activities
             }
 
         }
+
+        protected override void RegisterSubscribes()
+        {
+            this.ActionButton.Click += ActionButtonOnClick;
+            Rep.Instance.Players.ItemRemoved += PlayersOnItemRemoved;
+            _startGameButton.Click += _startGameButton_Click;
+        }
+        protected override void UnregisterSubscribes()
+        {
+            this.ActionButton.Click -= ActionButtonOnClick;
+            Rep.Instance.Players.ItemRemoved -= PlayersOnItemRemoved;
+            _startGameButton.Click -= _startGameButton_Click;
+        }
+        private void ActionButtonOnClick(object sender, EventArgs eventArgs)
+        {
+            this.StartActivityWithoutBackStack(new Intent(this, typeof(AddNewPlayerActivity)));
+        }
+
 
         private void PlayersOnItemRemoved(object sender, EventArgs eventArgs)
         {
@@ -90,19 +106,18 @@ namespace Yorsh.Activities
             }
         }
 
-		async void  _startGameButton_Click(object sender, EventArgs e)
-		{
-			if (IsPlayersCountValidate) 
-			{
-				await Rep.Instance.ClearAsync();
-				this.SaveCurrentPlayer(0);
-				this.StartActivityWithoutBackStack (new Intent (this, typeof(GameActivity)));			
-			} 
-			else 
-			{
-				this.StartActivityWithoutBackStack (new Intent (this, typeof(AddNewPlayerActivity)));
-			}
-		}
+        async void _startGameButton_Click(object sender, EventArgs e)
+        {
+            if (IsPlayersCountValidate)
+            {
+                await Rep.Instance.ResetAsync();
+                this.StartActivityWithoutBackStack(new Intent(this, typeof(GameActivity)));
+            }
+            else
+            {
+                this.StartActivityWithoutBackStack(new Intent(this, typeof(AddNewPlayerActivity)));
+            }
+        }
 
 
         public void SetButtonEnabled(bool enabled)
@@ -126,12 +141,16 @@ namespace Yorsh.Activities
             }
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
 
         protected override void OnPause()
         {
             try
             {
-                _startGameButton.Background.ClearColorFilter();
+                //_startGameButton.Background.ClearColorFilter();
                 base.OnPause();
             }
             catch (Exception exception)

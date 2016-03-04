@@ -29,6 +29,7 @@ namespace Yorsh.Activities
                 base.OnCreate(savedInstanceState);
                 SetContentView(Resource.Layout.Splash);
                 InitGa();
+                Rep.Instance.InitFontManager(Application);
                 InitConnectToGoogleStore();
             }
             catch (Exception exception)
@@ -89,16 +90,18 @@ namespace Yorsh.Activities
 				}, new[] { 0, 1, 2, 3, 4, 5, 6, 7 });
                 _serviceConnection = new InAppBillingServiceConnection(this, key);
                 _serviceConnection.BindErrors();
-                _serviceConnection.OnConnected += () =>
-                {
-                    if (_serviceConnection.BillingHandler != null)
-                        _serviceConnection.BillingHandler.BindErrors();
-                };
+                _serviceConnection.OnConnected+= _serviceConnection_OnConnected;
             }
             catch (Exception exception)
             {
                 GaService.TrackAppException(this.Class.Name, "InitConnectToGoogleStore", exception, false);
             }
+        }
+
+        void _serviceConnection_OnConnected ()
+        {
+			if (_serviceConnection.BillingHandler != null)
+				_serviceConnection.BillingHandler.BindErrors();
         }
 
         private async Task StartActivityAsync()
@@ -122,9 +125,9 @@ namespace Yorsh.Activities
         {
             try
             {
+                Rep.Instance.Players.Enumerator.SetCurrent(isDefault ? 0 : this.GetCurrentPlayer());
                 if (isDefault)
                 {
-                    Rep.Instance.Players.Enumerator.SetCurrent(0);
                     return new Intent(this, typeof(MainMenuActivity));
                 }
                 var prefX = GetSharedPreferences("X", FileCreationMode.Private);
@@ -132,7 +135,6 @@ namespace Yorsh.Activities
                 switch (className)
                 {
                     case StringConst.GameActivity:
-                        Rep.Instance.Players.Enumerator.SetCurrent(this.GetCurrentPlayer());
                         return new Intent(this, typeof(GameActivity));
                     case StringConst.MainMenuActivity:
                         return new Intent(this, typeof(MainMenuActivity));
@@ -147,9 +149,9 @@ namespace Yorsh.Activities
             catch (Exception exception)
             {
                 GaService.TrackAppException(this.Class, "GetIntentStartActivity", exception, false);
-                return new Intent(this, typeof (MainMenuActivity));
+                return new Intent(this, typeof(MainMenuActivity));
             }
-            
+
         }
 
         private void CreateLocalDatabase()
@@ -210,6 +212,7 @@ namespace Yorsh.Activities
         {
             _serviceConnection.UnbindErrors();
             Rep.DatabaseHelper.DataBaseCreatedOrOpened -= DatabaseHelperOnDatabaseCreatedOrOpened;
+            _serviceConnection.OnConnected -= _serviceConnection_OnConnected;
             if (_serviceConnection.Connected)
             {
                 _serviceConnection.Disconnect();

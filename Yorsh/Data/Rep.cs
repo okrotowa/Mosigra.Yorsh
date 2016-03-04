@@ -17,7 +17,7 @@ namespace Yorsh.Data
         private PlayerList _players;
         public Tracker GaTracker { get; set; }
         public GoogleAnalytics GaInstance { get; set; }
-        private object lockObject  = new object();
+        private readonly object _lockObject  = new object();
         private Rep()
         {
             _players = new PlayerList();
@@ -39,6 +39,8 @@ namespace Yorsh.Data
         }
 
         private DatabaseHelper _helper;
+        
+
         public static DatabaseHelper DatabaseHelper
         {
             get { return Instance._helper; }
@@ -48,11 +50,21 @@ namespace Yorsh.Data
             _helper = new DatabaseHelper(application, 1);
         }
 
+        private FontManager _fontManager;
+        public static FontManager FontManager
+        {
+            get { return Instance._fontManager; }
+        }
+
+        public void InitFontManager(Application application)
+        {
+            _fontManager = new FontManager(application);
+        }
         public Task<bool> InitPlayersAsync()
         {
             return Task<bool>.Factory.StartNew(() =>
             {
-                lock (lockObject)
+                lock (_lockObject)
                 {
                     _players = new PlayerList();
                     _players.CollectionChanged += PlayersOnCollectionChanged;
@@ -101,7 +113,7 @@ namespace Yorsh.Data
             {
                 try
                 {
-                    lock (lockObject)
+                    lock (_lockObject)
                     {
                         using (var playersFileStream = File.Create(PlayersFile))
                         {
@@ -147,16 +159,16 @@ namespace Yorsh.Data
             }
         }
 
-        public async Task ClearAsync()
+        public async Task ResetAsync()
         {
             try
             {
-                _players.Reset();
-                _helper.ClearAsync();
+                await _players.ResetAsync();
+                await _helper.ResetAsync();
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException("Rep", "ClearAsync", exception, false);
+                GaService.TrackAppException("Rep", "ResetAsync", exception, false);
             }
         }
 

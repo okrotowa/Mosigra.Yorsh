@@ -30,35 +30,80 @@ namespace Yorsh.Activities
         private ListView _bonusListView;
         private bool _navigatedFromGameActivity;
         private IList<Product> _allProducts;
+        private TextView _googleStoreNotActive;
+        private TextView _taskHeader;
+        private TextView _taskDescription;
+        private TextView _bonusHeader;
+        private TextView _bonusDescription;
+        private ScrollView _googleStoreActive;
+        private StoreListAdapter _taskListAdapter;
+        private StoreListAdapter _bonusListAdapter;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Store);
+            Initialize();
+            RegisterSubscribes();
+            ErrorOccur("Подключение к Google Store");
+            ConnectToService();
+        }
+
+        private void Initialize()
+        {
             _navigatedFromGameActivity = this.Intent.GetBooleanExtra("from_game", false);
 
-            ErrorOccur("Подключение к Google Store");
-            FindViewById<TextView>(Resource.Id.taskHeader).SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
-            var taskDescription = FindViewById<TextView>(Resource.Id.taskDescription);
-            taskDescription.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed),
-                Android.Graphics.TypefaceStyle.Bold);
+            _googleStoreNotActive = FindViewById<TextView>(Resource.Id.googleStoreNotActive);
+            _googleStoreNotActive.SetTypeface(Rep.FontManager.Get(Font.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
+            _googleStoreNotActive.Clickable = true;
 
-            var googleStoreNotActive = FindViewById<TextView>(Resource.Id.googleStoreNotActive);
-            googleStoreNotActive.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
-            googleStoreNotActive.Clickable = true;
-            googleStoreNotActive.Click += (sender, e) =>
+            _googleStoreActive = FindViewById<ScrollView>(Resource.Id.googleStoreActive);
+
+            _taskHeader = FindViewById<TextView>(Resource.Id.taskHeader);
+            _taskHeader.SetTypeface(Rep.FontManager.Get(Font.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
+            _taskDescription = FindViewById<TextView>(Resource.Id.taskDescription);
+            _taskDescription.SetTypeface(Rep.FontManager.Get(Font.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
+
+            _bonusHeader = FindViewById<TextView>(Resource.Id.bonusHeader);
+            _bonusHeader.SetTypeface(Rep.FontManager.Get(Font.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
+            _bonusDescription = FindViewById<TextView>(Resource.Id.bonusDescription);
+            _bonusDescription.SetTypeface(Rep.FontManager.Get(Font.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
+
+            _taskListView = FindViewById<ListView>(Resource.Id.taskListView);
+            _bonusListView = FindViewById<ListView>(Resource.Id.bonusListView);
+        }
+
+        private void GoogleStoreNotActiveOnClick(object sender, EventArgs eventArgs)
+        {
+            _googleStoreNotActive.Text = string.Empty;
+            _googleStoreNotActive.Visibility = ViewStates.Gone;
+            _googleStoreActive.Visibility = ViewStates.Visible;
+        }
+
+        protected override void RegisterSubscribes()
+        {
+            _googleStoreNotActive.Click += GoogleStoreNotActiveOnClick;
+        }
+
+        protected override void UnregisterSubscribes()
+        {
+            _googleStoreNotActive.Click -= GoogleStoreNotActiveOnClick;
+
+            if (BonusListAdapter != null) BonusListAdapter.ItemClick -= AdapterOnItemClick;
+            if (TaskListAdapter != null) TaskListAdapter.ItemClick -= AdapterOnItemClick;
+
+            if (_serviceConnection != null && _serviceConnection.Connected)
             {
-                googleStoreNotActive.Text = string.Empty;
-                googleStoreNotActive.Visibility = ViewStates.Gone;
-                FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Visible;
-            };
-            FindViewById<TextView>(Resource.Id.bonusHeader)
-                .SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed), Android.Graphics.TypefaceStyle.Bold);
-            var bonusDescription = FindViewById<TextView>(Resource.Id.bonusDescription);
-            bonusDescription.SetTypeface(this.MyriadProFont(MyriadPro.SemiboldCondensed),
-                Android.Graphics.TypefaceStyle.Bold);
+                _serviceConnection.OnConnected -= HandleOnConnected;
+                _serviceConnection.Disconnect();
+            }
 
-            ConnectToService();
+            if (_billingHandler != null)
+            {
+                _billingHandler.OnProductPurchased -= BillingHandlerOnProductPurchased;
+                _billingHandler.BuyProductError -= BillingHandler_BuyProductError;
+                Rep.DatabaseHelper.DatabaseChanged -= InstanceOnDatabaseChanged;
+            }
         }
 
         void ConnectToService()
@@ -235,10 +280,9 @@ namespace Yorsh.Activities
         {
             try
             {
-                var taskDescription = FindViewById<TextView>(Resource.Id.taskDescription);
                 var taskCount = Rep.DatabaseHelper.Tasks.Count;
                 var allTaskCount = IntConst.AllTaskCount - Rep.DatabaseHelper.Tasks.Count;
-                taskDescription.Text = _purchases.Any(x => x.IsAll && x.ProductType == StringConst.Task)
+                _taskDescription.Text = _purchases.Any(x => x.IsAll && x.ProductType == StringConst.Task)
                     ? string.Format("Вам доступны все {0} заданий и безлимитная подписка на новые",
                         IntConst.AllTaskCount)
                     : string.Format("У вас {0} заданий, {1}", taskCount,
@@ -246,8 +290,7 @@ namespace Yorsh.Activities
 
                 var bonusCount = Rep.DatabaseHelper.Bonuses.Count;
                 var allBonusCount = IntConst.AllBonusCount - Rep.DatabaseHelper.Bonuses.Count;
-                var bonusDescription = FindViewById<TextView>(Resource.Id.bonusDescription);
-                bonusDescription.Text = _purchases.Any(x => x.IsAll && x.ProductType == StringConst.Bonus)
+                _bonusDescription.Text = _purchases.Any(x => x.IsAll && x.ProductType == StringConst.Bonus)
                     ? string.Format("Вам доступны все {0} бонусов и безлимитная подписка на новые",
                         IntConst.AllBonusCount)
                     : string.Format("У вас {0} бонусов, {1}", bonusCount,
@@ -278,6 +321,26 @@ namespace Yorsh.Activities
 
         }
 
+        private StoreListAdapter TaskListAdapter
+        {
+            get { return _taskListAdapter; }
+            set
+            {
+                if (_taskListAdapter != null) _taskListAdapter.ItemClick -= AdapterOnItemClick;
+                _taskListAdapter = value;
+				_taskListAdapter.ItemClick += AdapterOnItemClick;
+            }
+        }
+        private StoreListAdapter BonusListAdapter
+        {
+            get { return _bonusListAdapter; }
+            set
+            {
+                if (_bonusListAdapter != null) _bonusListAdapter.ItemClick -= AdapterOnItemClick;
+                _bonusListAdapter = value;
+                _bonusListAdapter.ItemClick += AdapterOnItemClick;
+            }
+        }
         private void SetupInventory()
         {
             try
@@ -286,21 +349,16 @@ namespace Yorsh.Activities
                 SetDescriptionText();
                 SetUpProducts();
 
-                _taskListView = FindViewById<ListView>(Resource.Id.taskListView);
-                var adapter = new StoreListAdapter(this, _allErshProducts.Where(product=>product.Type == StringConst.Task));
-                adapter.ItemClick += AdapterOnItemClick;
-                _taskListView.Adapter = new MultiItemRowListAdapter(this, adapter, 3, 1);
+                TaskListAdapter = new StoreListAdapter(this, _allErshProducts.Where(product => product.Type == StringConst.Task));
+                _taskListView.Adapter = new MultiItemRowListAdapter(this, TaskListAdapter, 3, 1);
                 _taskListView.JustifyListViewHeightBasedOnChildren();
 
-                _bonusListView = FindViewById<ListView>(Resource.Id.bonusListView);
-                var bonusAdapter = new StoreListAdapter(this, _allErshProducts.Where(product => product.Type == StringConst.Bonus));
-                bonusAdapter.ItemClick += AdapterOnItemClick;
-                _bonusListView.Adapter = new MultiItemRowListAdapter(this, bonusAdapter, 3, 1);
+                BonusListAdapter = new StoreListAdapter(this, _allErshProducts.Where(product => product.Type == StringConst.Bonus));
+                _bonusListView.Adapter = new MultiItemRowListAdapter(this, BonusListAdapter, 3, 1);
                 _bonusListView.JustifyListViewHeightBasedOnChildren();
-
-
-                FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Visible;
-                FindViewById<TextView>(Resource.Id.googleStoreNotActive).Visibility = ViewStates.Gone;
+                
+                _googleStoreActive.Visibility = ViewStates.Visible;
+                _googleStoreNotActive.Visibility = ViewStates.Gone;
             }
             catch (Exception exception)
             {
@@ -366,27 +424,11 @@ namespace Yorsh.Activities
 
         private void ErrorOccur(string message)
         {
-            FindViewById<ScrollView>(Resource.Id.googleStoreActive).Visibility = ViewStates.Gone;
-            var googleStoreNotActive = FindViewById<TextView>(Resource.Id.googleStoreNotActive);
-            googleStoreNotActive.Visibility = ViewStates.Visible;
-            googleStoreNotActive.Text = message;
+            _googleStoreActive.Visibility = ViewStates.Gone;
+            _googleStoreNotActive.Visibility = ViewStates.Visible;
+            _googleStoreNotActive.Text = message;
         }
-        protected override void OnDestroy()
-        {
-            if (_serviceConnection != null && _serviceConnection.Connected)
-            {
-                _serviceConnection.OnConnected -= HandleOnConnected;
-                _serviceConnection.Disconnect();
-            }
 
-            if (_billingHandler != null)
-            {
-                _billingHandler.OnProductPurchased -= BillingHandlerOnProductPurchased;
-                _billingHandler.BuyProductError -= BillingHandler_BuyProductError;
-                Rep.DatabaseHelper.DatabaseChanged -= InstanceOnDatabaseChanged;
-            }
-            base.OnDestroy();
-        }
         public override void OnPreBackPressed()
         {
             AllowBackPressed = !_navigatedFromGameActivity;

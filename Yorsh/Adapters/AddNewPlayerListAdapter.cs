@@ -1,12 +1,9 @@
-﻿using System;
-using Android.Widget;
+﻿using Android.Widget;
 using Yorsh.Data;
+using Yorsh.Listeners;
 using Yorsh.Model;
-using Android.App;
 using Android.Views;
-using Android.Content;
 using Yorsh.Activities;
-using Yorsh.Helpers;
 
 namespace Yorsh.Adapters
 {
@@ -15,41 +12,45 @@ namespace Yorsh.Adapters
 		private readonly AddPlayersActivity _context;
 		private readonly PlayerList _players;
 
-		public AddNewPlayerListAdapter(Activity context)
+        public AddNewPlayerListAdapter(AddPlayersActivity context)
 		{
-			_context = (AddPlayersActivity)context;
+			_context = context;
 			_players = Rep.Instance.Players;
+	        Initialize();
 		}
 
-		public override long GetItemId(int position)
+	    private void Initialize()
+	    {
+
+	    }
+
+	    public override long GetItemId(int position)
 		{
 			return position;
 		}
-
-		public override View GetView(int position, View convertView, ViewGroup parent)
+       
+        public override View GetView(int position, View convertView, ViewGroup parent)
 		{
 			if (convertView != null) return convertView;
+            var inflater = _context.LayoutInflater;
+            var view = inflater.Inflate(Resource.Layout.AddPlayerItem, null);
+            var playerImage = view.FindViewById<ImageView>(Resource.Id.playerImage);
+            var playerName = view.FindViewById<TextView>(Resource.Id.playerName);
+            playerName.SetTypeface(Rep.FontManager.Get(Font.Bold), Android.Graphics.TypefaceStyle.Normal);
+            var enableTextView = view.FindViewById<TextView>(Resource.Id.isPlayText);
+            enableTextView.SetTypeface(Rep.FontManager.Get(Font.Regular), Android.Graphics.TypefaceStyle.Normal);
+            var removeButton = view.FindViewById<ImageButton>(Resource.Id.removeButton);
+            var doneImage = view.FindViewById<ImageView>(Resource.Id.doneImage);
+            var playerNameLayout = view.FindViewById<RelativeLayout>(Resource.Id.playerNameLayout);
 
 			var player = _players[position];
-			var inflater = (LayoutInflater)_context.GetSystemService(Context.LayoutInflaterService);
-
-			convertView = inflater.Inflate(Resource.Layout.AddPlayerItem, null);
-			convertView.FindViewById<ImageView>(Resource.Id.playerImage).SetImageBitmap(player.Image);
-
-			var playerName = convertView.FindViewById<TextView> (Resource.Id.playerName);
+            playerImage.SetImageBitmap(player.Image);
 			playerName.Text = player.Name;
-			playerName.SetTypeface (_context.MyriadProFont (MyriadPro.Bold), Android.Graphics.TypefaceStyle.Normal);
-
-			var enableTextView = convertView.FindViewById<TextView>(Resource.Id.isPlayText);
-			enableTextView.SetTypeface(_context.MyriadProFont (MyriadPro.Regular), Android.Graphics.TypefaceStyle.Normal);
-			var removeButton = convertView.FindViewById<ImageButton>(Resource.Id.removeButton);
-			var doneImage = convertView.FindViewById<ImageView>(Resource.Id.doneImage);
-
 			enableTextView.Enabled = player.IsPlay;
 
 			if (player.IsPlay)
 			{
-				removeButton.Visibility = ViewStates.Gone;
+                removeButton.Visibility = ViewStates.Gone;
 				doneImage.Visibility = ViewStates.Visible;
 				enableTextView.Text = _context.Resources.GetString(Resource.String.IsPlayString);
 			}
@@ -60,10 +61,9 @@ namespace Yorsh.Adapters
 				enableTextView.Text = _context.Resources.GetString(Resource.String.IsNotPlayString);
 			}
 
-			removeButton.Click += (sender, e) => 
-                Rep.Instance.Players.RemoveAt(position);
+            removeButton.SetOnClickListener(new RemoveButtonClickListener(position));
 
-			convertView.FindViewById<RelativeLayout>(Resource.Id.playerNameLayout).Click += (sender, e) =>
+			playerNameLayout.Click += (sender, e) =>
 			{
 				var isEnabledNew = !enableTextView.Enabled;
 				enableTextView.Enabled = isEnabledNew;
@@ -85,10 +85,10 @@ namespace Yorsh.Adapters
 				_context.SetButtonEnabled(_players.Count <= 1 || Rep.Instance.Players.IsAllPlay);
 			};
 
+            convertView = view;
 			return convertView;
 		}
-
-		public override int Count
+	    public override int Count
 		{
 			get { return _players.Count; }
 		}
@@ -97,6 +97,7 @@ namespace Yorsh.Adapters
 		{
 			get { return _players[position]; }
 		}
+
 	}
 }
 

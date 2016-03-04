@@ -1,12 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Yorsh.Model.EventAgruments;
 
 namespace Yorsh.Model
 {
-    public sealed class PlayerList : IList<Player>
+    public sealed class PlayerList 
     {
         private readonly PlayerEnumerator _enumerator;
         private readonly IList<Player> _players;
@@ -25,6 +25,10 @@ namespace Yorsh.Model
             _players = new List<Player>();
         }
 
+        public IEnumerable<Player> Players
+        {
+            get { return _players; }
+        } 
         public IEnumerable<Player> Items
         {
             get { return _players; }
@@ -57,14 +61,17 @@ namespace Yorsh.Model
             return _players.All(p => p.Score == 0) ? 0 : _players.Count(p => p.Score > player.Score) + 1;
         }
 
-        public void Reset()
+        public Task ResetAsync()
         {
-            foreach (var player in _players)
+            return Task.Factory.StartNew(() =>
             {
-                player.GetModel().Score = 0;
-            }
-            if (ScoreChanged != null) ScoreChanged.Invoke(this, new ScoreChangedEventArgs(0));
-            _enumerator.Reset();
+                foreach (var player in _players)
+                {
+                    player.GetModel().Score = 0;
+                }
+                if (ScoreChanged != null) ScoreChanged.Invoke(this, new ScoreChangedEventArgs(0));
+                _enumerator.Reset();
+            });
         }
 
         public event EventHandler ItemRemoved;
@@ -152,14 +159,5 @@ namespace Yorsh.Model
             get { return _enumerator; }
         }
 
-        public IEnumerator<Player> GetEnumerator()
-        {
-            return _enumerator;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _enumerator;
-        }
     }
 }

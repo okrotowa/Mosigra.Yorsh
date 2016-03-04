@@ -1,10 +1,8 @@
 ﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.5_1_WVGA" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\AddPlayersActivity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Yorsh.csproj">
     <Files>
-      <File FileName="Yorsh\Activities\GameActivity.cs" Line="1" Column="1" />
-      <File FileName="Yorsh\Activities\MainMenuActivity.cs" Line="1" Column="1" />
-      <File FileName="Yorsh\Activities\AddPlayersActivity.cs" Line="19" Column="9" />
+      <File FileName="Yorsh\Yorsh.csproj" Line="497" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -12,6 +10,15 @@
       <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Fragments\ChoosePhotoDialog.cs" line="80" column="1" />
       <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Fragments\ChoosePhotoDialog.cs" line="59" column="1" />
       <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Fragments\ChoosePhotoDialog.cs" line="66" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Activities\StoreActivity.cs" line="132" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Helpers\GaService.cs" line="34" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Activities\StoreActivity.cs" line="350" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Activities\StoreActivity.cs" line="352" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Activities\StoreActivity.cs" line="353" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Activities\StoreActivity.cs" line="329" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Adapters\StoreListAdapter.cs" line="25" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Adapters\StoreListAdapter.cs" line="26" column="1" />
+      <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Activities\StoreActivity.cs" line="331" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

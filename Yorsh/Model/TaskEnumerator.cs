@@ -8,7 +8,7 @@ namespace Yorsh.Model
 {
     public class TaskEnumerator : IEnumerator<TaskTable>
     {
-        private readonly TaskList _taskList;
+        private TaskList _taskList;
         private int _current;
 
         public event EventHandler<TaskPositionChangedEventArgs> TaskPositionChanged;
@@ -26,10 +26,15 @@ namespace Yorsh.Model
 
         public bool MoveNext()
         {
-            if (CurrentPosition >= _taskList.Count - 1) return false;
-            CurrentPosition = CurrentPosition + 1;
+            if (_current >= _taskList.Count - 1) return false;
+            {
+                _current++;
+                Current.Position = _current;
+                OnTaskPositionChanged(new TaskPositionChangedEventArgs(Current));
+            }
             return true;
         }
+
 
         public void Reset()
         {
@@ -42,8 +47,6 @@ namespace Yorsh.Model
             set
             {
                 _current = value;
-                Current.Position = _current;
-                OnTaskPositionChanged(new TaskPositionChangedEventArgs(Current));
             }
         }
 
@@ -59,6 +62,7 @@ namespace Yorsh.Model
 
         public void Dispose()
         {
+            
         }
     }
 }
