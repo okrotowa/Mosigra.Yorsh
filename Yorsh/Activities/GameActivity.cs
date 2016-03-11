@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -432,10 +431,6 @@ namespace Yorsh.Activities
                 GaService.TrackAppException(this.Class, "OnBackPressed", exception, false);
             }
 
-        }
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
         }
     }
 }

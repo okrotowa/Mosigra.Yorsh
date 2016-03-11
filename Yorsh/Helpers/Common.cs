@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Text;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
-namespace Yorsh
+namespace Yorsh.Helpers
 {
 	public static class Base64
 	{
@@ -30,11 +30,11 @@ namespace Yorsh
 		/// </summary>
 		public static class AES
 		{
-			public static int KeyLength = 128;
-			private const string SaltKey = "ShMG8hLyZ7k~Ge5@";
-			private const string VIKey = "~6YUi0Sv5@|{aOZO"; // TODO: Generate random VI each encryption and store it with encrypted value
+		    private const int KeyLength = 128;
+		    private const string SaltKey = "ShMG8hLyZ7k~Ge5@";
+			private const string VIKey = "~6YUi0Sv5@|{aOZO"; 
 
-			public static string Encrypt(byte[] value, string password)
+		    private static string Encrypt(byte[] value, string password)
 			{
 				var keyBytes = new Rfc2898DeriveBytes(password, Encoding.UTF8.GetBytes(SaltKey)).GetBytes(KeyLength / 8);
 				var symmetricKey = new RijndaelManaged { Mode = CipherMode.CBC, Padding = PaddingMode.Zeros };

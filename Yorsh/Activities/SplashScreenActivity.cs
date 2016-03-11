@@ -7,21 +7,82 @@ using Android.Content;
 using Android.Content.PM;
 using Android.Gms.Analytics;
 using Android.OS;
+using Android.Provider;
+using LicenseVerificationLibrary;
+using LicenseVerificationLibrary.Obfuscator;
+using LicenseVerificationLibrary.Policy;
 using Xamarin.InAppBilling;
 using Yorsh.Data;
 using Yorsh.Helpers;
 using Yorsh.Model;
 using Android.Widget;
+using Uri = Android.Net.Uri;
 
 namespace Yorsh.Activities
 {
     [Activity(Theme = "@android:style/Theme.NoTitleBar", MainLauncher = true, NoHistory = true, ScreenOrientation = ScreenOrientation.Portrait)]
-    public class SplashScreenActivity : Activity
+    public class SplashScreenActivity : Activity, ILicenseCheckerCallback
     {
-        InAppBillingServiceConnection _serviceConnection;
+        #region LicenseChecker
 
+        private LicenseChecker _licenseChecker;
+        private static readonly byte[] Salt =
+        {
+            11, 65, 30, 90, 103, 57, 74, 64, 51, 30, 95, 45, 23, 117, 36, 156, 11, 32, 55, 89
+        };
+
+
+        private void CheckLicense()
+        {
+            string deviceId = Settings.Secure.GetString(ContentResolver, Settings.Secure.AndroidId);
+
+            // Construct the LicenseChecker with a policy.
+            var obfuscator = new AesObfuscator(Salt, PackageName, deviceId);
+            var policy = new ServerManagedPolicy(this, obfuscator);
+            _licenseChecker = new LicenseChecker(this, policy, Xamarin.InAppBilling.Utilities.Security.Unify(new[] {
+					GetNumberString (3),
+					GetNumberString (6),
+					GetNumberString (1),
+					GetNumberString (4),
+					GetNumberString (2),
+					GetNumberString (7),
+					GetNumberString (0),
+					GetNumberString (5)
+				}, new[] { 0, 1, 2, 3, 4, 5, 6, 7 }));
+            _licenseChecker.CheckAccess(this);
+        }
+
+        public void Allow(PolicyServerResponse reason)
+        {
+            _pref1.Edit().PutString(_pref2, Base64.Encode(true.ToString())).Commit();
+            OnLicenseChecked();
+        }
+
+        public void ApplicationError(CallbackErrorCode errorCode)
+        {
+            GaService.TrackAppEvent("ApplicationError", errorCode.ToString());
+            OnLicenseChecked();
+        }
+
+        public void DontAllow(PolicyServerResponse reason)
+        {
+            switch (reason)
+            {
+                case PolicyServerResponse.NotLicensed:
+                    _pref1.Edit().PutString(_pref2, Base64.Encode(false.ToString())).Commit();
+                    GetDialog().Show();
+                    break;
+                default: OnLicenseChecked();
+                    break;
+            }
+        }
+
+        #endregion
+
+        private InAppBillingServiceConnection _serviceConnection;
         private bool _startActivity;
-
+        private ISharedPreferences _pref1;
+        private string _pref2;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             try
@@ -30,26 +91,77 @@ namespace Yorsh.Activities
                 SetContentView(Resource.Layout.Splash);
                 InitGa();
                 Rep.Instance.InitFontManager(Application);
-                InitConnectToGoogleStore();
+                InitLicence();
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class, "OnCreate", exception, true);
+                GaService.TrackAppException(Class, "OnCreate", exception, true);
             }
 
         }
 
-        protected override void OnResume()
+        private AlertDialog.Builder GetDialog()
         {
             try
             {
-                base.OnResume();
+                var builder = new AlertDialog.Builder(this);
+                builder.SetMessage(Resource.String.LicenseFailedMessageString);
+                builder.SetPositiveButton(GetString(Resource.String.WriteString), delegate
+                {
+                    try
+                    {
+                        var emailIntent = new Intent(Intent.ActionSendto, Uri.Parse("mailto:fernandmobileboardgames@gmail.com"));
+                        emailIntent.PutExtra(Intent.ExtraSubject, "Ошибка лицензии");
+                        StartActivity(Intent.CreateChooser(emailIntent, string.Empty));
+                    }
+                    catch (Exception exception)
+                    {
+                        GaService.TrackAppException(this.Class, "SendEmail", exception, false);
+                        var errorBuilder = new AlertDialog.Builder(this);
+                        errorBuilder.SetMessage(GetString(Resource.String.SendEmailFailedHeaderString)
+                                                + System.Environment.NewLine
+                                                + GetString(Resource.String.SendEmailFailedString));
+                        errorBuilder.SetCancelable(false);
+                        errorBuilder.SetPositiveButton("Ok", (sender, args) => base.OnBackPressed());
+                        errorBuilder.Show();
+                    }
+                   
+                });
+                builder.SetNegativeButton("Ok", (sender, args) => base.OnBackPressed());
+                builder.SetCancelable(false);
+                return builder;
+            }
+            catch (Exception exception)
+            {
+                GaService.TrackAppException(this.Class, "GetDialog", exception, false);
+                throw;
+            }
+        }
+        private void InitLicence()
+        {
+            _pref1 = GetSharedPreferences(Base64.Encode("RWZmZHNNkeHY"),FileCreationMode.Private);
+            _pref2 = Xamarin.InAppBilling.Utilities.Security.Unify(new[] { "dW58z", "ZnGZ" }, new[] { 0,1 });
+            var s = _pref1.GetString(_pref2, string.Empty);
+            if (string.IsNullOrEmpty(s)) 
+                CheckLicense();
+            else if (string.Compare(Base64.Encode(true.ToString()), s, StringComparison.OrdinalIgnoreCase) == 0)
+                OnLicenseChecked();
+            else if (string.Compare(Base64.Encode(false.ToString()), s, StringComparison.OrdinalIgnoreCase) == 0)
+                GetDialog().Show();
+            else CheckLicense();
+        }
+
+        private void OnLicenseChecked()
+        {
+            try
+            {
+                InitConnectToGoogleStore();
                 _serviceConnection.Connect();
                 CreateLocalDatabase();
             }
             catch (Exception exception)
             {
-                GaService.TrackAppException(this.Class, "OnResume", exception, true);
+                GaService.TrackAppException(this.Class, "OnLicenseChecked", exception, true);
             }
         }
 
@@ -90,7 +202,7 @@ namespace Yorsh.Activities
 				}, new[] { 0, 1, 2, 3, 4, 5, 6, 7 });
                 _serviceConnection = new InAppBillingServiceConnection(this, key);
                 _serviceConnection.BindErrors();
-                _serviceConnection.OnConnected+= _serviceConnection_OnConnected;
+                _serviceConnection.OnConnected += _serviceConnection_OnConnected;
             }
             catch (Exception exception)
             {
@@ -98,10 +210,10 @@ namespace Yorsh.Activities
             }
         }
 
-        void _serviceConnection_OnConnected ()
+        void _serviceConnection_OnConnected()
         {
-			if (_serviceConnection.BillingHandler != null)
-				_serviceConnection.BillingHandler.BindErrors();
+            if (_serviceConnection.BillingHandler != null)
+                _serviceConnection.BillingHandler.BindErrors();
         }
 
         private async Task StartActivityAsync()
@@ -210,16 +322,17 @@ namespace Yorsh.Activities
 
         protected override void OnDestroy()
         {
-            _serviceConnection.UnbindErrors();
-            Rep.DatabaseHelper.DataBaseCreatedOrOpened -= DatabaseHelperOnDatabaseCreatedOrOpened;
-            _serviceConnection.OnConnected -= _serviceConnection_OnConnected;
-            if (_serviceConnection.Connected)
+            if (Rep.DatabaseHelper!=null) Rep.DatabaseHelper.DataBaseCreatedOrOpened -= DatabaseHelperOnDatabaseCreatedOrOpened;
+            if (_serviceConnection!= null)
             {
-                _serviceConnection.Disconnect();
-                if (_serviceConnection.BillingHandler != null)
-                    _serviceConnection.BillingHandler.UnbindErrors();
+                _serviceConnection.OnConnected -= _serviceConnection_OnConnected;
+                _serviceConnection.UnbindErrors();
+
+                if (_serviceConnection.Connected) _serviceConnection.Disconnect();
+                if (_serviceConnection.BillingHandler != null) _serviceConnection.BillingHandler.UnbindErrors();
             }
             base.OnDestroy();
         }
+
     }
 }
