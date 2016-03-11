@@ -1,0 +1,8 @@
+diff a/Yorsh.userprefs b/Yorsh.userprefs	(rejected hunks)
+@@ -1,6 +1,5 @@
+ ﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
+   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.5_1_WVGA" />
+-  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\StoreActivity.cs">
+   <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Activities\AddPlayersActivity.cs">
+     <Files>
+       <File FileName="Yorsh\Activities\GameActivity.cs" Line="1" Column="1" />
