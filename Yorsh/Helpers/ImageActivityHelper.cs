@@ -51,14 +51,13 @@ namespace Yorsh.Helpers
                 {
                     if (_category != null && _category.Id == value.Id) return;
                     _category = value;
-                    if (CategoryImage!=null) CategoryImage.Dispose();
                     using (var resourceStream = ResourceLoader.GetEmbeddedResourceStream(Assembly.GetAssembly(typeof(ResourceLoader)), _category.ImageName))
-                    {				
+                    {
                         CategoryImage = BitmapExtensions.DecodeStream(resourceStream, ImageWidth, ImageHeight, _deviceWidth, _deviceHeight);
 
-						resourceStream.Close();
-						resourceStream.Dispose();
-					}
+                        resourceStream.Flush();
+                        resourceStream.Dispose();
+                    }
                 }
                 catch (Exception exception)
                 {

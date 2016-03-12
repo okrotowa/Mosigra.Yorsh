@@ -1,9 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yorsh", "Yorsh\Yorsh.csproj", "{F3119760-AB95-4324-9D27-8548A167DE3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yorsh.Transliteration", "Yorsh.Transliteration\Yorsh.Transliteration.csproj", "{A3BC9118-F2E4-4B74-9DE0-C8523726481D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,12 @@ Global
 		{F3119760-AB95-4324-9D27-8548A167DE3C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{F3119760-AB95-4324-9D27-8548A167DE3C}.Release|x64.ActiveCfg = Release|x64
 		{F3119760-AB95-4324-9D27-8548A167DE3C}.Release|x64.Build.0 = Release|x64
+		{A3BC9118-F2E4-4B74-9DE0-C8523726481D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3BC9118-F2E4-4B74-9DE0-C8523726481D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3BC9118-F2E4-4B74-9DE0-C8523726481D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A3BC9118-F2E4-4B74-9DE0-C8523726481D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3BC9118-F2E4-4B74-9DE0-C8523726481D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3BC9118-F2E4-4B74-9DE0-C8523726481D}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

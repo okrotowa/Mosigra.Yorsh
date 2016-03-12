@@ -12,10 +12,6 @@ namespace Yorsh.Activities
         private Color _whiteColor;
         private Color _whiteColorWithOpacity;
         private ColorFilter _grayColorFilter;
-        protected HelpActivity()
-        {
-
-        }
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

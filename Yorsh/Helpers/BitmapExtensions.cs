@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Graphics;
@@ -25,8 +24,8 @@ namespace Yorsh.Helpers
             var sampleSize = 1;
             if (height > desiredHeight || width > desiredWidth)
             {
-                var heightRatio = (int)Math.Round((float)height / (float)desiredHeight);
-                var widthRatio = (int)Math.Round((float)width / (float)desiredWidth);
+                var heightRatio = Math.Round(height / (float)desiredHeight);
+                var widthRatio = Math.Round(width / (float)desiredWidth);
                 sampleSize = Math.Min(heightRatio, widthRatio);
             }
             var options = new BitmapFactory.Options { InSampleSize = sampleSize };

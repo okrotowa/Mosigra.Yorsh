@@ -1,7 +1,6 @@
 ﻿using System;
 using Android.App;
 using Android.Graphics;
-using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -55,7 +54,11 @@ namespace Yorsh.Activities
                 var isBear = _imageActivityHelper.Task.IsBear;
                 SetResult(isBear ? Result.Ok : Result.Canceled);
                 _contentFrameLayout.Click -= ContentFrameLayoutOnClick;
-				if (_image!=null && _image.Drawable!=null) _image.Drawable.Dispose();
+                if (_image != null && _image.Drawable != null)
+                {
+                    _image.Drawable.Dispose();
+                    _image.SetImageBitmap(null);
+                }
                 base.OnBackPressed();
             }
             catch (Exception exception)

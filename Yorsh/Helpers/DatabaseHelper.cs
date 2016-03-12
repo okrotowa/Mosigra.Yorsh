@@ -425,14 +425,14 @@ namespace Yorsh.Helpers
 
         public override void OnCreate(SQLiteDatabase db)
         {
-
+            
         }
 
         public async override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
             try
             {
-				await DataBaseConnection.DropTableAsync<TaskTable>();
+                await DataBaseConnection.DropTableAsync<TaskTable>();
 	            await DataBaseConnection.DropTableAsync<BonusTable>();
 	            await DataBaseConnection.DropTableAsync<CategoryTable>();
 				await CreateOrOpenDataBaseAsync();
