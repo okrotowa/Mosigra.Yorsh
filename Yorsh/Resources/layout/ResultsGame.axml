@@ -81,7 +81,6 @@
             android:padding="20dp">
             <ImageView
                 android:id="@+id/playerImage"
-                android:src="@drawable/icon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:cropToPadding="true" />
@@ -136,7 +135,7 @@
             android:cacheColorHint="@android:color/transparent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:divider="@drawable/dividermargin"
+            android:divider="@drawable/divider"
             android:dividerHeight="1dp" />
     </LinearLayout>
 </RelativeLayout>

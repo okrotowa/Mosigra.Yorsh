@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Xamarin.Insights</id>
+    <version>1.11.4</version>
+    <title>Xamarin.Insights</title>
+    <authors>Xamarin, Inc.</authors>
+    <owners>Xamarin, Inc.</owners>
+    <licenseUrl>https://xamarin.com/cloud-services-agreement</licenseUrl>
+    <projectUrl>http://insights.xamarin.com/</projectUrl>
+    <iconUrl>https://houstonweb.blob.core.windows.net/assets/analytics-package@2x.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Insights for your Apps</description>
+    <releaseNotes>Insights point release for the 1.11 series, 1.11.4
+
+## Fixes 
+
+ * (Desktop) Performance counter protection to avoid a crasher on some reduced permissions accounts
+ * (Desktop) Fixes a crasher if a VPN connection was dropped half way through a session
+ * (UWP) Updates for win10 compatibility
+ * (all) Fixes a regression in the `Xamarin.Insights.PurgePendingCrashReports().Wait()` logic
+ * (all) More accurate time-code reporting to insights for users who manually change their time
+ * (all) `Xamarin.Insights.Identify(uid)` is now functional and no longer requires a secondary null parameter
+ * (all) The `InsightsIsNotInitialized` Exception will now never be thrown in release builds, any non `Insights.Initialize()` calls that are invoked before `Insights.Initialize()` will be lost.</releaseNotes>
+    <copyright>Copyright 2014-2015</copyright>
+    <tags>Xamarin Insights Statistics Analytics Application Report Event Track Android iOS WindowsPhone Phone RT</tags>
+  </metadata>
+</package>

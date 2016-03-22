@@ -21,27 +21,10 @@ namespace Yorsh.Helpers
         private IList<BonusTable> _bonuses;
         private IList<ErshPurchase> _taskPurchases = new List<ErshPurchase>();
         private IList<ErshPurchase> _bonusPurchases = new List<ErshPurchase>();
-        private ImageActivityHelper _imageActivityHelper;
 
         internal DatabaseHelper(Context context, int version) : base(context, Rep.Instance.DataBaseFile, null, version)
         {
             _context = context;           
-        }
-
-        public ImageActivityHelper ImageActivityHelper
-        {
-            get { return _imageActivityHelper; }
-            private set
-            {
-                if (_imageActivityHelper != null)
-                {
-                    if (_imageActivityHelper.TaskId.HasValue) 
-                        value.TaskId = _imageActivityHelper.TaskId;
-                    if (_imageActivityHelper.CategoryImage!=null) 
-                        _imageActivityHelper.CategoryImage.Dispose();
-                }
-                _imageActivityHelper = value;
-            }
         }
 
         public event EventHandler DataBaseCreatedOrOpened;
@@ -129,7 +112,7 @@ namespace Yorsh.Helpers
                  if (_tasks != null && _tasks.Enumerator != null) _tasks.Enumerator.TaskPositionChanged -= EnumeratorOnTaskPositionChanged;
                 _tasks = value;
                 _tasks.Enumerator.TaskPositionChanged += EnumeratorOnTaskPositionChanged;
-				ImageActivityHelper = new ImageActivityHelper(Tasks.GetTask, Tasks.GetCategory, _context.Resources.DisplayMetrics);
+				//ImageActivityHelper = new ImageActivityHelper(Tasks.GetTask, Tasks.GetCategory, _context.Resources.DisplayMetrics);
                 OnDatabaseChanged();
             }
         }
@@ -283,6 +266,12 @@ namespace Yorsh.Helpers
                 await CreateIfNotExistTable<BonusTable>();
                 await CreateIfNotExistTable<TaskTable>();
                 await CreateIfNotExistTable<CategoryTable>();
+                if (await DataBaseConnection.Table<CategoryTable>().Where(category=>category.Image==null).CountAsync()!=0)
+                {
+                    await RecreateTable<CategoryTable>();
+                    await TaskScoreRefreshAsync();
+                }
+
                 await RefreshAllAsync();
                 OnDataBaseCreatedOrOpened();
                 
@@ -291,6 +280,12 @@ namespace Yorsh.Helpers
             {
                 GaService.TrackAppException(_context.Class.SimpleName, "CreateOrOpenDataBaseAsync", exception, true);
             }
+        }
+
+        private async Task RecreateTable<TAble>() where TAble : ITable, new()
+        {
+            await DataBaseConnection.DropTableAsync<TAble>();
+            await CreateIfNotExistTable<TAble>();
         }
 
         public SQLiteAsyncConnection DataBaseConnection

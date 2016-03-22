@@ -7,7 +7,7 @@ namespace Yorsh.Data
         public static CategoryTable ParseCategory(string parseString)
         {
             var values = parseString.Split(';');
-            return new CategoryTable(int.Parse(values[0]), values[1], values[2]);
+            return new CategoryTable(int.Parse(values[0]), values[1]);
         }
 
         public static TaskTable ParseTask(string parseString)

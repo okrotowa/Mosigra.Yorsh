@@ -7,14 +7,14 @@ using Android.Widget;
 
 namespace Yorsh.Fragments
 {		
-	public class DialogRatingFragment : DialogFragment
+	public sealed class DialogRatingFragment : DialogFragment
 	{
 	    private ISharedPreferencesEditor _editor;
 		private bool _editorIsPutted = false;
 
 	    public event EventHandler Dissmissed;
 
-	    protected virtual void OnDissmissed()
+	    private void OnDissmissed()
 	    {
 	        var handler = Dissmissed;
 	        if (handler != null) handler(this, EventArgs.Empty);

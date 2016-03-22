@@ -1,0 +1,1627 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LicenseVerificationLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:LicenseVerificationLibrary.CallbackErrorCode">
+            <summary>
+            Application error codes.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.CallbackErrorCode.InvalidPackageName">
+            <summary>
+            The invalid package name.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.CallbackErrorCode.ErrorNonMatchingUid">
+            <summary>
+            The error non matching uid.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.CallbackErrorCode.NotMarketManaged">
+            <summary>
+            The not market managed.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.CallbackErrorCode.CheckInProgress">
+            <summary>
+            The check in progress.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.CallbackErrorCode.InvalidPublicKey">
+            <summary>
+            The invalid public key.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.CallbackErrorCode.MissingPermission">
+            <summary>
+            The missing permission.
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.DeviceLimiter.IDeviceLimiter">
+            <summary>
+            The i device limiter.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.DeviceLimiter.IDeviceLimiter.IsDeviceAllowed(System.String)">
+            <summary>
+            Checks if this device is allowed to use the given user's license.
+            </summary>
+            <param name="userId">
+            the user whose license the server responded with.
+            </param>
+            <returns>
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.Licensed"/> if the device is 
+            allowed, <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.NotLicensed"/> if not, 
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.Retry"/> if an error occurs.
+            </returns>
+        </member>
+        <member name="T:LicenseVerificationLibrary.DeviceLimiter.NullDeviceLimiter">
+            <summary>
+            The null device limiter.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.DeviceLimiter.NullDeviceLimiter.IsDeviceAllowed(System.String)">
+            <summary>
+            The is device allowed.
+            </summary>
+            <param name="userId">
+            The user id.
+            </param>
+            <returns>
+            </returns>
+        </member>
+        <member name="T:LicenseVerificationLibrary.ILicenseResultListener">
+            <summary>
+            The i license result listener.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.ILicenseResultListener.VerifyLicense(LicenseVerificationLibrary.ServerResponseCode,System.String,System.String)">
+            <summary>
+            The verify license.
+            </summary>
+            <param name="responseCode">
+            The response code.
+            </param>
+            <param name="signedData">
+            The signed data.
+            </param>
+            <param name="signature">
+            The signature.
+            </param>
+        </member>
+        <member name="T:LicenseVerificationLibrary.LicenseResultListenerStub">
+            <summary>
+            Local-side IPC implementation stub class.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseResultListenerStub.Descriptor">
+            <summary>
+            The descriptor.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseResultListenerStub.TransactionVerifyLicense">
+            <summary>
+            The transaction verify license.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseResultListenerStub.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.LicenseResultListenerStub"/> class. 
+            Construct the stub at attach it to the interface.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseResultListenerStub.AsInterface(Android.OS.IBinder)">
+            <summary>
+            The as interface.
+            </summary>
+            <param name="obj">
+            The obj.
+            </param>
+            <returns>
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseResultListenerStub.AsBinder">
+            <summary>
+            Cast an IBinder object into an ILicenseResultListener interface, generating a proxy if needed.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseResultListenerStub.VerifyLicense(LicenseVerificationLibrary.ServerResponseCode,System.String,System.String)">
+            <summary>
+            The verify license.
+            </summary>
+            <param name="responseCode">
+            The response code.
+            </param>
+            <param name="signedData">
+            The signed data.
+            </param>
+            <param name="signature">
+            The signature.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseResultListenerStub.OnTransact(System.Int32,Android.OS.Parcel,Android.OS.Parcel,System.Int32)">
+            <summary>
+            The on transact.
+            </summary>
+            <param name="code">
+            The code.
+            </param>
+            <param name="data">
+            The data.
+            </param>
+            <param name="reply">
+            The reply.
+            </param>
+            <param name="flags">
+            The flags.
+            </param>
+            <returns>
+            The on transact.
+            </returns>
+        </member>
+        <member name="T:LicenseVerificationLibrary.LicenseResultListenerStub.Proxy">
+            <summary>
+            The proxy.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseResultListenerStub.Proxy.remote">
+            <summary>
+            The remote.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseResultListenerStub.Proxy.#ctor(Android.OS.IBinder)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.LicenseResultListenerStub.Proxy"/> class.
+            </summary>
+            <param name="remote">
+            The remote.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseResultListenerStub.Proxy.AsBinder">
+            <summary>
+            The as binder.
+            </summary>
+            <returns>
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseResultListenerStub.Proxy.VerifyLicense(LicenseVerificationLibrary.ServerResponseCode,System.String,System.String)">
+            <summary>
+            The verify license.
+            </summary>
+            <param name="responseCode">
+            The response code.
+            </param>
+            <param name="signedData">
+            The signed data.
+            </param>
+            <param name="signature">
+            The signature.
+            </param>
+        </member>
+        <member name="P:LicenseVerificationLibrary.LicenseResultListenerStub.Proxy.InterfaceDescriptor">
+            <summary>
+            Gets InterfaceDescriptor.
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.ILicensingService">
+            <summary>
+            The i licensing service.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.ILicensingService.CheckLicense(System.Int64,System.String,LicenseVerificationLibrary.ILicenseResultListener)">
+            <summary>
+            The check license.
+            </summary>
+            <param name="nonce">
+            The nonce.
+            </param>
+            <param name="packageName">
+            The package name.
+            </param>
+            <param name="listener">
+            The listener.
+            </param>
+        </member>
+        <member name="T:LicenseVerificationLibrary.LicensingServiceStub">
+            <summary>
+            Local-side IPC implementation stub class.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicensingServiceStub.Descriptor">
+            <summary>
+            The descriptor.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicensingServiceStub.TransactionCheckLicense">
+            <summary>
+            The transaction check license.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicensingServiceStub.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:LicenseVerificationLibrary.LicensingServiceStub"/> class from being created. 
+            Construct the stub at attach it to the interface.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicensingServiceStub.AsInterface(Android.OS.IBinder)">
+            <summary>
+            The as interface.
+            </summary>
+            <param name="obj">
+            The obj.
+            </param>
+            <returns>
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicensingServiceStub.AsBinder">
+            <summary>
+            Cast an IBinder object into an ILicensingService interface, generating a proxy if needed.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicensingServiceStub.CheckLicense(System.Int64,System.String,LicenseVerificationLibrary.ILicenseResultListener)">
+            <summary>
+            The check license.
+            </summary>
+            <param name="nonce">
+            The nonce.
+            </param>
+            <param name="packageName">
+            The package name.
+            </param>
+            <param name="listener">
+            The listener.
+            </param>
+            <exception cref="T:System.NotImplementedException">
+            </exception>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicensingServiceStub.OnTransact(System.Int32,Android.OS.Parcel,Android.OS.Parcel,System.Int32)">
+            <summary>
+            The on transact.
+            </summary>
+            <param name="code">
+            The code.
+            </param>
+            <param name="data">
+            The data.
+            </param>
+            <param name="reply">
+            The reply.
+            </param>
+            <param name="flags">
+            The flags.
+            </param>
+            <returns>
+            The on transact.
+            </returns>
+        </member>
+        <member name="T:LicenseVerificationLibrary.LicensingServiceStub.Proxy">
+            <summary>
+            The proxy.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicensingServiceStub.Proxy.remote">
+            <summary>
+            The remote.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicensingServiceStub.Proxy.#ctor(Android.OS.IBinder)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.LicensingServiceStub.Proxy"/> class.
+            </summary>
+            <param name="remote">
+            The remote.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicensingServiceStub.Proxy.AsBinder">
+            <summary>
+            The as binder.
+            </summary>
+            <returns>
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicensingServiceStub.Proxy.CheckLicense(System.Int64,System.String,LicenseVerificationLibrary.ILicenseResultListener)">
+            <summary>
+            The check license.
+            </summary>
+            <param name="nonce">
+            The nonce.
+            </param>
+            <param name="packageName">
+            The package name.
+            </param>
+            <param name="listener">
+            The listener.
+            </param>
+        </member>
+        <member name="P:LicenseVerificationLibrary.LicensingServiceStub.Proxy.InterfaceDescriptor">
+            <summary>
+            Gets InterfaceDescriptor.
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.LicenseChecker">
+            <summary>
+            <para>
+            Client library for Android Market license verifications.
+            </para>
+            <para>
+            The LicenseChecker is configured via a <see cref="T:LicenseVerificationLibrary.Policy.IPolicy"/> which 
+            contains the logic to determine whether a user should have access to 
+            the application. 
+            For example, the <see cref="T:LicenseVerificationLibrary.Policy.IPolicy"/> can define a threshold for 
+            allowable number of server or client failures before the library 
+            reports the user as not having access.
+            </para>
+            </summary>
+            <remarks>
+            Must also provide the Base64-encoded RSA public key associated with 
+            your developer account. 
+            The public key is obtainable from the publisher site.
+            </remarks>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.KeyFactoryAlgorithm">
+            <summary>
+            The key factory algorithm.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.LicensingServiceIntentString">
+            <summary>
+              Note: For best security, we recommend obfuscating this string that is passed 
+              into BindService using another method of your own devising:
+              Source String: "com.android.vending.licensing.ILicensingService"
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.TimeoutMs">
+            <summary>
+            Timeout value (in milliseconds) for calls to service.
+            The timeout ms.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.Random">
+            <summary>
+            The random.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.checksInProgress">
+            <summary>
+            The _checks in progress.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.context">
+            <summary>
+            The _context.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.handler">
+            <summary>
+            A handler for running tasks on a background thread. We don't want license processing to block the UI thread.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.locker">
+            <summary>
+            The _locker.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.packageName">
+            <summary>
+            The _package name.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.pendingChecks">
+            <summary>
+            The _pending checks.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.policy">
+            <summary>
+            The _policy.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.publicKey">
+            <summary>
+            The _public key.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.versionCode">
+            <summary>
+            The _version code.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.licensingService">
+            <summary>
+            The _licensing service.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:LicenseVerificationLibrary.LicenseChecker"/> class.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.#ctor(Android.Content.Context,LicenseVerificationLibrary.Policy.IPolicy,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.LicenseChecker"/> class. 
+            The license checker.
+            </summary>
+            <param name="context">
+            a Context
+            </param>
+            <param name="policy">
+            implementation of IPolicy
+            </param>
+            <param name="encodedPublicKey">
+            Base64-encoded RSA public key
+            </param>
+            <exception cref="T:System.ArgumentException">
+            if encodedPublicKey is invalid
+            </exception>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.CheckAccess(LicenseVerificationLibrary.ILicenseCheckerCallback)">
+            <summary>
+            Checks if the user should have access to the app. Binds the service if necessary.
+            </summary>
+            <param name="callback">
+            The callback.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.OnDestroy">
+            <summary>
+            Inform the library that the context is about to be destroyed, so that any
+             open connections can be cleaned up.
+             Failure to call this method can result in a crash under certain
+             circumstances, such as during screen rotation if an Activity requests the
+             license check or when the user exits the application.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.OnServiceConnected(Android.Content.ComponentName,Android.OS.IBinder)">
+            <summary>
+            The on service connected.
+            </summary>
+            <param name="name">
+            The name.
+            </param>
+            <param name="service">
+            The service.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.OnServiceDisconnected(Android.Content.ComponentName)">
+            <summary>
+            The on service disconnected.
+            </summary>
+            <param name="name">
+            The name.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.GenerateNumberUsedOnce">
+            <summary>
+            Generates a nonce (number used once).
+            </summary>
+            <returns>
+            The generate number used once.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.GeneratePublicKey(System.String)">
+            <summary>
+            Generates a PublicKey instance from a string containing the Base64-encoded public key.
+            </summary>
+            <param name="encodedPublicKey">
+            Base64-encoded public key
+            </param>
+            <returns>
+            An IPublicKey that is used to verify the server data.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            if encodedPublicKey is invalid
+            </exception>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.GetVersionCode(Android.Content.Context,System.String)">
+            <summary>
+            Get version code for the application package name.
+            </summary>
+            <param name="context">
+            The context used to find the package version code.
+            </param>
+            <param name="packageName">
+            application package name
+            </param>
+            <returns>
+            the version code or an empty string if package was not found
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.CleanupService">
+            <summary>
+            Unbinds service if necessary and removes reference to it.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.FinishCheck(LicenseVerificationLibrary.LicenseValidator)">
+            <summary>
+            The finish check.
+            </summary>
+            <param name="validator">
+            The validator.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.HandleServiceConnectionError(LicenseVerificationLibrary.LicenseValidator)">
+            <summary>
+            Generates policy response for service connection errors, as a result of disconnections or timeouts.
+            </summary>
+            <param name="validator">
+            The validator.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.RunChecks">
+            <summary>
+            The run checks.
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.LicenseChecker.ResultListener">
+            <summary>
+            The result listener.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.ResultListener.checker">
+            <summary>
+            The _checker.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.ResultListener.licenseValidator">
+            <summary>
+            The _license validator.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseChecker.ResultListener.onTimeout">
+            <summary>
+            The _on timeout.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.ResultListener.#ctor(LicenseVerificationLibrary.LicenseValidator,LicenseVerificationLibrary.LicenseChecker)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.LicenseChecker.ResultListener"/> class.
+            </summary>
+            <param name="validator">
+            The validator.
+            </param>
+            <param name="checker">
+            The checker.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.ResultListener.VerifyLicense(LicenseVerificationLibrary.ServerResponseCode,System.String,System.String)">
+            <summary>
+            Runs in IPC thread pool. Post it to the Handler, so we can guarantee
+              either this or the timeout runs.
+            </summary>
+            <param name="responseCode">
+            The response code from the server.
+            </param>
+            <param name="signedData">
+            The data from the server.
+            </param>
+            <param name="signature">
+            The signature to use to verify the data.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.ResultListener.ClearTimeout">
+            <summary>
+            The clear timeout.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.ResultListener.DebugServerResponseCode(LicenseVerificationLibrary.ServerResponseCode)">
+            <summary>
+            The debug server response code.
+            </summary>
+            <param name="responseCode">
+            The response code.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseChecker.ResultListener.StartTimeout">
+            <summary>
+            The start timeout.
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.ILicenseCheckerCallback">
+            <summary>
+            The i license checker callback.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.ILicenseCheckerCallback.Allow(LicenseVerificationLibrary.PolicyServerResponse)">
+            <summary>
+            Allow use. App should proceed as normal.
+            </summary>
+            <param name="reason">
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.Licensed"/> or 
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.Retry"/> typically.
+            (although in theory the policy can return 
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.NotLicensed"/> here as well) 
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.ILicenseCheckerCallback.ApplicationError(LicenseVerificationLibrary.CallbackErrorCode)">
+            <summary>
+            Error in application code. Caller did not call or set up license 
+            checker correctly. 
+            Should be considered fatal.
+            </summary>
+            <param name="errorCode">
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.ILicenseCheckerCallback.DontAllow(LicenseVerificationLibrary.PolicyServerResponse)">
+            <summary>
+            Don't allow use. App should inform user and take appropriate action.
+            </summary>
+            <param name="reason">
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.NotLicensed"/> or 
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.Retry"/>. 
+            (although in theory the policy can return 
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.Licensed"/> here as well - perhaps 
+            the call to the LVL took too long, for example)
+            </param>
+        </member>
+        <member name="T:LicenseVerificationLibrary.LicenseValidator">
+            <summary>
+            Contains data related to a licensing request and methods to verify and process the response.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseValidator.SignatureAlgorithm">
+            <summary>
+            The signature algorithm.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseValidator.deviceLimiter">
+            <summary>
+            The device limiter.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseValidator.licenseCheckerCallback">
+            <summary>
+            The license checker callback.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseValidator.numberUsedOnce">
+            <summary>
+            The number used once.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseValidator.packageName">
+            <summary>
+            The package name.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseValidator.policy">
+            <summary>
+            The policy.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.LicenseValidator.versionCode">
+            <summary>
+            The version code.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseValidator.#ctor(LicenseVerificationLibrary.Policy.IPolicy,LicenseVerificationLibrary.DeviceLimiter.IDeviceLimiter,LicenseVerificationLibrary.ILicenseCheckerCallback,System.Int32,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.LicenseValidator"/> class.
+            </summary>
+            <param name="policy">
+            The policy.
+            </param>
+            <param name="deviceLimiter">
+            The device limiter.
+            </param>
+            <param name="callback">
+            The callback.
+            </param>
+            <param name="nonce">
+            The nonce.
+            </param>
+            <param name="packageName">
+            The package name.
+            </param>
+            <param name="versionCode">
+            The version code.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseValidator.GetCallback">
+            <summary>
+            The get callback.
+            </summary>
+            <returns>
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseValidator.GetNumberUsedOnce">
+            <summary>
+            The get number used once.
+            </summary>
+            <returns>
+            The get number used once.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseValidator.GetPackageName">
+            <summary>
+            The get package name.
+            </summary>
+            <returns>
+            The get package name.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseValidator.Verify(Java.Security.IPublicKey,LicenseVerificationLibrary.ServerResponseCode,System.String,System.String)">
+            <summary>
+            Verifies the response from server and calls appropriate callback method.
+            </summary>
+            <param name="publicKey">
+            public key associated with the developer account
+            </param>
+            <param name="responseCode">
+            server response code
+            </param>
+            <param name="signedData">
+            signed data from server
+            </param>
+            <param name="signature">
+            server signature
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseValidator.HandleApplicationError(LicenseVerificationLibrary.CallbackErrorCode)">
+            <summary>
+            The handle application error.
+            </summary>
+            <param name="code">
+            The code.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseValidator.HandleInvalidResponse">
+            <summary>
+            The handle invalid response.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.LicenseValidator.HandleResponse(LicenseVerificationLibrary.PolicyServerResponse,LicenseVerificationLibrary.ResponseData)">
+            <summary>
+            Confers with policy and calls appropriate callback method.
+            </summary>
+            <param name="response">
+            The response.
+            </param>
+            <param name="rawData">
+            The raw Data.
+            </param>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Obfuscator.AesObfuscator">
+            <summary>
+            An Obfuscator that uses AES to encrypt data.
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Obfuscator.IObfuscator">
+            <summary>
+            The i obfuscator.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.IObfuscator.Obfuscate(System.String,System.String)">
+            <summary>
+            Obfuscate a string that is being stored into shared preferences.
+            </summary>
+            <param name="original">
+            The data that is to be obfuscated.
+            </param>
+            <param name="key">
+            The key for the data that is to be obfuscated.
+            </param>
+            <returns>
+            A transformed version of the original data.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.IObfuscator.Unobfuscate(System.String,System.String)">
+            <summary>
+            Undo the transformation applied to data by the 
+            <see cref="M:LicenseVerificationLibrary.Obfuscator.IObfuscator.Obfuscate(System.String,System.String)"/> method.
+            </summary>
+            <param name="obfuscated">
+            The data that is to be obfuscated.
+            </param>
+            <param name="key">
+            The key for the data that is to be obfuscated.
+            </param>
+            <returns>
+            A transformed version of the original data.
+            </returns>
+            <exception cref="T:LicenseVerificationLibrary.Obfuscator.ValidationException">
+            Optionally thrown if a data integrity check fails.
+            </exception>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Obfuscator.AesObfuscator.CipherAlgorithm">
+            <summary>
+            The cipher algorithm.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Obfuscator.AesObfuscator.Header">
+            <summary>
+            The header.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Obfuscator.AesObfuscator.KeygenAlgorithm">
+            <summary>
+            The keygen algorithm.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Obfuscator.AesObfuscator.Iv">
+            <summary>
+            The iv.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Obfuscator.AesObfuscator.decryptor">
+            <summary>
+            The decryptor.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Obfuscator.AesObfuscator.encryptor">
+            <summary>
+            The encryptor.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.AesObfuscator.#ctor(System.Byte[],System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.Obfuscator.AesObfuscator"/> class. 
+            The aes obfuscator.
+            </summary>
+            <param name="salt">
+            an array of random bytes to use for each (un)obfuscation
+            </param>
+            <param name="applicationId">
+            application identifier, e.g. the package name
+            </param>
+            <param name="deviceId">
+            device identifier. Use as many sources as possible to 
+            create this unique identifier.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.AesObfuscator.Obfuscate(System.String,System.String)">
+            <summary>
+            The obfuscate.
+            </summary>
+            <param name="original">
+            The original.
+            </param>
+            <param name="key">
+            The key.
+            </param>
+            <returns>
+            The obfuscate.
+            </returns>
+            <exception cref="T:Java.Lang.RuntimeException">
+            </exception>
+            <exception cref="T:Java.Lang.RuntimeException">
+            </exception>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.AesObfuscator.Unobfuscate(System.String,System.String)">
+            <summary>
+            The unobfuscate.
+            </summary>
+            <param name="obfuscated">
+            The obfuscated.
+            </param>
+            <param name="key">
+            The key.
+            </param>
+            <returns>
+            The unobfuscate.
+            </returns>
+            <exception cref="T:LicenseVerificationLibrary.Obfuscator.ValidationException">
+            </exception>
+            <exception cref="T:Java.Lang.RuntimeException">
+            </exception>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator">
+            <summary>
+            An wrapper for SharedPreferences that transparently performs data
+              obfuscation.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator.obfuscator">
+            <summary>
+            The obfuscator.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator.preferences">
+            <summary>
+            The preferences.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator.editor">
+            <summary>
+            The editor.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator.#ctor(Android.Content.ISharedPreferences,LicenseVerificationLibrary.Obfuscator.IObfuscator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator"/> class. 
+            Constructor.
+            </summary>
+            <param name="sp">
+            A SharedPreferences instance provided by the system.
+            </param>
+            <param name="o">
+            The Obfuscator to use when reading or writing data.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator.Commit">
+            <summary>
+            The commit.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator.GetString(System.String,System.String)">
+            <summary>
+            The get string.
+            </summary>
+            <param name="key">
+            The key.
+            </param>
+            <param name="defValue">
+            The def value.
+            </param>
+            <returns>
+            The get string.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator.GetValue``1(System.String,``0)">
+            <summary>
+            The get value.
+            </summary>
+            <param name="key">
+            The key.
+            </param>
+            <param name="defValue">
+            The def value.
+            </param>
+            <typeparam name="T">
+            </typeparam>
+            <returns>
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator.PutString(System.String,System.String)">
+            <summary>
+            The put string.
+            </summary>
+            <param name="key">
+            The key.
+            </param>
+            <param name="value">
+            The value.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.PreferenceObfuscator.PutValue``1(System.String,``0)">
+            <summary>
+            The put value.
+            </summary>
+            <param name="key">
+            The key.
+            </param>
+            <param name="value">
+            The value.
+            </param>
+            <typeparam name="T">
+            </typeparam>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Obfuscator.ValidationException">
+            <summary>
+            Indicates that an error occurred while validating the integrity 
+            of data managed by an <see cref="T:LicenseVerificationLibrary.Obfuscator.IObfuscator"/>.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.ValidationException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.Obfuscator.ValidationException"/> class.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Obfuscator.ValidationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.Obfuscator.ValidationException"/> class.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Policy.PolicyExtensions">
+            <summary>
+            The policy extensions.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.PolicyExtensions.NameValueSeparator">
+            <summary>
+            The name value separator.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.PolicyExtensions.ParameterSeparator">
+            <summary>
+            The parameter separator.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.PolicyExtensions.MillisPerMinute">
+            <summary>
+            The millis per minute.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.PolicyExtensions.Jan1St970">
+            <summary>
+            The jan 1 st 970.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.PolicyExtensions.DecodeExtras(System.String)">
+            <summary>
+            The decode extras.
+            </summary>
+            <param name="extras">
+            The extras.
+            </param>
+            <returns>
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.PolicyExtensions.GetCurrentMilliseconds">
+            <summary>
+            The get current milliseconds.
+            </summary>
+            <returns>
+            The get current milliseconds.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.PolicyExtensions.TryDecodeExtras(System.String,System.Collections.Generic.Dictionary{System.String,System.String}@)">
+            <summary>
+            The try decode extras.
+            </summary>
+            <param name="rawData">
+            The raw data.
+            </param>
+            <param name="extras">
+            The extras.
+            </param>
+            <returns>
+            The try decode extras.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.PolicyExtensions.GetParameters(System.String)">
+            <summary>
+            The get parameters.
+            </summary>
+            <param name="uri">
+            The uri.
+            </param>
+            <returns>
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.PolicyExtensions.GetParameters(System.String,System.Text.Encoding)">
+            <summary>
+            The get parameters.
+            </summary>
+            <param name="uri">
+            The uri.
+            </param>
+            <param name="encoding">
+            The encoding.
+            </param>
+            <returns>
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            </exception>
+        </member>
+        <member name="T:LicenseVerificationLibrary.PolicyServerResponse">
+            <summary>
+            Change these values to make it more difficult for tools to automatically
+              strip LVL protection from your APK.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.PolicyServerResponse.Licensed">
+            <summary>
+              The server returned back a valid license response
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.PolicyServerResponse.NotLicensed">
+            <summary>
+              The server returned back a valid license response that indicated 
+              that the user definitively is not licensed
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.PolicyServerResponse.Retry">
+            <summary>
+              The license response was unable to be determined 
+              - perhaps as a result of faulty networking
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Policy.ApkExpansionPolicy">
+            <summary>
+            Default policy.
+            All policy decisions are based off of response data received from the 
+            licensing service.
+            </summary>
+            <remarks>
+            Specifically, the licensing server sends the following information: 
+            <ul>
+            <li>response validity period,</li>
+            <li>error retry period, and</li>
+            <li>error retry count.</li>
+            </ul>
+            These values will vary based on the the way the application is
+            configured in the Android Play publishing console, such as whether the 
+            application is marked as free or is within its refund period, as well 
+            as how often an application is checking with the licensing service.
+            Developers who need more fine grained control over their application's
+            licensing policy should implement a custom <see cref="T:LicenseVerificationLibrary.Policy.IPolicy"/>.
+            </remarks>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Policy.ServerManagedPolicy">
+            <summary>
+            <para>
+            Default policy. 
+            All policy decisions are based off of response data received from the 
+            licensing service. Specifically, the licensing server sends the 
+            following information: response validity period, error retry period, 
+            and error retry count.
+            </para>
+            </summary>
+            <remarks>
+            <para>
+            These values will vary based on the the way the application is 
+            configured in the Android Play publishing console, such as whether 
+            the application is marked as free or is within its refund period, as 
+            well as how often an application is checking with the licensing service.
+            </para>
+            <para>
+            Developers who need more fine grained control over their application's
+            licensing policy should implement a custom <see cref="T:LicenseVerificationLibrary.Policy.IPolicy"/>.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Policy.IPolicy">
+            <summary>
+            The i policy.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.IPolicy.AllowAccess">
+            <summary>
+            Check if the user should be allowed access to the application.
+            </summary>
+            <returns>
+            The allow access.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.IPolicy.ProcessServerResponse(LicenseVerificationLibrary.PolicyServerResponse,LicenseVerificationLibrary.ResponseData)">
+            <summary>
+            Provide results from contact with the license server. 
+            Retry counts are incremented if the current value of response is 
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.Retry"/>. 
+            Results will be used for any future policy decisions.
+            </summary>
+            <param name="response">
+            The result from validating the server response
+            </param>
+            <param name="rawData">
+            The raw server response data, can be null for 
+            <see cref="F:LicenseVerificationLibrary.PolicyServerResponse.Retry"/>
+            </param>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.PreferencesFile">
+            <summary>
+            The prefs file.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Obfuscator">
+            <summary>
+            The preferences.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.lastResponse">
+            <summary>
+            The last response.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.lastResponseTime">
+            <summary>
+            The last response time.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.maxRetries">
+            <summary>
+            The max retries.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.retryCount">
+            <summary>
+            The retry count.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.retryUntil">
+            <summary>
+            The retry until.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.validityTimestamp">
+            <summary>
+            The validity timestamp.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.ServerManagedPolicy.#ctor(Android.Content.Context,LicenseVerificationLibrary.Obfuscator.IObfuscator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.Policy.ServerManagedPolicy"/> class. 
+            The server managed policy.
+            </summary>
+            <param name="context">
+            The context for the current application
+            </param>
+            <param name="obfuscator">
+            An obfuscator to be used with preferences.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.ServerManagedPolicy.AllowAccess">
+            <summary>
+            This implementation allows access if either:
+              <ol>
+                <li>a LICENSED response was received within the validity period</li>
+                <li>
+                  a RETRY response was received in the last minute, and we are under
+                  the RETRY count or in the RETRY period.
+                </li>
+              </ol>
+            </summary>
+            <returns>
+            The allow access.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.ServerManagedPolicy.ProcessServerResponse(LicenseVerificationLibrary.PolicyServerResponse,LicenseVerificationLibrary.ResponseData)">
+            <summary>
+            Process a new response from the license server. 
+              This data will be used for computing future policy decisions. The
+              following parameters are processed:
+              <ul>
+                <li>VT: the timestamp that the client should consider the response valid until</li>
+                <li>GT: the timestamp that the client should ignore retry errors until</li>
+                <li>GR: the number of retry errors that the client should ignore</li>
+              </ul>
+            </summary>
+            <param name="response">
+            the result from validating the server response
+            </param>
+            <param name="rawData">
+            the raw server response data
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.ServerManagedPolicy.ResetPolicy">
+            <summary>
+            The reset policy.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.ServerManagedPolicy.ProcessResponseExtra(System.Collections.Generic.KeyValuePair{System.String,System.String})">
+            <summary>
+            Parse each extra in the response
+            </summary>
+            <param name="pair"></param>
+        </member>
+        <member name="P:LicenseVerificationLibrary.Policy.ServerManagedPolicy.LastResponse">
+            <summary>
+              Set the last license response received from the server and add to
+              preferences. You must manually call PreferenceObfuscator.commit() to
+              commit these changes to disk.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.Policy.ServerManagedPolicy.LastResponseTime">
+            <summary>
+            Gets or sets the server's last response time.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.Policy.ServerManagedPolicy.MaxRetries">
+            <summary>
+              The max retries value (GR) as received from the server
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.Policy.ServerManagedPolicy.RetryCount">
+            <summary>
+              Set the current retry count and add to preferences. You must manually
+              call PreferenceObfuscator.commit() to commit these changes to disk.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.Policy.ServerManagedPolicy.RetryUntil">
+            <summary>
+              The retry until timestamp (GT) received from the server.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.Policy.ServerManagedPolicy.ValidityTimestamp">
+            <summary>
+              The last validity timestamp (VT) received from the server
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences">
+            <summary>
+            The apk expansion preferences.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.LastResponse">
+            <summary>
+            The last response.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.MaximumRetries">
+            <summary>
+            The maximum retries.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.RetryCount">
+            <summary>
+            The retry count.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.RetryUntil">
+            <summary>
+            The retry until.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.ValidityTimestamp">
+            <summary>
+            The validity timestamp.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.DefaultMaxRetries">
+            <summary>
+            The default max retries.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.DefaultRetryCount">
+            <summary>
+            The default retry count.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.DefaultRetryUntil">
+            <summary>
+            The default retry until.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.DefaultValidityTimestamp">
+            <summary>
+            The default validity timestamp.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ServerManagedPolicy.Preferences.DefaultLastResponse">
+            <summary>
+            The default validity timestamp.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.PreferencesFile">
+            <summary>
+            The file.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.FileNameKey">
+            <summary>
+            The string that contains the key for finding file names.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.FileSizeKey">
+            <summary>
+            The string that contains the key for finding file sizes.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.FileUrlKey">
+            <summary>
+            The string that contains the key for finding file urls.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.expansionFiles">
+            <summary>
+            The expansion files.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.#ctor(Android.Content.Context,LicenseVerificationLibrary.Obfuscator.IObfuscator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.Policy.ApkExpansionPolicy"/> class. 
+            </summary>
+            <param name="context">
+            The context for the current application
+            </param>
+            <param name="obfuscator">
+            An obfuscator to be used when reading/writing to shared preferences.
+            </param>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.GetExpansionFilesCount">
+            <summary>
+            Gets the count of expansion URLs. Since expansionURLs are not committed
+            to preferences, this will return zero if there has been no LVL fetch in
+            the current session. 
+            </summary>
+            <returns>
+            the number of expansion URLs. (0,1,2)
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.ProcessResponseExtra(System.Collections.Generic.KeyValuePair{System.String,System.String})">
+            <summary>
+            Parse each extra in the response
+            </summary>
+            <param name="pair"></param>
+        </member>
+        <member name="P:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.ExpansionFile.Url">
+            <summary>
+            Gets or sets the expansion URL. 
+            </summary>
+            <remarks>
+            Expansion URL's are not committed to preferences, but are 
+            instead intended to be stored when the license response is 
+            processed by the front-end.
+            Since these URLs are not committed to preferences, this will 
+            always return null if there has not been an LVL fetch in the 
+            current session.
+            </remarks>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.ExpansionFileType">
+            <summary>
+            The design of the protocol supports n files. Currently the market can
+            only deliver two files. To accommodate this, we have these two constants,
+            but the order is the only relevant thing here.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.ExpansionFileType.MainFile">
+            <summary>
+            The main file.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.ApkExpansionPolicy.ExpansionFileType.PatchFile">
+            <summary>
+            The patch file.
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.Policy.StrictPolicy">
+            <summary>
+            Non-caching policy. 
+            All requests will be sent to the licensing service, and no local 
+            caching is performed. 
+            </summary>
+            <remarks>
+            <para>
+            Using a non-caching policy ensures that there is no local preference 
+            data for malicious users to tamper with. As a side effect, applications
+            will not be permitted to run while offline. Developers should carefully
+            weigh the risks of using this <see cref="T:LicenseVerificationLibrary.Policy.IPolicy"/> over one which 
+            implements caching, such as <see cref="T:LicenseVerificationLibrary.Policy.ServerManagedPolicy"/>.
+            </para>
+            <para>
+            Access to the application is only allowed if a LICESNED response is.
+            received. All other responses (including RETRY) will deny access.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:LicenseVerificationLibrary.Policy.StrictPolicy.lastResponse">
+            <summary>
+            The last response.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.StrictPolicy.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:LicenseVerificationLibrary.Policy.StrictPolicy"/> class.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.StrictPolicy.AllowAccess">
+            <summary>
+            This implementation allows access if and only if a LICENSED response was
+            received the last time the server was contacted.
+            </summary>
+            <returns>
+            The allow access.
+            </returns>
+        </member>
+        <member name="M:LicenseVerificationLibrary.Policy.StrictPolicy.ProcessServerResponse(LicenseVerificationLibrary.PolicyServerResponse,LicenseVerificationLibrary.ResponseData)">
+            <summary>
+            Process a new response from the license server. Since we aren't
+            performing any caching, this equates to reading the LicenseResponse. Any
+            ResponseData provided is ignored.
+            </summary>
+            <param name="response">
+            the result from validating the server response
+            </param>
+            <param name="rawData">
+            the raw server response data
+            </param>
+        </member>
+        <member name="T:LicenseVerificationLibrary.ResponseData">
+            <summary>
+            ResponseData from licensing server.
+            </summary>
+        </member>
+        <member name="M:LicenseVerificationLibrary.ResponseData.Parse(System.String)">
+            <summary>
+            Parses response string into ResponseData.
+            </summary>
+            <param name="responseData">
+            response data string
+            </param>
+            <returns>
+            ResponseData object
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            upon parsing error
+            </exception>
+        </member>
+        <member name="M:LicenseVerificationLibrary.ResponseData.ToString">
+            <summary>
+            The to string.
+            </summary>
+            <returns>
+            The to string.
+            </returns>
+        </member>
+        <member name="P:LicenseVerificationLibrary.ResponseData.Extra">
+            <summary>
+            Gets Extra.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.ResponseData.NumberUsedOnce">
+            <summary>
+            Gets NumberUsedOnce.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.ResponseData.PackageName">
+            <summary>
+            Gets PackageName.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.ResponseData.ResponseCode">
+            <summary>
+            Gets ResponseCode.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.ResponseData.TimeStamp">
+            <summary>
+            Gets TimeStamp.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.ResponseData.UserId">
+            <summary>
+            Gets UserId.
+            </summary>
+        </member>
+        <member name="P:LicenseVerificationLibrary.ResponseData.VersionCode">
+            <summary>
+            Gets VersionCode.
+            </summary>
+        </member>
+        <member name="T:LicenseVerificationLibrary.ServerResponseCode">
+            <summary>
+            Server response codes.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.ServerResponseCode.Licensed">
+            <summary>
+            The licensed.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.ServerResponseCode.NotLicensed">
+            <summary>
+            The not licensed.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.ServerResponseCode.LicensedOldKey">
+            <summary>
+            The licensed old key.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.ServerResponseCode.NotMarketManaged">
+            <summary>
+            The not market managed.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.ServerResponseCode.ServerFailure">
+            <summary>
+            The server failure.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.ServerResponseCode.OverQuota">
+            <summary>
+            The over quota.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.ServerResponseCode.ErrorContactingServer">
+            <summary>
+            The error contacting server.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.ServerResponseCode.InvalidPackageName">
+            <summary>
+            The invalid package name.
+            </summary>
+        </member>
+        <member name="F:LicenseVerificationLibrary.ServerResponseCode.NonMatchingUid">
+            <summary>
+            The non matching uid.
+            </summary>
+        </member>
+    </members>
+</doc>

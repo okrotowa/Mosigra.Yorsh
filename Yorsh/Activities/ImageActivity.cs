@@ -14,21 +14,24 @@ namespace Yorsh.Activities
     public class ImageActivity : Activity
     {
         private View _contentFrameLayout;
-        private readonly ImageActivityHelper _imageActivityHelper = Rep.DatabaseHelper.ImageActivityHelper;
         private ImageView _image;
+        private TaskTable _task;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             try
             {
                 base.OnCreate(savedInstanceState);
+                _task = Rep.DatabaseHelper.Tasks.Enumerator.Current;
+                var category = Rep.DatabaseHelper.Tasks.GetCategory(_task.CategoryId);
                 SetContentView(Resource.Layout.ImageCard);
                 _image = FindViewById<ImageView>(Resource.Id.imageCardView);
-                _image.SetImageBitmap(_imageActivityHelper.CategoryImage);
+                var imageIdentifier = this.Resources.GetIdentifier(category.Image, "drawable", this.PackageName);
+                _image.SetImageResource(imageIdentifier);
 
                 var text = FindViewById<TextView>(Resource.Id.textCard);
                 text.SetTypeface(Rep.FontManager.Get(Font.BankirRetro), TypefaceStyle.Normal);
-                text.Text = _imageActivityHelper.Task.TaskName;
+                text.Text = _task.TaskName;
 
                 _contentFrameLayout = FindViewById(Resource.Id.contentFrameLayout);
 
@@ -51,14 +54,10 @@ namespace Yorsh.Activities
         {
             try
             {
-                var isBear = _imageActivityHelper.Task.IsBear;
+                var isBear = _task.IsBear;
                 SetResult(isBear ? Result.Ok : Result.Canceled);
                 _contentFrameLayout.Click -= ContentFrameLayoutOnClick;
-                if (_image != null && _image.Drawable != null)
-                {
-                    _image.Drawable.Dispose();
-                    _image.SetImageBitmap(null);
-                }
+
                 base.OnBackPressed();
             }
             catch (Exception exception)
@@ -71,6 +70,16 @@ namespace Yorsh.Activities
         public override void OnBackPressed()
         {
            SetResult();
+        }
+
+        protected override void OnDestroy()
+        {
+            if (_image != null && _image.Drawable != null)
+            {
+                _image.Drawable.Dispose();
+                _image.SetImageBitmap(null);
+            }
+            base.OnDestroy();
         }
     }
 }

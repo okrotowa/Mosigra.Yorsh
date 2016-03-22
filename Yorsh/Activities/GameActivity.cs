@@ -224,7 +224,6 @@ namespace Yorsh.Activities
         private void CardImageOnClick(object sender, EventArgs eventArgs)
         {
             var intent = new Intent(this, typeof(ImageActivity));
-            Rep.DatabaseHelper.ImageActivityHelper.TaskId = _taskEnumerator.Current.Id;
             StartActivityForResult(intent, 100);
             SetButtonsEnabled(true);
         }
@@ -419,12 +418,8 @@ namespace Yorsh.Activities
                 builder.SetMessage(GetString(Resource.String.AreYouShureString));
                 builder.SetCancelable(true);
                 builder.SetPositiveButton(GetString(Resource.String.YesString), async (sender, args) => base.OnBackPressed ());
-                builder.SetNegativeButton(GetString(Resource.String.NoString), (sender, args) =>
-                {
-                });
-
-                var alertDialog = builder.Create();
-                alertDialog.Show();
+                builder.SetNegativeButton(GetString(Resource.String.NoString), (sender, args) =>{});
+                builder.Create().Show();
             }
             catch (Exception exception)
             {

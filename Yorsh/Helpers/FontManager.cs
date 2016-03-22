@@ -37,3 +37,14 @@ namespace Yorsh.Helpers
 
     }
 }
+
+public enum Font
+{
+    BoldCondensed,
+    Condensed,
+    Bold,
+    Regular,
+    SemiboldCondensed,
+    LightCondensed,
+    BankirRetro
+}

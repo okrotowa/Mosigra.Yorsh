@@ -1,6 +1,6 @@
 namespace Yorsh.Helpers
 {
-    public class StringConst
+    public static class StringConst
     {
         public const string ResultGameActivity = "ResultGameAcitivity";
         public const string MainMenuActivity = "MainMenuActivity";

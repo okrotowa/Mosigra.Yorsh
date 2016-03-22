@@ -2,8 +2,6 @@
 using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.Widget;
-using Android.Views;
 
 namespace Yorsh.Helpers
 {
@@ -16,58 +14,6 @@ namespace Yorsh.Helpers
             mainActivity.Finish();
         }
 
-        //public static Typeface MyriadProFont(this Activity activity, Font font)
-        //{
-        //    string name;
-        //    switch (font)
-        //    {
-        //        case Font.BoldCondensed:
-        //            name = "MyriadProBoldCondensed.ttf";
-        //            break;
-        //        case Font.Condensed:
-        //            name = "MyriadProCondensed.ttf";
-        //            break;
-        //        case Font.Bold:
-        //            name = "MyriadProBold.ttf";
-        //            break;
-        //        case Font.Regular:
-        //            name = "MyriadProRegular.ttf";
-        //            break;
-        //        case Font.SemiboldCondensed:
-        //            name = "MyriadProSemiboldCond.otf";
-        //            break;
-        //        case Font.LightCondensed:
-        //            name = "MyriadProLightCond.otf";
-        //            break;
-        //        default:
-        //            throw new NotImplementedException();
-        //    }
-        //    return Typeface.CreateFromAsset(activity.Assets, name);
-        //}
-
-        //public static void OnTouchButtonDarker(this Activity activity, Button sender, View.TouchEventArgs e)
-        //{
-        //    var button = sender;
-        //    switch (e.Event.Action)
-        //    {
-        //        case MotionEventActions.Down:
-        //            {
-        //                button.Background.SetColorFilter(activity.Resources.GetColor(Resource.Color.button_shadow_gray), PorterDuff.Mode.SrcAtop);
-        //                button.SetTextColor(GetColorWithOpacity(activity, Resource.Color.white, Resource.Color.button_shadow_gray));
-        //                button.Invalidate();
-        //                e.Handled = false;
-        //                break;
-        //            }
-        //        case MotionEventActions.Up:
-        //            {
-        //                button.Background.ClearColorFilter();
-        //                button.SetTextColor(activity.Resources.GetColor(Android.Resource.Color.White));
-        //                button.Invalidate();
-        //                e.Handled = false;
-        //                break;
-        //            }
-        //    }
-        //}
         public static void SaveCurrentPlayer(this Activity activity, int player)
         {
             var editor = activity.GetSharedPreferences("T", FileCreationMode.Private).Edit();
@@ -110,13 +56,3 @@ namespace Yorsh.Helpers
 }
 
 
-public enum Font
-{
-    BoldCondensed,
-    Condensed,
-    Bold,
-    Regular,
-    SemiboldCondensed,
-    LightCondensed,
-    BankirRetro
-}

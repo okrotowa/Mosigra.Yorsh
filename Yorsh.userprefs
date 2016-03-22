@@ -1,10 +1,6 @@
 ﻿<Properties StartupItem="Yorsh\Yorsh.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.5_1_WVGA" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Yorsh\Yorsh.csproj">
-    <Files>
-      <File FileName="Yorsh\Yorsh.csproj" Line="497" Column="30" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh\Fragments\ChoosePhotoDialog.cs" line="80" column="1" />
@@ -22,4 +18,5 @@
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Yorsh AndroidDesignerPreferredDevice="Nexus 4" />
 </Properties>

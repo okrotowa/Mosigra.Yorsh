@@ -74,7 +74,11 @@ namespace Yorsh.Model
         {
             try
             {
-				if (Image!=null) Image.Dispose();
+                if (Image != null)
+                {
+                    Image.Recycle();
+                    Image.Dispose();
+                }
 
                 if (string.IsNullOrEmpty(PhotoPath))
                 {

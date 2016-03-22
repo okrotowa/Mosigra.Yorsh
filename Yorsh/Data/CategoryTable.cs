@@ -10,18 +10,16 @@ namespace Yorsh.Data
 
         }
 
-        public CategoryTable(int id, string categoryName,string imageName)
+        public CategoryTable(int id,string image)
         {
             Id = id;
-            ImageName = imageName;
-            CategoryName = categoryName;
+            Image = image;
         }
         
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string ImageName { get; set; }
+        public string Image { get; set; }
 
-        public string CategoryName { get; set; }
 
         public bool IsEnabled { get; set; }
 

@@ -8,8 +8,9 @@
         android:id="@+id/imageCardView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:src="@drawable/iq_bg"
-        android:scaleType="centerCrop" />
+        android:src="@drawable/iq_df"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="false" />
     <TextView
         android:id="@+id/textCard"
         android:background="@drawable/round_rect_shape_grey_background"

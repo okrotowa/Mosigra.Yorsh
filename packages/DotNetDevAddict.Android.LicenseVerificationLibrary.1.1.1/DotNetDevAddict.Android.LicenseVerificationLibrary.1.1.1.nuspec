@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>DotNetDevAddict.Android.LicenseVerificationLibrary</id>
+    <version>1.1.1</version>
+    <title>Android License Verification Library</title>
+    <authors>Matthew Leibowitz</authors>
+    <owners>Matthew Leibowitz</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/mattleibow/android.Play.ExpansionLibrary</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/mattleibow/Android.Play.ExpansionLibrary/master/Resources/LicenseVerificationLibrary_128x128.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C# implementation of Google's Android License Verification Library (LVL).</description>
+    <summary>C# implementation of Google's Android License Verification Library (LVL).</summary>
+    <copyright>.NET Development Addict</copyright>
+    <tags>android monodroid xamarin google lvl license verification library</tags>
+  </metadata>
+</package>

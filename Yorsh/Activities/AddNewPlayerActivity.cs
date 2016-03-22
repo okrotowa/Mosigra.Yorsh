@@ -144,7 +144,6 @@ namespace Yorsh.Activities
                 {
                     try
                     {
-
                         _player.PhotoPath = value;
                         _player.LoadBitmap(this.Resources.GetDimensionPixelSize(
                             Resource.Dimension.AddPlayerItem_imageSize));
@@ -325,7 +324,11 @@ namespace Yorsh.Activities
 
         protected override void OnDestroy()
         {
-            if (_playerImageButton.Drawable != null) _playerImageButton.Drawable.Dispose();
+            if (_playerImageButton.Drawable != null)
+            {
+                _playerImageButton.Drawable.Dispose();
+                _playerImageButton.SetImageBitmap(null);
+            }
             //_confirmButton.Background.ClearColorFilter();
             //_confirmButton.SetTextColor(Resources.GetColor(Resource.Color.white));
             base.OnDestroy();
