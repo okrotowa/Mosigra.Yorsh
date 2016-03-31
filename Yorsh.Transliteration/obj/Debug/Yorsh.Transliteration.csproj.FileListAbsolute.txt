@@ -1,8 +1,0 @@
-E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh.Transliteration\bin\Debug\Yorsh.Transliteration.exe.config
-E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh.Transliteration\bin\Debug\Yorsh.Transliteration.exe
-E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh.Transliteration\bin\Debug\Yorsh.Transliteration.pdb
-E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh.Transliteration\bin\Debug\UnidecodeSharpFork.dll
-E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh.Transliteration\bin\Debug\UnidecodeSharpFork.pdb
-E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh.Transliteration\obj\Debug\Yorsh.Transliteration.csprojResolveAssemblyReference.cache
-E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh.Transliteration\obj\Debug\Yorsh.Transliteration.exe
-E:\Fionariza\Programming\Work\Mosigra.Yorsh\Yorsh.Transliteration\obj\Debug\Yorsh.Transliteration.pdb
